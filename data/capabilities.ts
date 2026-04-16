@@ -66,7 +66,7 @@ const DATA: Record<string, CapabilityData> = {
   [toSlug('Cloud Security Posture Management')]: GENERATE_CAPABILITY('Cloud Security Posture', 'Visibility & Control', 'Automated compliance and risk assessment for dynamic cloud environments.', Shield),
   [toSlug('Penetration Testing & Red Teaming')]: GENERATE_CAPABILITY('Penetration Testing', 'Offensive Security', 'Simulating real-world attacks to identify and patch vulnerabilities before exploitation.', Shield),
   [toSlug('Governance, Risk & Compliance (GRC)')]: GENERATE_CAPABILITY('GRC', 'Aligned Assurance', 'Unified approach to managing regulatory requirements and enterprise risk.', FileCheck),
-  [toSlug('Data Privacy & Protection')]: GENERATE_CAPABILITY('Data Privacy', 'Trust by Design', 'Safeguarding sensitive data and ensuring compliance with GDPR, CCPA, and global standards.', Shield),
+  [toSlug('Data Privacy & Protection')]: GENERATE_CAPABILITY('Data Privacy', 'Trust by Design', 'Safeguarding sensitive data and ensuring alignment with global data protection standards and regulations.', Shield),
 
   // --- DIGITAL EXPERIENCE ---
   [toSlug('UX/UI Design Strategy')]: GENERATE_CAPABILITY('UX/UI Design Strategy', 'Experience is Authority', 'Designing intuitive, high-impact digital interfaces that prioritize user intent and conversion.', Palette),
@@ -117,7 +117,15 @@ const DATA: Record<string, CapabilityData> = {
   [toSlug('Visual Identity Systems')]: GENERATE_CAPABILITY('Visual Identity Systems', 'A Language of Quality', 'Codifying colors, typography, and imagery into a unified system that scales globally.', Palette),
   [toSlug('Crisis Communications')]: GENERATE_CAPABILITY('Crisis Communications', 'Protecting Brand Equity', 'Strategic management of the narrative during high-stakes reputational challenges.', MessageCircle),
   [toSlug('Employer Branding')]: GENERATE_CAPABILITY('Employer Branding', 'Attracting the Elite', 'Positioning the organization as a premier destination for top-tier global talent.', UserPlus),
-  [toSlug('Brand Governance')]: GENERATE_CAPABILITY('Brand Governance', 'Safeguarding the Standard', 'Ensuring absolute consistency in brand execution across every region and platform.', FileCheck)
+  [toSlug('Brand Governance')]: GENERATE_CAPABILITY('Brand Governance', 'Safeguarding the Standard', 'Ensuring absolute consistency in brand execution across every region and platform.', FileCheck),
+
+  // --- CUSTOM SOFTWARE ---
+  [toSlug('Web Application Development')]: GENERATE_CAPABILITY('Web Application Development', 'Production-Grade Web Apps', 'Full-stack web applications built with React, Next.js, Node.js, and modern frameworks for enterprise-scale performance.', Layers),
+  [toSlug('Mobile App Development')]: GENERATE_CAPABILITY('Mobile App Development', 'Native & Cross-Platform', 'iOS and Android applications using React Native and Swift/Kotlin for seamless user experiences.', Smartphone),
+  [toSlug('SaaS Platform Engineering')]: GENERATE_CAPABILITY('SaaS Platform Engineering', 'Multi-Tenant at Scale', 'Custom SaaS products with subscription management, multi-tenancy, and elastic infrastructure.', Cloud),
+  [toSlug('API Design & Microservices')]: GENERATE_CAPABILITY('API Design & Microservices', 'Connected Systems', 'RESTful and GraphQL APIs with microservices architecture for scalable, maintainable backends.', Database),
+  [toSlug('DevOps & CI/CD Pipelines')]: GENERATE_CAPABILITY('DevOps & CI/CD Pipelines', 'Ship Fast, Ship Safe', 'Automated build, test, and deploy pipelines with infrastructure-as-code and containerized deployments.', Zap),
+  [toSlug('Legacy System Modernization')]: GENERATE_CAPABILITY('Legacy System Modernization', 'Future-Proof Your Stack', 'Migrating monolithic legacy applications to modern cloud-native architectures without business disruption.', TrendingUp)
 };
 
 export const getCapabilityData = (slug: string): CapabilityData | undefined => {

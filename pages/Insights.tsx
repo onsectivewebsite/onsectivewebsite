@@ -1,9 +1,8 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, ChevronLeft, Search as SearchIcon, ArrowUpRight } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Search as SearchIcon, ArrowUpRight, Clock } from 'lucide-react';
 import SEOHead from '../components/SEO/SEOHead';
 import { ALL_INSIGHTS } from '../constants';
-import Button from '../components/UI/Button';
 
 const ITEMS_PER_PAGE = 9;
 
@@ -11,168 +10,194 @@ const Insights: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Scroll to top when page changes
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentPage]);
 
-  // Filter Logic - Only Search now
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.05, rootMargin: '0px 0px -60px 0px' }
+    );
+    document.querySelectorAll('.animate-on-scroll').forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [currentPage, searchQuery]);
+
   const filteredPosts = useMemo(() => {
     return ALL_INSIGHTS.filter(post => {
-      const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                            post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchesSearch;
+      const q = searchQuery.toLowerCase();
+      return post.title.toLowerCase().includes(q) || post.excerpt.toLowerCase().includes(q) || post.category.toLowerCase().includes(q);
     });
   }, [searchQuery]);
 
-  // Pagination Logic
   const totalPages = Math.ceil(filteredPosts.length / ITEMS_PER_PAGE);
   const currentPosts = filteredPosts.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
-  
-  // Featured Post (First one of filtered or global)
+
   const featuredPost = currentPosts[0];
-  const listPosts = currentPosts.slice(1);
+  const gridPosts = currentPosts.slice(1);
 
   return (
     <>
-      <SEOHead 
-        title="Insights & Analysis" 
-        description="Explore expert articles on AI, Digital Marketing, SEO, and Brand Strategy."
+      <SEOHead
+        title="Insights & Perspectives | Onsective"
+        description="Expert analysis on AI, cloud, cybersecurity, digital marketing, and enterprise transformation from Onsective Research."
       />
-      
-      {/* Header with Search Filter */}
-      <section className="pt-24 md:pt-32 pb-12 bg-white px-6 border-b border-gray-100">
+
+      {/* ===== HEADER ===== */}
+      <section className="pt-32 sm:pt-40 md:pt-44 pb-10 bg-white border-b border-[#e2e8f0] px-6">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
-              <div className="max-w-3xl">
-                  <span className="text-brand-primary font-bold tracking-[0.2em] uppercase text-xs mb-4 block animate-fade-up">Perspectives</span>
-                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-medium text-brand-black animate-fade-up delay-100">
-                    The Knowledge<span className="text-brand-primary">.</span>
-                  </h1>
+            <div className="max-w-2xl">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="w-8 h-px bg-[#c1912f]" />
+                <span className="text-[#c1912f] text-xs font-semibold uppercase tracking-[0.2em] font-['Plus_Jakarta_Sans']">Research</span>
               </div>
-              
-              <div className="relative w-full md:w-80 animate-fade-up delay-200">
-                  <input 
-                        type="text" 
-                        placeholder="Search topics..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full pl-4 pr-10 py-3 bg-gray-50 border-b-2 border-gray-200 focus:border-brand-primary focus:outline-none transition-colors text-sm font-medium"
-                    />
-                   <SearchIcon className="absolute right-0 top-3 text-gray-400" size={20} />
-              </div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-['Playfair_Display'] font-bold text-[#1a1a2e]">
+                Insights &amp; Perspectives
+              </h1>
+            </div>
+
+            <div className="relative w-full md:w-80">
+              <input
+                type="text"
+                placeholder="Search articles..."
+                value={searchQuery}
+                onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
+                className="w-full pl-5 pr-11 py-3 bg-[#f1f5f9] border border-[#e2e8f0] rounded-lg focus:border-[#c1912f] focus:ring-2 focus:ring-[#c1912f]/10 focus:outline-none transition-all text-sm font-['Plus_Jakarta_Sans']"
+              />
+              <SearchIcon className="absolute right-4 top-3.5 text-[#64748b]" size={18} />
+            </div>
           </div>
         </div>
       </section>
 
+      {/* ===== CONTENT ===== */}
       <section className="py-16 bg-white min-h-screen">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+        <div className="max-w-7xl mx-auto px-6 lg:px-16">
+
           {currentPosts.length > 0 ? (
             <>
-            {/* Featured Hero Article */}
-            <div className="mb-20 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center group cursor-pointer">
-                <div className="lg:col-span-8 overflow-hidden relative aspect-video">
-                    <Link to={`/insights/${featuredPost.id}`}>
-                        <img 
-                            src={featuredPost.image} 
-                            alt={featuredPost.title} 
-                            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" 
+              {/* Featured Article */}
+              {featuredPost && (
+                <div className="mb-20 animate-on-scroll opacity-0 translate-y-8 transition-all duration-700 [&.is-visible]:opacity-100 [&.is-visible]:translate-y-0">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center group">
+                    <div className="lg:col-span-7 overflow-hidden relative aspect-video rounded-lg">
+                      <Link to={`/insights/${featuredPost.id}`}>
+                        <img
+                          src={featuredPost.image}
+                          alt={featuredPost.title}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                         />
-                    </Link>
-                </div>
-                <div className="lg:col-span-4 flex flex-col justify-center">
-                    <div className="mb-6">
-                         <span className="bg-brand-black text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1">
-                             {featuredPost.category}
-                         </span>
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#071a2e]/60 to-transparent" />
+                      </Link>
                     </div>
-                    <Link to={`/insights/${featuredPost.id}`}>
-                        <h2 className="text-3xl md:text-4xl font-serif text-brand-black mb-6 leading-tight group-hover:text-brand-primary transition-colors">
-                            {featuredPost.title}
+                    <div className="lg:col-span-5 flex flex-col justify-center">
+                      <span className="inline-block px-3 py-1 bg-[#c1912f] text-white text-xs font-semibold rounded w-fit mb-4 font-['Plus_Jakarta_Sans']">
+                        {featuredPost.category}
+                      </span>
+                      <Link to={`/insights/${featuredPost.id}`}>
+                        <h2 className="text-2xl md:text-3xl lg:text-4xl font-['Playfair_Display'] text-[#1a1a2e] mb-4 leading-tight font-bold group-hover:text-[#c1912f] transition-colors">
+                          {featuredPost.title}
                         </h2>
-                    </Link>
-                    <p className="text-gray-600 mb-8 font-light leading-relaxed line-clamp-3">
+                      </Link>
+                      <p className="text-[#64748b] mb-6 text-sm leading-relaxed line-clamp-3 font-['Plus_Jakarta_Sans']">
                         {featuredPost.excerpt}
-                    </p>
-                    <div className="flex items-center justify-between text-xs text-gray-400 uppercase tracking-widest border-t border-gray-100 pt-6">
-                         <span>{featuredPost.date}</span>
-                         <span>{featuredPost.readTime}</span>
+                      </p>
+                      <div className="flex items-center gap-6 text-xs text-[#64748b] font-medium font-['Plus_Jakarta_Sans'] border-t border-[#e2e8f0] pt-4">
+                        <span>{featuredPost.date}</span>
+                        <span className="flex items-center gap-1"><Clock size={12} /> {featuredPost.readTime}</span>
+                      </div>
                     </div>
+                  </div>
                 </div>
-            </div>
+              )}
 
-            {/* Grid for remaining posts */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 mb-20">
-                {listPosts.map((post) => (
-                    <div key={post.id} className="flex flex-col group">
-                        <Link to={`/insights/${post.id}`} className="block overflow-hidden mb-6 aspect-[3/2] relative">
-                             <img 
-                                src={post.image} 
-                                alt={post.title} 
-                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" 
-                             />
-                             <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 text-[10px] font-bold uppercase tracking-widest">
-                                 {post.category}
-                             </div>
+              {/* Article Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+                {gridPosts.map((post, idx) => (
+                  <div
+                    key={post.id}
+                    className="animate-on-scroll opacity-0 translate-y-8 transition-all duration-700 [&.is-visible]:opacity-100 [&.is-visible]:translate-y-0 flex flex-col group rounded-lg overflow-hidden bg-white border border-[#e2e8f0] hover:border-[#c1912f]/30 hover:shadow-sm"
+                    style={{ transitionDelay: `${idx * 80}ms` }}
+                  >
+                    <Link to={`/insights/${post.id}`} className="block overflow-hidden aspect-[3/2] relative">
+                      <img
+                        src={post.image}
+                        alt={post.title}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute top-4 left-4">
+                        <span className="px-3 py-1 bg-[#c1912f] text-white text-xs font-semibold rounded font-['Plus_Jakarta_Sans']">
+                          {post.category}
+                        </span>
+                      </div>
+                    </Link>
+                    <div className="flex-1 flex flex-col p-6">
+                      <Link to={`/insights/${post.id}`}>
+                        <h3 className="text-lg font-bold text-[#1a1a2e] mb-2 font-['Playfair_Display'] group-hover:text-[#c1912f] transition-colors leading-snug">
+                          {post.title}
+                        </h3>
+                      </Link>
+                      <p className="text-[#64748b] text-sm mb-4 line-clamp-2 leading-relaxed font-['Plus_Jakarta_Sans']">
+                        {post.excerpt}
+                      </p>
+                      <div className="mt-auto pt-4 border-t border-[#e2e8f0] flex justify-between items-center">
+                        <span className="text-xs text-[#64748b] font-medium font-['Plus_Jakarta_Sans']">{post.date}</span>
+                        <Link to={`/insights/${post.id}`} className="text-[#c1912f] hover:brightness-110 transition-all">
+                          <ArrowUpRight size={18} />
                         </Link>
-                        <div className="flex-1 flex flex-col">
-                            <Link to={`/insights/${post.id}`}>
-                                <h3 className="text-xl font-serif font-medium text-brand-black mb-3 group-hover:text-brand-primary transition-colors leading-snug">
-                                    {post.title}
-                                </h3>
-                            </Link>
-                            <p className="text-gray-500 text-sm font-light mb-6 line-clamp-2">
-                                {post.excerpt}
-                            </p>
-                            <div className="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center">
-                                <span className="text-xs text-gray-400 font-medium uppercase tracking-wider">{post.date}</span>
-                                <Link to={`/insights/${post.id}`} className="text-brand-black hover:text-brand-primary transition-colors">
-                                    <ArrowUpRight size={18} />
-                                </Link>
-                            </div>
-                        </div>
+                      </div>
                     </div>
+                  </div>
                 ))}
-            </div>
+              </div>
             </>
           ) : (
             <div className="text-center py-20">
-                  <p className="text-xl text-gray-500">No articles found matching your criteria.</p>
-                  <button onClick={() => {setSearchQuery('');}} className="text-brand-primary mt-4 font-bold underline">Reset Filters</button>
+              <p className="text-xl text-[#64748b] mb-4 font-['Plus_Jakarta_Sans']">No articles match your search.</p>
+              <button
+                onClick={() => setSearchQuery('')}
+                className="text-[#c1912f] font-semibold text-sm hover:underline font-['Plus_Jakarta_Sans']"
+              >
+                Clear search
+              </button>
             </div>
           )}
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="flex justify-center items-center gap-4 border-t border-gray-100 pt-12">
-              <Button 
-                variant="outline" 
+            <div className="flex justify-center items-center gap-4 border-t border-[#e2e8f0] pt-10">
+              <button
                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
-                className="w-10 h-10 p-0 flex items-center justify-center border-gray-200"
+                className="w-10 h-10 rounded-lg border border-[#e2e8f0] flex items-center justify-center text-[#64748b] hover:border-[#c1912f] hover:text-[#c1912f] disabled:opacity-30 transition-all"
               >
                 <ChevronLeft size={16} />
-              </Button>
-              
-              <div className="flex items-center gap-2">
-                  <span className="text-sm font-bold text-brand-black">Page {currentPage} of {totalPages}</span>
-              </div>
+              </button>
 
-              <Button 
-                variant="outline" 
+              <span className="text-sm font-semibold text-[#1a1a2e] font-['Plus_Jakarta_Sans']">
+                Page {currentPage} of {totalPages}
+              </span>
+
+              <button
                 onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
-                className="w-10 h-10 p-0 flex items-center justify-center border-gray-200"
+                className="w-10 h-10 rounded-lg border border-[#e2e8f0] flex items-center justify-center text-[#64748b] hover:border-[#c1912f] hover:text-[#c1912f] disabled:opacity-30 transition-all"
               >
                 <ChevronRight size={16} />
-              </Button>
+              </button>
             </div>
           )}
-
         </div>
       </section>
     </>

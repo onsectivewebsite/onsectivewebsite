@@ -7,9 +7,11 @@ interface SEOHeadProps {
   description?: string;
   pageKey?: string;
   overrides?: Partial<SEOConfigItem>;
+  breadcrumbs?: { name: string; url: string }[];
+  faqItems?: { q: string; a: string }[];
 }
 
-const SITE_NAME = 'Command the Future';
+const SITE_NAME = 'Onsective Enterprise';
 const SITE_URL = 'https://onsective.com';
 const DEFAULT_OG_IMAGE = `${SITE_URL}/assets/logo.png`;
 
@@ -33,7 +35,7 @@ const setLink = (rel: string, href: string) => {
   el.href = href;
 };
 
-const SEOHead: React.FC<SEOHeadProps> = ({ title, description, pageKey, overrides }) => {
+const SEOHead: React.FC<SEOHeadProps> = ({ title, description, pageKey, overrides, breadcrumbs, faqItems }) => {
   useEffect(() => {
     // 1. Resolve SEO config
     const pageSEO: SEOConfigItem = pageKey && SEO_CONFIG[pageKey]
@@ -48,7 +50,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({ title, description, pageKey, override
     const finalOgImage = pageSEO.ogImage || DEFAULT_OG_IMAGE;
     const finalOgType = pageSEO.ogType || 'website';
     const finalTwitterCard = pageSEO.twitterCard || 'summary_large_image';
-    const canonicalUrl = pageSEO.canonical || SITE_URL;
+    const canonicalUrl = pageSEO.canonical || `${SITE_URL}${window.location.pathname}`;
 
     // --- Page Title ---
     const titleSuffix = ` | ${SITE_NAME}`;
@@ -58,7 +60,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({ title, description, pageKey, override
     setMeta('meta[name="description"]', 'name', finalDesc);
     if (finalKeywords) setMeta('meta[name="keywords"]', 'name', finalKeywords);
     setMeta('meta[name="robots"]', 'name', 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1');
-    setMeta('meta[name="author"]', 'name', SITE_NAME);
+    setMeta('meta[name="author"]', 'name', 'Onsective Enterprise Inc.');
 
     // --- Open Graph ---
     setMeta('meta[property="og:title"]', 'property', finalOgTitle);
@@ -81,40 +83,60 @@ const SEOHead: React.FC<SEOHeadProps> = ({ title, description, pageKey, override
     setLink('canonical', canonicalUrl);
 
     // --- Structured Data (JSON-LD) ---
+    const graphEntities: any[] = [
+      {
+        '@type': ['Organization', 'Corporation'],
+        '@id': `${SITE_URL}/#organization`,
+        name: SITE_NAME,
+        alternateName: ['Onsective', 'Onsective Enterprise Inc.', 'Onsective Consulting'],
+        url: SITE_URL,
+        logo: {
+          '@type': 'ImageObject',
+          url: `${SITE_URL}/assets/logo.png`,
+        },
+        contactPoint: {
+          '@type': 'ContactPoint',
+          telephone: '+1-672-673-7900',
+          contactType: 'customer service',
+          areaServed: 'Worldwide',
+        },
+        sameAs: [
+          'https://www.linkedin.com/company/onsective',
+          'https://www.instagram.com/onsective',
+          'https://twitter.com/OnsectiveEnt',
+        ],
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: '1111 Albion Rd',
+          addressLocality: 'Etobicoke',
+          addressRegion: 'ON',
+          postalCode: 'M9V 1A6',
+          addressCountry: 'CA',
+        },
+      },
+    ];
+
+    // Add page-specific structured data
+    if (pageSEO.structuredData) {
+      graphEntities.push(pageSEO.structuredData);
+    }
+
+    // Add BreadcrumbList if provided
+    if (breadcrumbs && breadcrumbs.length > 0) {
+      graphEntities.push({
+        '@type': 'BreadcrumbList',
+        itemListElement: breadcrumbs.map((bc, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          name: bc.name,
+          item: bc.url,
+        })),
+      });
+    }
+
     const orgSchema = {
       '@context': 'https://schema.org',
-      '@graph': [
-        {
-          '@type': 'Organization',
-          '@id': `${SITE_URL}/#organization`,
-          name: SITE_NAME,
-          url: SITE_URL,
-          logo: {
-            '@type': 'ImageObject',
-            url: `${SITE_URL}/assets/logo.png`,
-          },
-          contactPoint: {
-            '@type': 'ContactPoint',
-            telephone: '+1-672-673-7900',
-            contactType: 'customer service',
-            areaServed: 'Worldwide',
-          },
-          sameAs: [
-            'https://www.linkedin.com/company/onsective',
-            'https://www.instagram.com/onsective',
-            'https://twitter.com/OnsectiveEnt',
-          ],
-          address: {
-            '@type': 'PostalAddress',
-            streetAddress: '1111 Albion Rd',
-            addressLocality: 'Etobicoke',
-            addressRegion: 'ON',
-            postalCode: 'M9V 1A6',
-            addressCountry: 'CA',
-          },
-        },
-        ...(pageSEO.structuredData ? [pageSEO.structuredData] : []),
-      ],
+      '@graph': graphEntities,
     };
 
     let ldScript = document.querySelector('script[data-seo="structured"]') as HTMLScriptElement | null;
@@ -126,9 +148,35 @@ const SEOHead: React.FC<SEOHeadProps> = ({ title, description, pageKey, override
     }
     ldScript.textContent = JSON.stringify(orgSchema, null, 2);
 
+    // Add FAQ structured data if provided
+    let faqScript = document.querySelector('script[data-seo="faq"]') as HTMLScriptElement | null;
+    if (faqItems && faqItems.length > 0) {
+      const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqItems.map(item => ({
+          '@type': 'Question',
+          name: item.q,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: item.a,
+          },
+        })),
+      };
+      if (!faqScript) {
+        faqScript = document.createElement('script');
+        faqScript.type = 'application/ld+json';
+        faqScript.setAttribute('data-seo', 'faq');
+        document.head.appendChild(faqScript);
+      }
+      faqScript.textContent = JSON.stringify(faqSchema, null, 2);
+    } else if (faqScript) {
+      faqScript.remove();
+    }
+
     // Scroll to top on route change
     window.scrollTo(0, 0);
-  }, [title, description, pageKey, overrides]);
+  }, [title, description, pageKey, overrides, breadcrumbs, faqItems]);
 
   return null;
 };

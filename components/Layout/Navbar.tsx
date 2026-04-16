@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Search, ChevronDown, ArrowRight } from 'lucide-react';
-import { NAV_ITEMS, SERVICES, INDUSTRIES, ALL_INSIGHTS } from '../../constants';
-import Button from '../UI/Button';
+import { Menu, X, Search, ChevronDown, ArrowRight, Phone, Mail } from 'lucide-react';
+import { NAV_ITEMS, SERVICES, INDUSTRIES, ALL_INSIGHTS, CONTACT_EMAIL, CONTACT_PHONE } from '../../constants';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,285 +9,385 @@ const Navbar: React.FC = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeMega, setActiveMega] = useState<string | null>(null);
+  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const location = useLocation();
 
-  const isDarkHeroPage = ['/', '/services', '/about', '/careers', '/industries', '/platforms', '/contact'].includes(location.pathname);
-  const navTheme = (!scrolled && isDarkHeroPage && !isOpen) ? 'dark' : 'light';
-
+  // Scroll detection — hides utility bar, makes main nav sticky
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Close everything on route change
   useEffect(() => {
     setIsOpen(false);
     setIsSearchOpen(false);
     setActiveMega(null);
+    setSearchQuery('');
+    setMobileExpanded(null);
   }, [location.pathname]);
 
-  // Global Search Logic
+  // Body scroll lock
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [isOpen]);
+
+  // Focus search input when opened
+  useEffect(() => {
+    if (isSearchOpen) searchInputRef.current?.focus();
+  }, [isSearchOpen]);
+
+  // Search results
   const searchResults = useMemo(() => {
     if (searchQuery.length < 2) return null;
     const q = searchQuery.toLowerCase();
     return {
       services: SERVICES.filter(s => s.title.toLowerCase().includes(q)),
       industries: INDUSTRIES.filter(i => i.title.toLowerCase().includes(q)),
-      insights: ALL_INSIGHTS.filter(p => p.title.toLowerCase().includes(q)).slice(0, 5)
+      insights: ALL_INSIGHTS.filter(p => p.title.toLowerCase().includes(q)).slice(0, 5),
     };
   }, [searchQuery]);
 
+  const hasResults = searchResults
+    ? searchResults.services.length + searchResults.industries.length + searchResults.insights.length > 0
+    : false;
+
   return (
     <>
-      <nav
-        className={`fixed top-0 left-0 w-full z-[300] transition-all duration-500 ${navTheme === 'dark'
-          ? 'bg-transparent'
-          : 'bg-white/95 backdrop-blur-2xl shadow-premium border-b border-slate-100'
-          }`}
-        onMouseLeave={() => setActiveMega(null)}
+      {/* ===== UTILITY BAR (hidden mobile) ===== */}
+      <div
+        className={`hidden lg:block fixed top-0 left-0 right-0 z-[210] h-8 bg-brand-dark transition-transform duration-300 ${
+          scrolled ? '-translate-y-full' : 'translate-y-0'
+        }`}
       >
-        <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-10 lg:px-12">
-          <div className={`flex justify-between items-center transition-all duration-500 ${scrolled ? 'h-16 md:h-20' : 'h-20 md:h-24'
-            }`}>
-
-            <Link to="/" className="flex items-center z-[310] group shrink-0" aria-label="Home">
-              <div className={`transition-all duration-700 ${scrolled ? 'w-28 md:w-36' : 'w-36 md:w-48'
-                } flex items-center justify-start bg-transparent`}>
-                <img
-                  src="/assets/logo.png"
-                  alt="Onsective Logo"
-                  className={`w-full h-auto object-contain object-left transition-all duration-700 ${navTheme === 'dark' ? 'brightness-0 invert' : ''
-                    }`}
-                />
-              </div>
-            </Link>
-
-            <div className="hidden xl:flex flex-1 items-center justify-center h-full shrink">
-              {NAV_ITEMS.map((item) => (
-                <div
-                  key={item.label}
-                  className="h-full flex items-center"
-                  onMouseEnter={() => setActiveMega(item.label)}
-                >
-                  {item.isExternal ? (
-                    <a
-                      href={item.path}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`px-3 2xl:px-6 text-[10px] 2xl:text-xs font-bold uppercase tracking-[0.25em] transition-all duration-300 h-full flex items-center relative group ${navTheme === 'dark' ? 'text-white/80' : 'text-slate-600'
-                        } hover:text-brand-primary`}
-                    >
-                      {item.label}
-                    </a>
-                  ) : (
-                    <Link
-                      to={item.path}
-                      className={`px-3 2xl:px-6 text-[10px] 2xl:text-xs font-bold uppercase tracking-[0.25em] transition-all duration-300 h-full flex items-center relative group ${navTheme === 'dark' ? 'text-white/80' : 'text-slate-600'
-                        } hover:text-brand-primary`}
-                    >
-                      {item.label}
-                      {item.children && <ChevronDown size={14} className={`ml-1.5 transition-transform ${activeMega === item.label ? 'rotate-180' : ''}`} />}
-                      <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-1 bg-brand-primary transition-all duration-500 ${activeMega === item.label ? 'w-full' : ''
-                        }`}></span>
-                    </Link>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            <div className="flex items-center gap-3 md:gap-5 z-[310] shrink-0">
-              <button
-                onClick={() => setIsSearchOpen(true)}
-                className={`transition-colors p-2 ${isOpen || navTheme === 'light' ? 'text-brand-black' : 'text-white'
-                  } hover:text-brand-primary`}
-              >
-                <Search size={22} className="w-5 h-5 md:w-6 md:h-6" />
-              </button>
-
-              <Link to="/contact" className="hidden lg:block">
-                <Button variant={navTheme === 'dark' ? 'outline' : 'primary'} size="sm" className={`text-[10px] md:text-xs px-3 md:px-5 ${navTheme === 'dark' ? 'border-white text-white hover:bg-white hover:text-brand-black' : ''}`}>
-                  Consultation
-                </Button>
-              </Link>
-
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                className={`xl:hidden p-2 rounded-none transition-all duration-500 border ${isOpen
-                  ? 'bg-brand-primary text-brand-black border-brand-primary'
-                  : (navTheme === 'dark' ? 'bg-white/10 text-white border-white/20' : 'bg-slate-100 text-brand-black border-slate-200')
-                  }`}
-                aria-label="Toggle Menu"
-              >
-                {isOpen ? <X size={20} className="md:w-6 md:h-6" /> : <Menu size={20} className="md:w-6 md:h-6" />}
-              </button>
-            </div>
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center justify-between">
+          <div className="flex items-center gap-5 text-white/60 text-xs">
+            <a
+              href={`tel:${CONTACT_PHONE.replace(/[^0-9+]/g, '')}`}
+              className="flex items-center gap-1.5 hover:text-white transition-colors"
+            >
+              <Phone size={11} /> {CONTACT_PHONE}
+            </a>
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="flex items-center gap-1.5 hover:text-white transition-colors"
+            >
+              <Mail size={11} /> {CONTACT_EMAIL}
+            </a>
           </div>
-        </div>
-
-        {/* Mega Menu Overlay */}
-        <div
-          className={`hidden xl:block absolute left-0 right-0 top-full bg-white shadow-2xl transition-all duration-500 transform border-t border-slate-100 ${activeMega && NAV_ITEMS.find(i => i.label === activeMega)?.children ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-4 invisible'
-            }`}
-        >
-          <div className="max-w-[1440px] mx-auto px-12 py-16 grid grid-cols-12 gap-12">
-            <div className="col-span-4 border-r border-slate-100 pr-12">
-              <h3 className="text-4xl font-serif text-brand-black mb-6">{activeMega}</h3>
-              <p className="text-slate-500 text-sm leading-relaxed mb-10 font-medium">
-                Architecting proprietary systems for the world's most sophisticated enterprise organizations.
-              </p>
-              <Link to={NAV_ITEMS.find(i => i.label === activeMega)?.path || '/'}>
-                <Button variant="text" withArrow className="font-bold">Explore Full Catalog</Button>
-              </Link>
-            </div>
-            <div className="col-span-8 grid grid-cols-2 gap-x-12 gap-y-6">
-              {NAV_ITEMS.find(i => i.label === activeMega)?.children?.map((child, idx) => (
-                <Link key={idx} to={child.path} className="group block p-4 hover:bg-slate-50 transition-colors">
-                  <h4 className="font-bold text-brand-black text-[11px] uppercase tracking-widest mb-1 group-hover:text-brand-primary transition-colors">
-                    {child.label}
-                  </h4>
-                  {child.description && (
-                    <p className="text-[10px] text-slate-400 font-medium uppercase truncate">
-                      {child.description}
-                    </p>
-                  )}
-                </Link>
-              ))}
-            </div>
-          </div>
-          <div className="h-1 w-full bg-gold-gradient"></div>
-        </div>
-      </nav>
-
-      {/* SEARCH OVERLAY */}
-      <div className={`fixed inset-0 bg-brand-black z-[400] transition-all duration-700 flex flex-col ${isSearchOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'}`}>
-        <div className="p-6 md:p-12 flex justify-between items-center border-b border-white/5">
-          <span className="text-brand-primary font-black uppercase tracking-[0.4em] text-xs">Global Intelligence Search</span>
-          <button onClick={() => setIsSearchOpen(false)} className="text-white hover:text-brand-primary transition-colors">
-            <X size={32} />
-          </button>
-        </div>
-        <div className="flex-1 overflow-y-auto px-6 md:px-24 py-12 md:py-24">
-          <div className="max-w-4xl mx-auto">
-            <input
-              type="text"
-              placeholder="Search Capabilities, Industries, or Insights..."
-              className="w-full bg-transparent border-b-4 border-brand-primary/20 pb-8 text-3xl md:text-7xl font-serif text-white focus:border-brand-primary outline-none transition-all placeholder:text-white/10"
-              autoFocus={isSearchOpen}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-
-            {searchResults && (
-              <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-12 animate-fade-up">
-                {searchResults.services.length > 0 && (
-                  <div>
-                    <h4 className="text-[10px] font-black uppercase tracking-[0.5em] text-brand-primary mb-6">Capabilities</h4>
-                    <div className="space-y-4">
-                      {searchResults.services.map(s => (
-                        <Link key={s.id} to={s.path} className="block group">
-                          <p className="text-white text-xl font-serif group-hover:text-brand-primary transition-colors">{s.title}</p>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {searchResults.industries.length > 0 && (
-                  <div>
-                    <h4 className="text-[10px] font-black uppercase tracking-[0.5em] text-brand-primary mb-6">Verticals</h4>
-                    <div className="space-y-4">
-                      {searchResults.industries.map(i => (
-                        <Link key={i.id} to={i.path} className="block group">
-                          <p className="text-white text-xl font-serif group-hover:text-brand-primary transition-colors">{i.title}</p>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {searchResults.insights.length > 0 && (
-                  <div className="md:col-span-2">
-                    <h4 className="text-[10px] font-black uppercase tracking-[0.5em] text-brand-primary mb-6">Strategic Insights</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {searchResults.insights.map(p => (
-                        <Link key={p.id} to={`/insights/${p.id}`} className="block group p-4 border border-white/5 hover:border-brand-primary/20 transition-all">
-                          <p className="text-white font-serif group-hover:text-brand-primary transition-colors">{p.title}</p>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
+          <div className="flex items-center gap-5 text-white/60 text-xs">
+            <Link to="/careers" className="hover:text-white transition-colors">Careers</Link>
+            <Link to="/investors" className="hover:text-white transition-colors">Investors</Link>
+            <Link to="/alumni" className="hover:text-white transition-colors">Alumni</Link>
           </div>
         </div>
       </div>
 
-      {/* MOBILE NAV OVERLAY */}
-      <div
-        className={`fixed inset-0 w-full h-[100dvh] bg-brand-black z-[250] transition-all duration-700 ease-[cubic-bezier(0.85,0,0.15,1)] flex flex-col ${isOpen ? 'translate-y-0 opacity-100 pointer-events-auto' : '-translate-y-full opacity-0 pointer-events-none'
-          }`}
+      {/* ===== MAIN NAV BAR ===== */}
+      <nav
+        className={`fixed left-0 right-0 z-[200] h-16 bg-white border-b border-brand-border transition-all duration-300 ${
+          scrolled ? 'top-0 shadow-md' : 'top-0 lg:top-8'
+        }`}
+        onMouseLeave={() => setActiveMega(null)}
       >
-        <div className="flex flex-col h-full pt-20 sm:pt-32 px-6 sm:px-16 pb-12 overflow-y-auto">
-          <div className="space-y-6 sm:space-y-10 mb-16">
-            {NAV_ITEMS.map((item, idx) => (
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="flex items-center shrink-0" aria-label="Home">
+            <img
+              src="/assets/logo.png"
+              alt="Onsective"
+              className="w-32 h-auto object-contain"
+            />
+          </Link>
+
+          {/* Desktop Links */}
+          <div className="hidden xl:flex items-center h-full">
+            {NAV_ITEMS.map((item) => (
               <div
                 key={item.label}
-                className={`transition-all duration-700 transform ${isOpen ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'}`}
-                style={{ transitionDelay: `${100 + (idx * 80)}ms` }}
+                className="relative h-full flex items-center"
+                onMouseEnter={() => item.children ? setActiveMega(item.label) : setActiveMega(null)}
               >
-                {item.isExternal ? (
-                  <a
-                    href={item.path}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-2xl sm:text-4xl md:text-6xl font-serif font-black text-white hover:text-brand-primary transition-colors inline-block uppercase tracking-tighter"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {item.label}
-                  </a>
-                ) : (
-                  <Link
-                    to={item.path}
-                    className="text-2xl sm:text-4xl md:text-6xl font-serif font-black text-white hover:text-brand-primary transition-colors inline-block uppercase tracking-tighter"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                )}
-
-                {item.children && (
-                  <div className="mt-4 sm:mt-6 flex flex-wrap gap-3 sm:gap-6 pl-4 border-l-2 border-brand-primary/20">
-                    {item.children.slice(0, 4).map((child, cIdx) => (
-                      <Link
-                        key={cIdx}
-                        to={child.path}
-                        className="text-[9px] sm:text-xs font-bold uppercase tracking-[0.2em] text-white/40 hover:text-white"
-                        onClick={() => setIsOpen(false)}
-                      >
-                        {child.label}
-                      </Link>
-                    ))}
-                    <Link
-                      to={item.path}
-                      className="text-[9px] sm:text-xs font-black text-brand-primary uppercase tracking-[0.3em] flex items-center gap-2"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      ALL <ArrowRight size={12} />
-                    </Link>
-                  </div>
-                )}
+                <Link
+                  to={item.path}
+                  className={`px-4 h-full flex items-center gap-1 text-sm font-medium transition-colors relative ${
+                    location.pathname.startsWith(item.path)
+                      ? 'text-brand-primary'
+                      : 'text-brand-text hover:text-brand-primary'
+                  }`}
+                >
+                  {item.label.split(' ').map(w => w.charAt(0) + w.slice(1).toLowerCase()).join(' ')}
+                  {item.children && (
+                    <ChevronDown
+                      size={13}
+                      className={`transition-transform duration-200 ${activeMega === item.label ? 'rotate-180' : ''}`}
+                    />
+                  )}
+                  {/* Active underline */}
+                  <span
+                    className={`absolute bottom-0 left-4 right-4 h-0.5 bg-brand-primary transition-opacity duration-200 ${
+                      activeMega === item.label || location.pathname.startsWith(item.path) ? 'opacity-100' : 'opacity-0'
+                    }`}
+                  />
+                </Link>
               </div>
             ))}
           </div>
 
-          <div className="mt-auto pt-8 border-t border-white/10 flex flex-col gap-6">
-            <Link to="/contact" onClick={() => setIsOpen(false)}>
-              <Button variant="primary" className="w-full py-5 text-xs font-black" size="lg">
-                Initiate Mission
-              </Button>
+          {/* Right side: search + CTA + hamburger */}
+          <div className="flex items-center gap-2 shrink-0">
+            {/* Inline Search */}
+            <div className="hidden md:flex items-center">
+              {isSearchOpen ? (
+                <div className="flex items-center border border-brand-border rounded-md overflow-hidden bg-brand-light">
+                  <Search size={15} className="ml-3 text-brand-muted" />
+                  <input
+                    ref={searchInputRef}
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search..."
+                    className="w-52 px-2 py-1.5 text-sm bg-transparent outline-none text-brand-text placeholder:text-brand-muted"
+                  />
+                  <button
+                    onClick={() => { setIsSearchOpen(false); setSearchQuery(''); }}
+                    className="p-1.5 text-brand-muted hover:text-brand-text transition-colors"
+                  >
+                    <X size={14} />
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setIsSearchOpen(true)}
+                  className="p-2 text-brand-muted hover:text-brand-primary transition-colors"
+                  aria-label="Search"
+                >
+                  <Search size={18} />
+                </button>
+              )}
+            </div>
+
+            <Link to="/contact" className="hidden md:inline-flex">
+              <span className="bg-brand-primary text-white px-5 py-2 rounded-md text-sm font-semibold hover:bg-brand-gold-dark transition-colors cursor-pointer">
+                Contact Us
+              </span>
+            </Link>
+
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="xl:hidden p-2 text-brand-text hover:text-brand-primary transition-colors"
+              aria-label="Menu"
+            >
+              {isOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
+        </div>
+
+        {/* ===== INLINE SEARCH RESULTS (desktop) ===== */}
+        {isSearchOpen && searchResults && (
+          <div className="hidden md:block absolute right-4 lg:right-8 top-full mt-1 w-80 lg:w-96 bg-white border border-brand-border rounded-md shadow-lg z-[195] max-h-[60vh] overflow-y-auto">
+            <div className="p-4 space-y-3">
+              {searchResults.services.length > 0 && (
+                <div>
+                  <div className="text-[10px] font-semibold text-brand-muted uppercase tracking-wider mb-1.5">Services</div>
+                  {searchResults.services.map(s => (
+                    <Link
+                      key={s.id}
+                      to={s.path}
+                      onClick={() => { setIsSearchOpen(false); setSearchQuery(''); }}
+                      className="block px-2 py-1.5 rounded text-sm text-brand-text hover:text-brand-primary hover:bg-brand-light transition-colors"
+                    >
+                      {s.title}
+                    </Link>
+                  ))}
+                </div>
+              )}
+              {searchResults.industries.length > 0 && (
+                <div>
+                  <div className="text-[10px] font-semibold text-brand-muted uppercase tracking-wider mb-1.5">Industries</div>
+                  {searchResults.industries.map(i => (
+                    <Link
+                      key={i.id}
+                      to={i.path}
+                      onClick={() => { setIsSearchOpen(false); setSearchQuery(''); }}
+                      className="block px-2 py-1.5 rounded text-sm text-brand-text hover:text-brand-primary hover:bg-brand-light transition-colors"
+                    >
+                      {i.title}
+                    </Link>
+                  ))}
+                </div>
+              )}
+              {searchResults.insights.length > 0 && (
+                <div>
+                  <div className="text-[10px] font-semibold text-brand-muted uppercase tracking-wider mb-1.5">Insights</div>
+                  {searchResults.insights.map(p => (
+                    <Link
+                      key={p.id}
+                      to={`/insights/${p.id}`}
+                      onClick={() => { setIsSearchOpen(false); setSearchQuery(''); }}
+                      className="block px-2 py-1.5 rounded text-sm text-brand-text hover:text-brand-primary hover:bg-brand-light transition-colors"
+                    >
+                      {p.title}
+                    </Link>
+                  ))}
+                </div>
+              )}
+              {!hasResults && (
+                <p className="text-brand-muted text-sm text-center py-3">No results found.</p>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* ===== MEGA MENU (desktop) ===== */}
+        {activeMega && NAV_ITEMS.find(i => i.label === activeMega)?.children && (
+          <div
+            className="hidden xl:block absolute left-0 right-0 top-full bg-white border-t border-brand-border z-[190]"
+            onMouseLeave={() => setActiveMega(null)}
+          >
+            <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
+              <div className="grid grid-cols-12 gap-8">
+                {/* Left intro */}
+                <div className="col-span-3 pr-6 border-r border-brand-border">
+                  <h3 className="text-lg font-display font-bold text-brand-dark mb-2">
+                    {NAV_ITEMS.find(i => i.label === activeMega)?.label
+                      .split(' ')
+                      .map(w => w.charAt(0) + w.slice(1).toLowerCase())
+                      .join(' ')}
+                  </h3>
+                  <p className="text-brand-muted text-sm leading-relaxed mb-5">
+                    {NAV_ITEMS.find(i => i.label === activeMega)?.description ||
+                      'Explore our solutions tailored for enterprise organizations.'}
+                  </p>
+                  <Link
+                    to={NAV_ITEMS.find(i => i.label === activeMega)?.path || '/'}
+                    onClick={() => setActiveMega(null)}
+                    className="inline-flex items-center gap-1.5 text-brand-primary text-sm font-semibold hover:gap-2.5 transition-all"
+                  >
+                    View All <ArrowRight size={14} />
+                  </Link>
+                </div>
+
+                {/* Children grid */}
+                <div className="col-span-9 grid grid-cols-3 gap-x-6 gap-y-1">
+                  {NAV_ITEMS.find(i => i.label === activeMega)?.children?.map((child, idx) => (
+                    <Link
+                      key={idx}
+                      to={child.path}
+                      onClick={() => setActiveMega(null)}
+                      className="block px-3 py-2.5 rounded-md hover:bg-brand-light transition-colors group"
+                    >
+                      <div className="text-sm font-medium text-brand-text group-hover:text-brand-primary transition-colors">
+                        {child.label}
+                      </div>
+                      {child.description && (
+                        <div className="text-xs text-brand-muted mt-0.5 line-clamp-1">{child.description}</div>
+                      )}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </nav>
+
+      {/* ===== MOBILE MENU — full screen white overlay ===== */}
+      {isOpen && (
+        <div className="fixed inset-0 z-[250] xl:hidden bg-white flex flex-col">
+          {/* Mobile header */}
+          <div className="flex items-center justify-between px-6 h-16 border-b border-brand-border shrink-0">
+            <Link to="/" onClick={() => setIsOpen(false)}>
+              <img src="/assets/logo.png" alt="Onsective" className="w-28 h-auto object-contain" />
+            </Link>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="p-2 text-brand-text hover:text-brand-primary transition-colors"
+            >
+              <X size={22} />
+            </button>
+          </div>
+
+          {/* Mobile search */}
+          <div className="px-6 pt-4 pb-2">
+            <div className="flex items-center border border-brand-border rounded-md bg-brand-light">
+              <Search size={15} className="ml-3 text-brand-muted" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search..."
+                className="flex-1 px-2 py-2.5 text-sm bg-transparent outline-none text-brand-text placeholder:text-brand-muted"
+              />
+            </div>
+          </div>
+
+          {/* Mobile nav items */}
+          <div className="flex-1 overflow-y-auto px-6 py-4 space-y-1">
+            {NAV_ITEMS.map((item) => (
+              <div key={item.label}>
+                <div className="flex items-center justify-between">
+                  <Link
+                    to={item.path}
+                    onClick={() => setIsOpen(false)}
+                    className={`block py-3 text-base font-semibold transition-colors ${
+                      location.pathname.startsWith(item.path)
+                        ? 'text-brand-primary'
+                        : 'text-brand-text hover:text-brand-primary'
+                    }`}
+                  >
+                    {item.label.split(' ').map(w => w.charAt(0) + w.slice(1).toLowerCase()).join(' ')}
+                  </Link>
+                  {item.children && (
+                    <button
+                      onClick={() => setMobileExpanded(mobileExpanded === item.label ? null : item.label)}
+                      className="p-2 text-brand-muted"
+                    >
+                      <ChevronDown
+                        size={16}
+                        className={`transition-transform duration-200 ${mobileExpanded === item.label ? 'rotate-180' : ''}`}
+                      />
+                    </button>
+                  )}
+                </div>
+                {item.children && mobileExpanded === item.label && (
+                  <div className="ml-4 mb-2 border-l-2 border-brand-border pl-4 space-y-0.5">
+                    {item.children.map((child, i) => (
+                      <Link
+                        key={i}
+                        to={child.path}
+                        onClick={() => setIsOpen(false)}
+                        className="block py-2 text-sm text-brand-muted hover:text-brand-primary transition-colors"
+                      >
+                        {child.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+
+            {/* Extra mobile links */}
+            <div className="pt-4 border-t border-brand-border space-y-1">
+              <Link to="/careers" onClick={() => setIsOpen(false)} className="block py-2 text-sm text-brand-muted hover:text-brand-primary transition-colors">Careers</Link>
+              <Link to="/investors" onClick={() => setIsOpen(false)} className="block py-2 text-sm text-brand-muted hover:text-brand-primary transition-colors">Investors</Link>
+              <Link to="/alumni" onClick={() => setIsOpen(false)} className="block py-2 text-sm text-brand-muted hover:text-brand-primary transition-colors">Alumni</Link>
+            </div>
+          </div>
+
+          {/* Mobile CTA */}
+          <div className="px-6 pb-8 pt-4 shrink-0">
+            <Link to="/contact" onClick={() => setIsOpen(false)} className="block">
+              <span className="block w-full py-3.5 bg-brand-primary text-white font-semibold text-sm rounded-md text-center hover:bg-brand-gold-dark transition-colors cursor-pointer">
+                Contact Us
+              </span>
             </Link>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

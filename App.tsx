@@ -29,25 +29,25 @@ const Terms = lazy(() => import('./pages/Terms'));
 const Copyright = lazy(() => import('./pages/Copyright'));
 const Accessibility = lazy(() => import('./pages/Accessibility'));
 
-// Elite Loading Fallback
+// Loading Screen
 const Loading = () => (
-  <div className="min-h-screen flex flex-col items-center justify-center bg-brand-black text-white p-6">
-    <div className="relative mb-12 flex justify-center items-center">
-      <div className="w-40 h-auto bg-transparent overflow-hidden animate-pulse">
-        <img
-          src="/assets/logo.png"
-          alt="Onsective Logo"
-          className="w-full h-auto object-contain bg-transparent"
-        />
-      </div>
+  <div className="min-h-screen flex flex-col items-center justify-center bg-white">
+    <div className="mb-6">
+      <img
+        src="/assets/logo.png"
+        alt="Onsective"
+        className="w-36 h-auto object-contain"
+      />
     </div>
-    <div className="flex flex-col items-center gap-4">
-      <span className="text-[10px] font-black uppercase tracking-[0.6em] text-brand-primary animate-pulse">
-        Synchronizing Enterprise
-      </span>
-      <div className="w-48 h-[1px] bg-white/10 relative overflow-hidden">
-        <div className="absolute inset-0 bg-brand-primary animate-[reveal_2s_infinite]"></div>
+    <div className="flex flex-col items-center gap-3">
+      <div className="w-40 h-px bg-brand-border relative overflow-hidden">
+        <div
+          className="absolute inset-y-0 left-0 w-1/3 bg-brand-primary"
+          style={{ animation: 'loadSlide 1.4s ease-in-out infinite' }}
+        />
+        <style>{`@keyframes loadSlide { 0% { transform: translateX(-100%); } 100% { transform: translateX(400%); } }`}</style>
       </div>
+      <span className="text-brand-muted text-sm">Loading...</span>
     </div>
   </div>
 );
@@ -58,7 +58,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const isAdmin = location.pathname.startsWith('/admin');
 
   return (
-    <div className="min-h-screen flex flex-col bg-white text-brand-dark font-sans antialiased selection:bg-brand-primary selection:text-brand-black overflow-x-hidden w-full relative">
+    <div className="min-h-screen flex flex-col bg-white text-brand-dark font-sans antialiased selection:bg-brand-primary selection:text-white overflow-x-hidden w-full max-w-[100vw] relative">
       {!isAdmin && <Navbar />}
       <main className="flex-grow">
         {children}

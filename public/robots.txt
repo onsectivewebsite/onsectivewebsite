@@ -1,0 +1,27 @@
+# Onsective Enterprise — robots.txt
+# https://onsective.com
+
+User-agent: *
+Allow: /
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
+
+# Disallow admin and API routes
+Disallow: /admin
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://onsective.com/sitemap.xml
+
+# Google-specific
+User-agent: Googlebot
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+# Bing
+User-agent: Bingbot
+Allow: /
+Disallow: /admin
+Disallow: /api/

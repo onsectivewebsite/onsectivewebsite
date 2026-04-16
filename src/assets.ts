@@ -9,7 +9,7 @@ export const ASSETS = {
 
   // Leadership
   TEAM_RISHABH: '/images/team-rishabh.jpg',
-  TEAM_KAVYA: '/images/test1.jpg',
+  TEAM_KAVYA: '/images/team-kavya.jpg',
   TEAM_ALI: '/images/team-kumakshi.jpg',
   TEAM_SHABIR: '/images/team-shabir.jpg',
   TEAM_RIYAN: '/images/team-riyan.jpg',

@@ -1,134 +1,173 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Globe, Zap, Users, Target, TrendingUp } from 'lucide-react';
+import { Lightbulb, Shield, Award, Users, Zap, ArrowRight, Eye, Target } from 'lucide-react';
 import SEOHead from '../components/SEO/SEOHead';
-import Button from '../components/UI/Button';
+import { COMPANY_NAME } from '../constants';
+
+const VALUES = [
+  {
+    icon: Lightbulb,
+    title: 'Innovation',
+    description: 'We pursue bold ideas and emerging technologies that redefine what is possible for our clients. Curiosity drives every solution we build.',
+  },
+  {
+    icon: Shield,
+    title: 'Integrity',
+    description: 'Transparency, honesty, and ethical conduct are non-negotiable. We earn trust through actions, not promises, at every stage of engagement.',
+  },
+  {
+    icon: Award,
+    title: 'Excellence',
+    description: 'We hold ourselves to the highest standards of quality. Every deliverable, every interaction, and every recommendation reflects our commitment to being best-in-class.',
+  },
+  {
+    icon: Users,
+    title: 'Collaboration',
+    description: 'Great outcomes are built together. We operate as an extension of our clients\u2019 teams, fostering open dialogue, shared ownership, and collective accountability.',
+  },
+  {
+    icon: Zap,
+    title: 'Impact',
+    description: 'We measure success not by hours billed but by the tangible business outcomes we create. Every initiative must deliver measurable, lasting value.',
+  },
+];
 
 const Vision: React.FC = () => {
-    useEffect(() => {
-        window.scrollTo(0, 0);
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => { if (entry.isIntersecting) entry.target.classList.add('active'); });
-        }, { threshold: 0.05, rootMargin: '0px 0px -50px 0px' });
-
-        const elements = document.querySelectorAll('.reveal');
-        elements.forEach((el) => observer.observe(el));
-
-        const fallback = setTimeout(() => {
-            elements.forEach((el) => el.classList.add('active'));
-        }, 2000);
-
-        return () => { observer.disconnect(); clearTimeout(fallback); };
-    }, []);
-
-    const differentiators = [
-        {
-            icon: Zap,
-            title: "Future-First Technology Philosophy",
-            description: "Onsective champions innovation by integrating emerging technologies with user-centric design and performance optimization."
-        },
-        {
-            icon: Target,
-            title: "Creative Tech + Strategic Insight",
-            description: "Combining technical expertise with branding and storytelling to craft solutions that resonate with audiences."
-        },
-        {
-            icon: Users,
-            title: "Remote-First Collaborative Culture",
-            description: "Built for a distributed workforce that thrives on flexibility, collaboration, and diverse perspectives."
-        },
-        {
-            icon: Globe,
-            title: "Impactful Digital Solutions",
-            description: "From custom platforms and applications to compelling visual media, Onsective drives meaningful digital engagement."
-        },
-        {
-            icon: TrendingUp,
-            title: "Commitment to Growth",
-            description: "Empowering clients and team members to evolve through continuous learning, experimentation, and measurable results."
-        }
-    ];
-
-    return (
-        <>
-            <SEOHead pageKey="about" />
-
-            {/* 1. HERO - Institutional Vision */}
-            <section className="relative pt-32 pb-24 md:pt-48 md:pb-32 bg-brand-black text-white overflow-hidden min-h-[60vh] flex items-center">
-                <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2000&auto=format&fit=crop')] bg-cover"></div>
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/80 to-transparent"></div>
-
-                <div className="max-w-[1440px] mx-auto px-6 lg:px-12 relative z-10 w-full reveal">
-                    <span className="text-brand-primary font-bold tracking-[0.5em] uppercase text-[10px] mb-6 block">The Baseline</span>
-                    <h1 className="text-5xl sm:text-6xl md:text-8xl font-serif font-black mb-8 tracking-tighter leading-none">
-                        INSTITUTIONAL <br /><span className="text-gold-gradient italic">VISION.</span>
-                    </h1>
-                    <p className="text-lg md:text-2xl text-white/70 font-medium max-w-4xl leading-relaxed">
-                        Founded in 2026, Onsective Inc. is an innovative technology firm dedicated to reshaping how businesses connect with audiences in the digital age. Rooted in creativity, data-driven strategy, and cutting-edge tech solutions, Onsective partners with brands, agencies, and enterprises to deliver impactful digital products and immersive experiences.
-                    </p>
-                </div>
-            </section>
-
-            {/* 2. THE CORE METHODOLOGY */}
-            <section className="py-24 md:py-32 bg-white">
-                <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-center">
-                        <div className="reveal">
-                            <h2 className="text-4xl md:text-6xl font-serif text-brand-black mb-10 leading-[1.1]">The Core <span className="text-gold-gradient italic">Identity.</span></h2>
-                            <p className="text-slate-500 text-lg md:text-xl leading-relaxed font-medium">
-                                At its core, Onsective blends technology with storytelling—building scalable systems, dynamic digital content, and strategic tech solutions that drive engagement, growth, and measurable outcomes.
-                            </p>
-                            <p className="text-slate-500 text-lg md:text-xl leading-relaxed mt-6 font-medium">
-                                With a focus on agility and forward-thinking innovation, the company continually pushes boundaries in software, digital media, and interactive design.
-                            </p>
-                        </div>
-                        <div className="relative reveal delay-200">
-                            <div className="aspect-square bg-slate-100 overflow-hidden shadow-premium">
-                                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000&auto=format&fit=crop" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 scale-105 hover:scale-100" alt="Technology Sphere" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* 3. WHAT SETS US APART */}
-            <section className="py-24 md:py-32 bg-slate-50">
-                <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
-                    <div className="text-center mb-20 reveal">
-                        <span className="text-brand-primary font-bold tracking-[0.5em] uppercase text-[10px] mb-6 block">Our Defensibility</span>
-                        <h2 className="text-4xl md:text-6xl font-serif text-brand-black leading-none">WHAT SETS <span className="text-brand-primary italic">ONSECTIVE</span> APART.</h2>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-                        {differentiators.map((diff, idx) => (
-                            <div key={idx} className={`bg-white p-10 shadow-sm border border-slate-100 hover:border-brand-primary/50 transition-all duration-500 reveal delay-${idx * 100} group`}>
-                                <div className="text-brand-primary mb-8 group-hover:scale-110 transition-transform">
-                                    <diff.icon size={40} strokeWidth={1.5} />
-                                </div>
-                                <h3 className="text-xl md:text-2xl font-serif font-black text-brand-black mb-4 group-hover:text-brand-primary transition-colors">{diff.title}</h3>
-                                <p className="text-slate-500 leading-relaxed font-medium">
-                                    {diff.description}
-                                </p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* 4. CTA */}
-            <section className="py-24 bg-brand-black text-white text-center">
-                <div className="max-w-4xl mx-auto px-6 reveal">
-                    <h2 className="text-4xl md:text-6xl font-serif mb-8">Ready to <span className="text-gold-gradient italic">Reshape</span> Your Future?</h2>
-                    <Link to="/contact">
-                        <Button variant="primary" size="lg" className="px-12 uppercase tracking-widest text-[10px] font-black">
-                            Initiate Partnership
-                        </Button>
-                    </Link>
-                </div>
-            </section>
-        </>
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add('is-visible');
+        });
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
     );
+    document.querySelectorAll('.animate-on-scroll').forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <>
+      <SEOHead pageKey="vision" />
+
+      {/* ===== SECTION 1: HERO ===== */}
+      <section className="bg-brand-dark pt-40 pb-24">
+        <div className="max-w-7xl mx-auto px-6 lg:px-16 text-center">
+          <span className="text-brand-primary font-semibold text-xs tracking-[0.2em] uppercase block mb-4 animate-on-scroll">Purpose & Direction</span>
+          <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6 animate-on-scroll delay-100">
+            Our Vision & Mission
+          </h1>
+          <p className="text-lg text-white/60 max-w-2xl mx-auto leading-relaxed animate-on-scroll delay-200">
+            The principles that guide our strategy, shape our culture, and define the value we create for every client and community we serve.
+          </p>
+        </div>
+      </section>
+
+      {/* ===== SECTION 2: MISSION & VISION ===== */}
+      <section className="py-24 lg:py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+            {/* Mission */}
+            <div className="animate-on-scroll">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-14 h-14 bg-brand-primary/10 rounded-full flex items-center justify-center">
+                  <Target size={26} className="text-brand-primary" />
+                </div>
+                <h2 className="font-display text-3xl lg:text-4xl font-bold text-brand-dark">Our Mission</h2>
+              </div>
+              <div className="pl-[4.5rem]">
+                <p className="text-brand-muted text-base leading-relaxed mb-4">
+                  To empower enterprises worldwide with integrated technology consulting and digital transformation services that convert strategic ambition into operational reality. We exist to bridge the gap between where organizations are today and where they need to be tomorrow.
+                </p>
+                <p className="text-brand-muted text-base leading-relaxed">
+                  Every engagement we undertake is designed to deliver measurable business outcomes, strengthen organizational resilience, and create competitive advantages that endure beyond the lifecycle of any single project. We are not vendors; we are partners invested in our clients' long-term success.
+                </p>
+              </div>
+            </div>
+
+            {/* Vision */}
+            <div className="animate-on-scroll delay-200">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-14 h-14 bg-brand-primary/10 rounded-full flex items-center justify-center">
+                  <Eye size={26} className="text-brand-primary" />
+                </div>
+                <h2 className="font-display text-3xl lg:text-4xl font-bold text-brand-dark">Our Vision</h2>
+              </div>
+              <div className="pl-[4.5rem]">
+                <p className="text-brand-muted text-base leading-relaxed mb-4">
+                  To be recognized as the world's most trusted digital transformation consultancy, setting the standard for how technology, strategy, and human ingenuity converge to solve the defining challenges of our era.
+                </p>
+                <p className="text-brand-muted text-base leading-relaxed">
+                  We envision a future where every enterprise, regardless of size or geography, has access to world-class technology guidance. By expanding our global footprint and deepening our domain expertise, we aim to democratize institutional-grade digital capabilities for organizations ready to lead.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== SECTION 3: VALUES ===== */}
+      <section className="py-24 lg:py-32 bg-brand-light">
+        <div className="max-w-7xl mx-auto px-6 lg:px-16">
+          <div className="text-center mb-16 animate-on-scroll">
+            <span className="text-brand-primary font-semibold text-xs tracking-[0.2em] uppercase block mb-4">What We Stand For</span>
+            <h2 className="font-display text-4xl lg:text-5xl font-bold text-brand-dark mb-6">
+              Our Core Values
+            </h2>
+            <p className="text-brand-muted text-lg max-w-3xl mx-auto leading-relaxed">
+              Five foundational principles that inform every decision, every hire, and every solution we deliver.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {VALUES.map((value, idx) => (
+              <div
+                key={idx}
+                className={`bg-white border border-brand-border rounded-lg p-8 hover:shadow-lg hover:border-brand-primary/30 transition-all duration-300 animate-on-scroll ${idx === 4 ? 'sm:col-span-2 lg:col-span-1' : ''}`}
+                style={{ transitionDelay: `${idx * 100}ms` }}
+              >
+                <div className="w-12 h-12 bg-brand-primary/10 rounded-lg flex items-center justify-center mb-5">
+                  <value.icon size={22} className="text-brand-primary" />
+                </div>
+                <h3 className="font-display text-xl font-bold text-brand-dark mb-3">{value.title}</h3>
+                <p className="text-brand-muted text-sm leading-relaxed">{value.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== SECTION 4: IP NOTICE ===== */}
+      <section className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-6 lg:px-16 text-center animate-on-scroll">
+          <div className="border border-brand-border rounded-lg p-8 lg:p-10">
+            <h3 className="font-display text-xl font-bold text-brand-dark mb-4">Intellectual Property Notice</h3>
+            <p className="text-brand-muted text-sm leading-relaxed">
+              All content, methodologies, frameworks, proprietary tools, and brand assets displayed on this website are the exclusive intellectual property of {COMPANY_NAME} Enterprise Inc. Unauthorized reproduction, distribution, or commercial use of any materials without prior written consent is strictly prohibited. {COMPANY_NAME}, the {COMPANY_NAME} logo, and all associated trademarks are registered marks of {COMPANY_NAME} Enterprise Inc. &copy; {new Date().getFullYear()} {COMPANY_NAME} Enterprise Inc. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== SECTION 5: CTA ===== */}
+      <section className="py-24 bg-brand-dark">
+        <div className="max-w-7xl mx-auto px-6 lg:px-16 text-center animate-on-scroll">
+          <h2 className="font-display text-4xl lg:text-5xl font-bold text-white mb-6">
+            Build the Future With Us
+          </h2>
+          <p className="text-lg text-white/50 max-w-2xl mx-auto mb-10 leading-relaxed">
+            Our mission is only possible through strong partnerships. If our values resonate with your organization, we would welcome the conversation.
+          </p>
+          <Link
+            to="/contact"
+            className="inline-flex items-center gap-3 px-10 py-4 bg-brand-primary text-white font-bold text-sm hover:bg-brand-gold-dark transition-colors duration-300 rounded"
+          >
+            Start a Conversation <ArrowRight size={16} />
+          </Link>
+        </div>
+      </section>
+    </>
+  );
 };
 
 export default Vision;

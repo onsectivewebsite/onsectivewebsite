@@ -83,4 +83,12 @@ export interface LeadershipProfile {
 export interface SEOConfigItem {
   title: string;
   description: string;
+  keywords?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  ogType?: string;
+  twitterCard?: string;
+  canonical?: string;
+  structuredData?: Record<string, any>;
 }

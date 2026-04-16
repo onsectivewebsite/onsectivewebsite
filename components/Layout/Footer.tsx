@@ -1,133 +1,250 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Linkedin, Facebook, Youtube, MapPin, Phone, Mail, Instagram, X as XIcon, Globe } from 'lucide-react';
-import { COMPANY_NAME, SERVICES, INDUSTRIES, CONTACT_EMAIL, CONTACT_PHONE, LINKEDIN_URL, INSTAGRAM_URL, X_URL, YOUTUBE_URL, FACEBOOK_URL, HEADQUARTERS_ADDRESS } from '../../constants';
-import Button from '../UI/Button';
+import {
+  MapPin, Phone, Mail, ArrowRight, ArrowUpRight, Globe,
+  Linkedin, Instagram, Youtube, Facebook,
+} from 'lucide-react';
+import {
+  COMPANY_NAME, SERVICES, INDUSTRIES, CONTACT_EMAIL, CONTACT_PHONE,
+  LINKEDIN_URL, INSTAGRAM_URL, X_URL, YOUTUBE_URL, FACEBOOK_URL,
+  HEADQUARTERS_ADDRESS, GLOBAL_OFFICES,
+} from '../../constants';
+
+const XIcon = () => (
+  <svg width={16} height={16} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
 
 const Footer: React.FC = () => {
-  const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${HEADQUARTERS_ADDRESS.street} ${HEADQUARTERS_ADDRESS.city} ${HEADQUARTERS_ADDRESS.state} ${HEADQUARTERS_ADDRESS.zip}`)}`;
+  const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
+  const currentYear = new Date().getFullYear();
+
+  const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    `${HEADQUARTERS_ADDRESS.street} ${HEADQUARTERS_ADDRESS.city} ${HEADQUARTERS_ADDRESS.state} ${HEADQUARTERS_ADDRESS.zip}`
+  )}`;
+
+  const socialLinks = [
+    { label: 'LinkedIn', href: LINKEDIN_URL, icon: <Linkedin size={18} /> },
+    { label: 'Instagram', href: INSTAGRAM_URL, icon: <Instagram size={18} /> },
+    { label: 'X', href: X_URL, icon: <XIcon /> },
+    { label: 'YouTube', href: YOUTUBE_URL, icon: <Youtube size={18} /> },
+    { label: 'Facebook', href: FACEBOOK_URL, icon: <Facebook size={18} /> },
+  ];
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubscribed(true);
+    setEmail('');
+    setTimeout(() => setSubscribed(false), 3000);
+  };
 
   return (
-    <footer className="bg-white text-brand-dark border-t border-gray-100">
+    <footer className="relative overflow-hidden">
 
-      {/* Pre-Footer CTA */}
-      <div className="bg-brand-black py-16 sm:py-24 px-4 sm:px-12">
-        <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
-          <div className="text-center md:text-left max-w-2xl">
-            <h3 className="text-2xl sm:text-5xl font-serif text-white mb-4">Ready to navigate your next?</h3>
-            <p className="text-gray-400 font-medium text-base sm:text-xl">Interface with Onsective architects to accelerate your institutional transformation.</p>
+      {/* ===== LARGE CTA SECTION ===== */}
+      <section className="relative bg-brand-dark py-28 lg:py-36 overflow-hidden">
+        {/* Animated diagonal accent lines */}
+        <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'repeating-linear-gradient(135deg, #c1912f 0px, #c1912f 1px, transparent 1px, transparent 80px)' }}></div>
+        {/* Floating 3D orb */}
+        <div className="absolute right-[10%] top-1/2 -translate-y-1/2 w-64 h-64 border border-brand-primary/10 rounded-full animate-spin hidden lg:block" style={{ animationDuration: '25s' }}></div>
+        <div className="absolute right-[12%] top-1/2 -translate-y-1/2 w-48 h-48 border border-brand-primary/5 rounded-full animate-spin hidden lg:block" style={{ animationDuration: '35s', animationDirection: 'reverse' }}></div>
+
+        <div className="max-w-7xl mx-auto px-6 lg:px-16 relative z-10">
+          <div className="max-w-3xl">
+            <p className="text-brand-primary font-semibold text-sm tracking-widest uppercase mb-6">Ready to start?</p>
+            <h2 className="font-display text-3xl sm:text-5xl lg:text-7xl font-black text-white leading-[0.95] tracking-tight mb-8">
+              Let's Build<br />
+              <span className="text-gold">What's Next.</span>
+            </h2>
+            <p className="text-white/60 text-base sm:text-xl leading-relaxed mb-10 max-w-xl">
+              Whether you're architecting sovereign infrastructure, entering new markets, or building a product from inception — our principals are ready when you are.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link to="/contact" className="inline-flex items-center gap-3 bg-brand-primary text-white font-bold px-6 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base hover:bg-brand-gold-dark transition-all">
+                Start a Conversation <ArrowRight size={18} />
+              </Link>
+              <Link to="/services" className="inline-flex items-center gap-3 border border-white/20 text-white font-semibold px-6 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base hover:bg-white/5 transition-all">
+                Explore Services <ArrowUpRight size={18} />
+              </Link>
+            </div>
           </div>
-          <Link to="/contact" className="w-full sm:w-auto">
-            <Button variant="primary" size="lg" className="w-full bg-white text-brand-black hover:bg-brand-primary hover:text-white border-none">
-              Initiate Briefing
-            </Button>
-          </Link>
+        </div>
+      </section>
+
+      {/* ===== NEWSLETTER BAR ===== */}
+      <div className="bg-brand-primary">
+        <div className="max-w-7xl mx-auto px-6 lg:px-16 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div>
+            <h3 className="text-white text-xl font-display font-bold">
+              Subscribe to Our Insights
+            </h3>
+            <p className="text-white/70 text-sm mt-1">
+              Weekly perspectives on technology, strategy, and digital transformation.
+            </p>
+          </div>
+          <form onSubmit={handleSubscribe} className="flex w-full md:w-auto">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Your work email"
+              required
+              className="flex-1 md:w-80 px-5 py-3.5 bg-white/20 border border-white/30 text-white placeholder:text-white/50 outline-none focus:bg-white/30 transition-all text-sm"
+            />
+            <button type="submit" className="px-6 py-3.5 bg-brand-dark text-white text-sm font-bold hover:bg-brand-navy-deep transition-colors flex items-center gap-2 shrink-0">
+              {subscribed ? 'Subscribed ✓' : 'Subscribe'}
+            </button>
+          </form>
         </div>
       </div>
 
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-10 lg:px-12 py-16 sm:py-24">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-10 gap-12 lg:gap-8 xl:gap-12">
+      {/* ===== MAIN FOOTER ===== */}
+      <div className="bg-[#041020]">
+        {/* Gold accent line at top */}
+        <div className="h-[2px] bg-gradient-to-r from-transparent via-brand-primary/40 to-transparent"></div>
 
-          {/* Brand & Address */}
-          <div className="space-y-4 lg:col-span-4 pr-0 lg:pr-12">
-            <Link to="/" className="group inline-block mb-2 -mt-4 sm:-mt-6 lg:-mt-10">
-              <img
-                src="/assets/logo.png"
-                alt={COMPANY_NAME}
-                className="w-48 sm:w-56 h-auto object-contain object-left transition-transform duration-500 group-hover:scale-105"
-              />
-            </Link>
+        <div className="max-w-7xl mx-auto px-6 lg:px-16 pt-20 pb-16">
 
-            <div className="space-y-4 text-sm font-medium text-slate-500">
-              <a
-                href={googleMapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-start gap-4 hover:text-brand-primary transition-colors group"
-              >
-                <MapPin className="w-5 h-5 shrink-0 text-brand-primary group-hover:scale-110 transition-all" />
-                <span className="leading-relaxed font-bold uppercase tracking-tight text-[10px] xl:text-xs">
-                  {HEADQUARTERS_ADDRESS.street}<br />
-                  {HEADQUARTERS_ADDRESS.city}, {HEADQUARTERS_ADDRESS.state} {HEADQUARTERS_ADDRESS.zip}<br />
-                  {HEADQUARTERS_ADDRESS.country}
+          {/* Top row: Logo + tagline + offices */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-20">
+            <div className="lg:col-span-5">
+              <Link to="/" className="inline-block mb-6">
+                <img src="/assets/logo.png" alt={COMPANY_NAME} className="w-40 h-auto object-contain brightness-0 invert" />
+              </Link>
+              <p className="text-white/40 text-lg leading-relaxed max-w-md mb-8">
+                A global digital transformation consultancy helping enterprises across 7+ nations modernize, innovate, and lead through technology.
+              </p>
+              {/* Social icons — larger */}
+              <div className="flex gap-3">
+                {socialLinks.map(({ label, href, icon }) => (
+                  <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
+                    className="w-11 h-11 flex items-center justify-center border border-white/10 text-white/40 hover:text-brand-primary hover:border-brand-primary transition-all duration-300">
+                    {icon}
+                  </a>
+                ))}
+              </div>
+            </div>
+            <div className="lg:col-span-7">
+              <h4 className="text-white/30 text-xs font-semibold uppercase tracking-[0.2em] mb-6">Our Global Offices</h4>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
+                {GLOBAL_OFFICES.map((office, i) => (
+                  <Link key={i} to="/contact" className="group">
+                    <div className="text-2xl mb-2">{office.flag}</div>
+                    <div className="text-white font-semibold text-base group-hover:text-brand-primary transition-colors">{office.city}</div>
+                    <div className="text-white/30 text-sm">{office.country}</div>
+                    <div className="text-brand-primary/60 text-xs mt-1 font-medium">{office.type}</div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Separator */}
+          <div className="h-px bg-white/5 mb-16"></div>
+
+          {/* Link columns */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-12 mb-16">
+            {/* Services */}
+            <div>
+              <h4 className="text-white font-bold text-sm uppercase tracking-[0.15em] mb-6">Services</h4>
+              <ul className="space-y-3">
+                {SERVICES.map((s) => (
+                  <li key={s.id}>
+                    <Link to={s.path} className="text-white/40 text-xs sm:text-[15px] hover:text-brand-primary hover:translate-x-1 transition-all duration-200 inline-block">
+                      {s.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Industries */}
+            <div>
+              <h4 className="text-white font-bold text-sm uppercase tracking-[0.15em] mb-6">Industries</h4>
+              <ul className="space-y-3">
+                {INDUSTRIES.map((ind) => (
+                  <li key={ind.id}>
+                    <Link to={ind.path} className="text-white/40 text-xs sm:text-[15px] hover:text-brand-primary hover:translate-x-1 transition-all duration-200 inline-block">
+                      {ind.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Company */}
+            <div>
+              <h4 className="text-white font-bold text-sm uppercase tracking-[0.15em] mb-6">Company</h4>
+              <ul className="space-y-3">
+                {[
+                  { label: 'About Us', path: '/about' },
+                  { label: 'Our Vision', path: '/vision' },
+                  { label: 'Leadership', path: '/about' },
+                  { label: 'Insights', path: '/insights' },
+                  { label: 'Events', path: '/events' },
+                  { label: 'Careers', path: '/careers' },
+                  { label: 'Investors', path: '/investors' },
+                  { label: 'Alumni', path: '/alumni' },
+                  { label: 'Contact', path: '/contact' },
+                ].map((item, idx) => (
+                  <li key={idx}>
+                    <Link to={item.path} className="text-white/35 text-[15px] hover:text-brand-primary hover:translate-x-1 transition-all duration-200 inline-block">
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Contact */}
+            <div>
+              <h4 className="text-white font-bold text-sm uppercase tracking-[0.15em] mb-6">Get in Touch</h4>
+              <div className="space-y-4">
+                <a href={`tel:${CONTACT_PHONE.replace(/[^0-9+]/g, '')}`} className="flex items-center gap-3 text-white/35 text-[15px] hover:text-brand-primary transition-colors">
+                  <Phone size={16} className="text-brand-primary shrink-0" />
+                  {CONTACT_PHONE}
+                </a>
+                <a href={`mailto:${CONTACT_EMAIL}`} className="flex items-center gap-3 text-white/35 text-[15px] hover:text-brand-primary transition-colors">
+                  <Mail size={16} className="text-brand-primary shrink-0" />
+                  {CONTACT_EMAIL}
+                </a>
+                <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 text-white/35 text-sm hover:text-brand-primary transition-colors">
+                  <MapPin size={16} className="text-brand-primary shrink-0 mt-0.5" />
+                  <span>{HEADQUARTERS_ADDRESS.street}, {HEADQUARTERS_ADDRESS.city}, {HEADQUARTERS_ADDRESS.state} {HEADQUARTERS_ADDRESS.zip}</span>
+                </a>
+              </div>
+
+              <div className="mt-8">
+                <Link to="/contact" className="inline-flex items-center gap-2 bg-brand-primary text-white font-semibold px-6 py-3 text-sm hover:bg-brand-gold-dark transition-colors">
+                  Contact Us <ArrowRight size={14} />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ===== BOTTOM BAR ===== */}
+        <div className="border-t border-white/5">
+          <div className="max-w-7xl mx-auto px-6 lg:px-16 py-8">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+              <div className="text-white/20 text-sm text-center lg:text-left">
+                <p>&copy; {currentYear} {COMPANY_NAME} Enterprise Inc. All rights reserved.</p>
+                <p className="mt-1 text-white/10 text-xs">All content, media, videos, and intellectual property are protected under Canadian and international copyright law.</p>
+              </div>
+              <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-white/25">
+                <Link to="/privacy" className="hover:text-brand-primary transition-colors">Privacy Policy</Link>
+                <Link to="/terms" className="hover:text-brand-primary transition-colors">Terms of Use</Link>
+                <Link to="/copyright" className="hover:text-brand-primary transition-colors">Copyright</Link>
+                <Link to="/accessibility" className="hover:text-brand-primary transition-colors">Accessibility</Link>
+                <a href="https://employee.onsective.com" target="_blank" rel="noopener noreferrer" className="hover:text-brand-primary transition-colors flex items-center gap-1">
+                  Employee Portal <ArrowUpRight size={10} />
+                </a>
+                <span className="flex items-center gap-1.5 text-white/30">
+                  <Globe size={13} /> Global / EN
                 </span>
-              </a>
-
-              <a
-                href={`tel:${CONTACT_PHONE.replace(/[^0-9+]/g, '')}`}
-                className="flex items-center gap-4 hover:text-brand-primary transition-colors group"
-              >
-                <Phone className="w-5 h-5 shrink-0 text-brand-primary group-hover:scale-110 transition-all" />
-                <span className="font-black tracking-widest text-[10px] xl:text-xs">{CONTACT_PHONE}</span>
-              </a>
-
-              <a
-                href={`mailto:${CONTACT_EMAIL}`}
-                className="flex items-center gap-4 hover:text-brand-primary transition-colors group"
-              >
-                <Mail className="w-5 h-5 shrink-0 text-brand-primary group-hover:scale-110 transition-all" />
-                <span className="font-bold lowercase text-[10px] xl:text-xs">{CONTACT_EMAIL}</span>
-              </a>
-            </div>
-
-            <div className="flex flex-wrap gap-3 pt-4">
-              <SocialIcon Icon={Linkedin} href={LINKEDIN_URL} />
-              <SocialIcon Icon={Instagram} href={INSTAGRAM_URL} />
-              <SocialIcon Icon={XIcon} href={X_URL} />
-              <SocialIcon Icon={Youtube} href={YOUTUBE_URL} />
-              <SocialIcon Icon={Facebook} href={FACEBOOK_URL} />
-            </div>
-          </div>
-
-          {/* Capabilities */}
-          <div className="lg:col-span-2">
-            <h4 className="font-bold text-[10px] uppercase tracking-[0.3em] text-brand-black mb-8 border-b border-slate-100 pb-2">Capabilities</h4>
-            <ul className="space-y-4 text-[10px] font-black uppercase tracking-widest text-slate-400">
-              {SERVICES.slice(0, 6).map(s => (
-                <li key={s.id}>
-                  <Link to={s.path} className="hover:text-brand-primary transition-colors">{s.title}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Industries */}
-          <div className="lg:col-span-2">
-            <h4 className="font-bold text-[10px] uppercase tracking-[0.3em] text-brand-black mb-8 border-b border-slate-100 pb-2">Verticals</h4>
-            <ul className="space-y-4 text-[10px] font-black uppercase tracking-widest text-slate-400">
-              {INDUSTRIES.map(i => (
-                <li key={i.id}>
-                  <Link to={i.path} className="hover:text-brand-primary transition-colors">{i.title}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Intelligence */}
-          <div className="lg:col-span-2">
-            <h4 className="font-bold text-[10px] uppercase tracking-[0.3em] text-brand-black mb-8 border-b border-slate-100 pb-2">Intelligence</h4>
-            <ul className="space-y-4 text-[10px] font-black uppercase tracking-widest text-slate-400">
-              <li><Link to="/insights" className="hover:text-brand-primary transition-colors">Strategic Briefs</Link></li>
-              <li><Link to="/careers" className="hover:text-brand-primary transition-colors">Elite Mandates</Link></li>
-              <li><Link to="/about" className="hover:text-brand-primary transition-colors">Our Genesis</Link></li>
-              <li><Link to="/investors" className="hover:text-brand-primary transition-colors">Capital Governance</Link></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      {/* Legal & Localities */}
-      <div className="bg-slate-50 border-t border-slate-100 py-10">
-        <div className="max-w-[1440px] mx-auto px-4 sm:px-12 flex flex-col md:flex-row justify-between items-center gap-8 text-[9px] font-black uppercase tracking-widest text-slate-400">
-          <p className="text-center md:text-left">&copy; {new Date().getFullYear()} ONSECTIVE ENTERPRISE INC. ALL RIGHTS RESERVED.</p>
-          <div className="flex flex-wrap justify-center gap-6 sm:gap-10">
-            <Link to="/privacy" className="hover:text-brand-black">Privacy</Link>
-            <Link to="/terms" className="hover:text-brand-black">Terms</Link>
-            <a href="https://employee.onsective.com" target="_blank" rel="noopener noreferrer" className="hover:text-brand-black">Employee Login</a>
-            <a href="https://ug.link/onsective" target="_blank" rel="noopener noreferrer" className="hover:text-brand-black">Employee Storage Login</a>
-            <div className="flex items-center gap-2 text-brand-primary">
-              <Globe size={14} className="text-brand-primary" />
-              <span>GLOBAL / EN</span>
+              </div>
             </div>
           </div>
         </div>
@@ -135,16 +252,5 @@ const Footer: React.FC = () => {
     </footer>
   );
 };
-
-const SocialIcon = ({ Icon, href = "#" }: { Icon: any; href?: string }) => (
-  <a
-    href={href}
-    target={href !== "#" ? "_blank" : undefined}
-    rel={href !== "#" ? "noopener noreferrer" : undefined}
-    className="w-10 h-10 rounded-none border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-brand-black hover:text-brand-primary hover:border-brand-black transition-all duration-300"
-  >
-    <Icon size={18} />
-  </a>
-);
 
 export default Footer;
