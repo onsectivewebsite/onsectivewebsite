@@ -24,6 +24,8 @@ const DEFAULT_DB = {
   sessions: [],
   twoFactorCodes: [],
   resetTokens: [],
+  subscribers: [],
+  digestLog: [],
 };
 
 // ─── SMTP Transporter ────────────────────────────────────────────────────────
@@ -851,6 +853,295 @@ router.delete('/api/admin/users/:id', authenticateAdmin, requireSuperuser, (req,
   } catch (error) {
     console.error('[User Delete Error]', error);
     return res.status(500).json({ message: 'Failed to delete user.' });
+  }
+});
+
+// ─── Newsletter SMTP (donotreply@onsective.com) ─────────────────────────────
+
+const newsletterTransporter = nodemailer.createTransport({
+  host: 'smtp.hostinger.com',
+  port: 465,
+  secure: true,
+  auth: {
+    user: process.env.NEWSLETTER_EMAIL || 'donotreply@onsective.com',
+    pass: process.env.NEWSLETTER_PASS || 'Ons3ctiv3.',
+  },
+  connectionTimeout: 15000,
+});
+
+// ─── Subscriber Routes ──────────────────────────────────────────────────────
+
+// POST /api/subscribe — public
+router.post('/api/subscribe', (req, res) => {
+  try {
+    const { email, frequency } = req.body;
+    if (!email || !email.includes('@')) {
+      return res.status(400).json({ message: 'Valid email is required.' });
+    }
+
+    const db = readDB();
+    if (!db.subscribers) db.subscribers = [];
+
+    const existing = db.subscribers.find((s) => s.email.toLowerCase() === email.toLowerCase());
+    if (existing) {
+      if (existing.unsubscribed) {
+        existing.unsubscribed = false;
+        existing.frequency = frequency || 'weekly';
+        existing.resubscribedAt = new Date().toISOString();
+        writeDB(db);
+        return res.status(200).json({ message: 'Welcome back! You have been re-subscribed.' });
+      }
+      return res.status(200).json({ message: 'You are already subscribed.' });
+    }
+
+    const unsubToken = uuidv4();
+    db.subscribers.push({
+      id: uuidv4(),
+      email: email.toLowerCase().trim(),
+      frequency: frequency || 'weekly',
+      subscribedAt: new Date().toISOString(),
+      unsubscribed: false,
+      unsubToken,
+    });
+    writeDB(db);
+
+    // Send welcome email
+    const unsubLink = `https://onsective.com/api/unsubscribe?token=${unsubToken}`;
+    newsletterTransporter.sendMail({
+      from: '"Onsective Insights" <donotreply@onsective.com>',
+      to: email,
+      subject: 'Welcome to Onsective Insights',
+      html: `
+        <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #ffffff; border: 1px solid #e2e8f0;">
+          <div style="background: #0d2b45; padding: 30px; text-align: center;">
+            <h1 style="color: #c1912f; font-size: 20px; letter-spacing: 0.15em; margin: 0;">ONSECTIVE INSIGHTS</h1>
+          </div>
+          <div style="padding: 40px 30px;">
+            <p style="color: #1a1a2e; font-size: 16px; line-height: 1.8;">Thank you for subscribing to Onsective Insights.</p>
+            <p style="color: #64748b; font-size: 14px; line-height: 1.8;">You will receive ${frequency || 'weekly'} digests with our latest articles on digital transformation, cloud, AI, cybersecurity, and enterprise technology.</p>
+            <div style="margin: 30px 0; padding: 20px; background: #f8fafc; border-left: 3px solid #c1912f;">
+              <p style="color: #1a1a2e; font-size: 14px; margin: 0;"><strong>Delivery:</strong> ${(frequency || 'weekly').charAt(0).toUpperCase() + (frequency || 'weekly').slice(1)} digest</p>
+            </div>
+          </div>
+          <div style="padding: 20px 30px; background: #f8fafc; text-align: center; border-top: 1px solid #e2e8f0;">
+            <a href="${unsubLink}" style="color: #94a3b8; font-size: 11px; text-decoration: underline;">Unsubscribe</a>
+            <p style="color: #cbd5e1; font-size: 10px; margin-top: 8px;">Onsective Enterprise Inc. — Toronto, Canada</p>
+          </div>
+        </div>
+      `,
+    }).catch((err) => console.error('[Newsletter Welcome Error]', err.message));
+
+    return res.status(200).json({ message: 'Subscribed successfully!' });
+  } catch (error) {
+    console.error('[Subscribe Error]', error);
+    return res.status(500).json({ message: 'Subscription failed.' });
+  }
+});
+
+// GET /api/unsubscribe?token=... — public
+router.get('/api/unsubscribe', (req, res) => {
+  try {
+    const { token } = req.query;
+    if (!token) {
+      return res.status(400).send('<html><body style="font-family:sans-serif;text-align:center;padding:60px"><h2>Invalid unsubscribe link.</h2></body></html>');
+    }
+
+    const db = readDB();
+    if (!db.subscribers) db.subscribers = [];
+    const sub = db.subscribers.find((s) => s.unsubToken === token);
+    if (!sub) {
+      return res.send('<html><body style="font-family:sans-serif;text-align:center;padding:60px"><h2>This link is invalid or you are already unsubscribed.</h2><a href="https://onsective.com">Back to Onsective</a></body></html>');
+    }
+
+    sub.unsubscribed = true;
+    sub.unsubscribedAt = new Date().toISOString();
+    writeDB(db);
+
+    return res.send(`
+      <html><body style="font-family:'Helvetica Neue',sans-serif;text-align:center;padding:60px;color:#1a1a2e;">
+        <div style="max-width:500px;margin:0 auto;">
+          <h1 style="color:#0d2b45;font-size:24px;">Unsubscribed</h1>
+          <p style="color:#64748b;font-size:15px;line-height:1.7;">You have been successfully unsubscribed from Onsective Insights. You will no longer receive digest emails.</p>
+          <p style="color:#64748b;font-size:13px;margin-top:20px;">Changed your mind? <a href="https://onsective.com/insights" style="color:#c1912f;">Re-subscribe here</a></p>
+          <a href="https://onsective.com" style="display:inline-block;margin-top:30px;background:#0d2b45;color:#c1912f;padding:12px 30px;text-decoration:none;font-weight:bold;font-size:13px;">Back to Onsective</a>
+        </div>
+      </body></html>
+    `);
+  } catch (error) {
+    console.error('[Unsubscribe Error]', error);
+    return res.status(500).send('<html><body style="font-family:sans-serif;text-align:center;padding:60px"><h2>Something went wrong.</h2></body></html>');
+  }
+});
+
+// POST /api/unsubscribe — public (JSON for frontend)
+router.post('/api/unsubscribe', (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) return res.status(400).json({ message: 'Email is required.' });
+
+    const db = readDB();
+    if (!db.subscribers) db.subscribers = [];
+    const sub = db.subscribers.find((s) => s.email.toLowerCase() === email.toLowerCase());
+    if (!sub || sub.unsubscribed) {
+      return res.status(200).json({ message: 'Unsubscribed successfully.' });
+    }
+    sub.unsubscribed = true;
+    sub.unsubscribedAt = new Date().toISOString();
+    writeDB(db);
+    return res.status(200).json({ message: 'Unsubscribed successfully.' });
+  } catch (error) {
+    return res.status(500).json({ message: 'Failed to unsubscribe.' });
+  }
+});
+
+// GET /api/admin/subscribers — admin only
+router.get('/api/admin/subscribers', authenticateAdmin, (req, res) => {
+  try {
+    const db = readDB();
+    const subs = (db.subscribers || []).map((s) => ({
+      id: s.id,
+      email: s.email,
+      frequency: s.frequency,
+      subscribedAt: s.subscribedAt,
+      unsubscribed: s.unsubscribed,
+      unsubscribedAt: s.unsubscribedAt,
+    }));
+    const active = subs.filter((s) => !s.unsubscribed).length;
+    return res.status(200).json({ subscribers: subs, total: subs.length, active });
+  } catch (error) {
+    return res.status(500).json({ message: 'Failed to fetch subscribers.' });
+  }
+});
+
+// DELETE /api/admin/subscribers/:id — admin only
+router.delete('/api/admin/subscribers/:id', authenticateAdmin, (req, res) => {
+  try {
+    const db = readDB();
+    if (!db.subscribers) db.subscribers = [];
+    db.subscribers = db.subscribers.filter((s) => s.id !== req.params.id);
+    writeDB(db);
+    return res.status(200).json({ message: 'Subscriber removed.' });
+  } catch (error) {
+    return res.status(500).json({ message: 'Failed to remove subscriber.' });
+  }
+});
+
+// PUT /api/admin/subscribers/:id — admin update frequency
+router.put('/api/admin/subscribers/:id', authenticateAdmin, (req, res) => {
+  try {
+    const db = readDB();
+    if (!db.subscribers) db.subscribers = [];
+    const sub = db.subscribers.find((s) => s.id === req.params.id);
+    if (!sub) return res.status(404).json({ message: 'Subscriber not found.' });
+    if (req.body.frequency) sub.frequency = req.body.frequency;
+    if (typeof req.body.unsubscribed === 'boolean') sub.unsubscribed = req.body.unsubscribed;
+    writeDB(db);
+    return res.status(200).json({ message: 'Subscriber updated.' });
+  } catch (error) {
+    return res.status(500).json({ message: 'Failed to update subscriber.' });
+  }
+});
+
+// POST /api/admin/send-digest — admin sends digest manually
+router.post('/api/admin/send-digest', authenticateAdmin, async (req, res) => {
+  try {
+    const { frequency, subject, previewText, blogIds } = req.body;
+    if (!frequency) return res.status(400).json({ message: 'Frequency is required (daily, weekly, monthly).' });
+
+    const db = readDB();
+    if (!db.subscribers) db.subscribers = [];
+    const recipients = db.subscribers.filter((s) => !s.unsubscribed && s.frequency === frequency);
+    if (recipients.length === 0) {
+      return res.status(200).json({ message: `No active ${frequency} subscribers found.`, sent: 0 });
+    }
+
+    // Get blogs to include
+    const blogs = (db.blogs || [])
+      .filter((b) => b.status === 'published')
+      .sort((a, b) => new Date(b.publishedAt || b.createdAt).getTime() - new Date(a.publishedAt || a.createdAt).getTime())
+      .slice(0, blogIds?.length ? undefined : 5);
+    const selectedBlogs = blogIds?.length ? blogs.filter((b) => blogIds.includes(b.id)) : blogs;
+
+    if (selectedBlogs.length === 0) {
+      return res.status(400).json({ message: 'No published blogs to include in digest.' });
+    }
+
+    const emailSubject = subject || `Onsective ${frequency.charAt(0).toUpperCase() + frequency.slice(1)} Digest — ${new Date().toLocaleDateString('en-CA', { month: 'long', day: 'numeric', year: 'numeric' })}`;
+
+    let sent = 0;
+    let failed = 0;
+
+    for (const sub of recipients) {
+      const unsubLink = `https://onsective.com/api/unsubscribe?token=${sub.unsubToken}`;
+      const blogHTML = selectedBlogs.map((b) => `
+        <div style="margin-bottom: 25px; padding-bottom: 25px; border-bottom: 1px solid #f1f5f9;">
+          ${b.image ? `<img src="${b.image}" alt="${b.title}" style="width:100%;max-height:200px;object-fit:cover;margin-bottom:15px;border-radius:4px;" />` : ''}
+          <span style="color:#c1912f;font-size:11px;font-weight:bold;text-transform:uppercase;letter-spacing:0.1em;">${b.category || 'Insight'}</span>
+          <h3 style="color:#1a1a2e;font-size:18px;margin:8px 0;"><a href="https://onsective.com/insights/${b.slug}" style="color:#1a1a2e;text-decoration:none;">${b.title}</a></h3>
+          <p style="color:#64748b;font-size:14px;line-height:1.6;margin:0;">${b.excerpt || ''}</p>
+          <a href="https://onsective.com/insights/${b.slug}" style="color:#c1912f;font-size:13px;font-weight:bold;text-decoration:none;display:inline-block;margin-top:10px;">Read More →</a>
+        </div>
+      `).join('');
+
+      try {
+        await newsletterTransporter.sendMail({
+          from: '"Onsective Insights" <donotreply@onsective.com>',
+          to: sub.email,
+          subject: emailSubject,
+          html: `
+            <div style="font-family:'Helvetica Neue',Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;border:1px solid #e2e8f0;">
+              <div style="background:#0d2b45;padding:25px 30px;text-align:center;">
+                <h1 style="color:#c1912f;font-size:18px;letter-spacing:0.15em;margin:0;">ONSECTIVE INSIGHTS</h1>
+                <p style="color:rgba(255,255,255,0.4);font-size:11px;margin-top:5px;">${frequency.charAt(0).toUpperCase() + frequency.slice(1)} Digest — ${new Date().toLocaleDateString('en-CA', { month: 'long', year: 'numeric' })}</p>
+              </div>
+              <div style="padding:30px;">
+                ${previewText ? `<p style="color:#64748b;font-size:14px;line-height:1.7;margin-bottom:25px;">${previewText}</p>` : ''}
+                ${blogHTML}
+              </div>
+              <div style="padding:20px 30px;background:#f8fafc;text-align:center;border-top:1px solid #e2e8f0;">
+                <a href="${unsubLink}" style="color:#94a3b8;font-size:11px;text-decoration:underline;">Unsubscribe</a>
+                <span style="color:#cbd5e1;font-size:11px;"> · </span>
+                <a href="https://onsective.com/insights" style="color:#94a3b8;font-size:11px;text-decoration:underline;">View all insights</a>
+                <p style="color:#cbd5e1;font-size:10px;margin-top:8px;">Onsective Enterprise Inc. · Toronto, Canada</p>
+              </div>
+            </div>
+          `,
+        });
+        sent++;
+      } catch (err) {
+        console.error(`[Digest] Failed to send to ${sub.email}:`, err.message);
+        failed++;
+      }
+    }
+
+    // Log digest
+    if (!db.digestLog) db.digestLog = [];
+    db.digestLog.push({
+      id: uuidv4(),
+      frequency,
+      sentAt: new Date().toISOString(),
+      recipientCount: recipients.length,
+      sent,
+      failed,
+      blogCount: selectedBlogs.length,
+      subject: emailSubject,
+    });
+    writeDB(db);
+
+    return res.status(200).json({ message: `Digest sent to ${sent} subscribers.`, sent, failed, total: recipients.length });
+  } catch (error) {
+    console.error('[Send Digest Error]', error);
+    return res.status(500).json({ message: 'Failed to send digest.' });
+  }
+});
+
+// GET /api/admin/digest-log — admin view digest history
+router.get('/api/admin/digest-log', authenticateAdmin, (req, res) => {
+  try {
+    const db = readDB();
+    return res.status(200).json(db.digestLog || []);
+  } catch (error) {
+    return res.status(500).json({ message: 'Failed to fetch digest log.' });
   }
 });
 

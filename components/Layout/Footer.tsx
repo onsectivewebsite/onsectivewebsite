@@ -33,11 +33,29 @@ const Footer: React.FC = () => {
     { label: 'Facebook', href: FACEBOOK_URL, icon: <Facebook size={18} /> },
   ];
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const [subFrequency, setSubFrequency] = useState('weekly');
+  const [subError, setSubError] = useState('');
+
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubscribed(true);
-    setEmail('');
-    setTimeout(() => setSubscribed(false), 3000);
+    setSubError('');
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, frequency: subFrequency }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setSubscribed(true);
+        setEmail('');
+        setTimeout(() => setSubscribed(false), 4000);
+      } else {
+        setSubError(data.message || 'Failed to subscribe.');
+      }
+    } catch {
+      setSubError('Network error. Please try again.');
+    }
   };
 
   return (
@@ -77,26 +95,40 @@ const Footer: React.FC = () => {
       <div className="bg-brand-primary">
         <div className="max-w-7xl mx-auto px-6 lg:px-16 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
-            <h3 className="text-white text-xl font-display font-bold">
+            <h3 className="text-white text-lg sm:text-xl font-display font-bold">
               Subscribe to Our Insights
             </h3>
-            <p className="text-white/70 text-sm mt-1">
-              Weekly perspectives on technology, strategy, and digital transformation.
+            <p className="text-white/70 text-xs sm:text-sm mt-1">
+              Get our latest articles on technology, strategy, and digital transformation.
             </p>
           </div>
-          <form onSubmit={handleSubscribe} className="flex w-full md:w-auto">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Your work email"
-              required
-              className="flex-1 md:w-80 px-5 py-3.5 bg-white/20 border border-white/30 text-white placeholder:text-white/50 outline-none focus:bg-white/30 transition-all text-sm"
-            />
-            <button type="submit" className="px-6 py-3.5 bg-brand-dark text-white text-sm font-bold hover:bg-brand-navy-deep transition-colors flex items-center gap-2 shrink-0">
-              {subscribed ? 'Subscribed ✓' : 'Subscribe'}
-            </button>
-          </form>
+          <div className="w-full md:w-auto">
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2">
+              <div className="flex flex-1">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Your work email"
+                  required
+                  className="flex-1 min-w-0 sm:w-64 px-4 py-3 bg-white/20 border border-white/30 text-white placeholder:text-white/50 outline-none focus:bg-white/30 transition-all text-sm"
+                />
+                <select
+                  value={subFrequency}
+                  onChange={(e) => setSubFrequency(e.target.value)}
+                  className="px-2 py-3 bg-white/20 border border-white/30 border-l-0 text-white text-xs outline-none cursor-pointer"
+                >
+                  <option value="daily" className="text-black">Daily</option>
+                  <option value="weekly" className="text-black">Weekly</option>
+                  <option value="monthly" className="text-black">Monthly</option>
+                </select>
+              </div>
+              <button type="submit" className="px-5 py-3 bg-brand-dark text-white text-xs font-bold uppercase tracking-wider hover:bg-brand-navy-deep transition-colors shrink-0">
+                {subscribed ? '✓ Subscribed' : 'Subscribe'}
+              </button>
+            </form>
+            {subError && <p className="text-white/80 text-xs mt-2">{subError}</p>}
+          </div>
         </div>
       </div>
 

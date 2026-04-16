@@ -51,7 +51,7 @@ const api = async (path: string, options: RequestInit = {}) => {
 /* ================================================================== */
 /*  ADMIN COMPONENT                                                    */
 /* ================================================================== */
-type Tab = 'dashboard' | 'blogs' | 'users' | 'leads' | 'analytics' | 'settings';
+type Tab = 'dashboard' | 'blogs' | 'users' | 'leads' | 'analytics' | 'subscribers';
 
 const Admin: React.FC = () => {
   /* -------- Auth State -------- */
@@ -95,6 +95,13 @@ const Admin: React.FC = () => {
 
   /* -------- Leads State -------- */
   const [leads, setLeads] = useState<any[]>([]);
+
+  /* -------- Subscriber State -------- */
+  const [subscribers, setSubscribers] = useState<any[]>([]);
+  const [subStats, setSubStats] = useState({ total: 0, active: 0 });
+  const [digestLog, setDigestLog] = useState<any[]>([]);
+  const [digestForm, setDigestForm] = useState({ frequency: 'weekly', subject: '', previewText: '' });
+  const [sendingDigest, setSendingDigest] = useState(false);
 
   /* -------- Toast -------- */
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
@@ -223,13 +230,24 @@ const Admin: React.FC = () => {
     } catch {}
   }, []);
 
+  const fetchSubscribers = useCallback(async () => {
+    try {
+      const data = await api('/api/admin/subscribers');
+      setSubscribers(data.subscribers);
+      setSubStats({ total: data.total, active: data.active });
+      const log = await api('/api/admin/digest-log');
+      setDigestLog(log);
+    } catch {}
+  }, []);
+
   useEffect(() => {
     if (authStep !== 'authenticated') return;
     if (activeTab === 'blogs') fetchBlogs();
     if (activeTab === 'users') fetchUsers();
     if (activeTab === 'analytics') fetchAnalytics();
     if (activeTab === 'leads') fetchLeads();
-  }, [activeTab, authStep, fetchBlogs, fetchUsers, fetchAnalytics, fetchLeads]);
+    if (activeTab === 'subscribers') fetchSubscribers();
+  }, [activeTab, authStep, fetchBlogs, fetchUsers, fetchAnalytics, fetchLeads, fetchSubscribers]);
 
   /* ================================================================ */
   /*  BLOG HANDLERS                                                    */
@@ -284,6 +302,28 @@ const Admin: React.FC = () => {
       await api(`/api/admin/users/${id}`, { method: 'DELETE' });
       showToast('User removed'); fetchUsers();
     } catch (err: any) { showToast(err.message, 'error'); }
+  };
+
+  /* ================================================================ */
+  /*  SUBSCRIBER HANDLERS                                              */
+  /* ================================================================ */
+  const deleteSubscriber = async (id: string) => {
+    if (!confirm('Remove this subscriber?')) return;
+    try {
+      await api(`/api/admin/subscribers/${id}`, { method: 'DELETE' });
+      showToast('Subscriber removed'); fetchSubscribers();
+    } catch (err: any) { showToast(err.message, 'error'); }
+  };
+
+  const sendDigest = async () => {
+    if (!confirm(`Send ${digestForm.frequency} digest to all ${digestForm.frequency} subscribers?`)) return;
+    setSendingDigest(true);
+    try {
+      const data = await api('/api/admin/send-digest', { method: 'POST', body: JSON.stringify(digestForm) });
+      showToast(data.message);
+      fetchSubscribers();
+    } catch (err: any) { showToast(err.message, 'error'); }
+    finally { setSendingDigest(false); }
   };
 
   /* ================================================================ */
@@ -427,6 +467,7 @@ const Admin: React.FC = () => {
     { id: 'analytics' as Tab, label: 'Analytics', icon: BarChart3 },
     { id: 'users' as Tab, label: 'Users', icon: Users },
     { id: 'leads' as Tab, label: 'Leads', icon: MessageSquare },
+    { id: 'subscribers' as Tab, label: 'Subscribers', icon: Mail },
   ];
 
   return (
@@ -961,6 +1002,127 @@ const Admin: React.FC = () => {
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+          )}
+
+          {/* ========== SUBSCRIBERS ========== */}
+          {activeTab === 'subscribers' && (
+            <div className="space-y-6">
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-serif font-black uppercase">Subscribers</h1>
+                <p className="text-slate-400 text-xs mt-1">Newsletter subscribers and digest management</p>
+              </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div className="p-4 bg-slate-50 border border-slate-100 rounded-lg">
+                  <p className="text-xl font-serif font-black">{subStats.active}</p>
+                  <p className="text-[9px] uppercase tracking-wider text-slate-400 mt-1">Active</p>
+                </div>
+                <div className="p-4 bg-slate-50 border border-slate-100 rounded-lg">
+                  <p className="text-xl font-serif font-black">{subStats.total - subStats.active}</p>
+                  <p className="text-[9px] uppercase tracking-wider text-slate-400 mt-1">Unsubscribed</p>
+                </div>
+                <div className="p-4 bg-slate-50 border border-slate-100 rounded-lg">
+                  <p className="text-xl font-serif font-black">{subStats.total}</p>
+                  <p className="text-[9px] uppercase tracking-wider text-slate-400 mt-1">Total All-Time</p>
+                </div>
+                <div className="p-4 bg-slate-50 border border-slate-100 rounded-lg">
+                  <p className="text-xl font-serif font-black">{digestLog.length}</p>
+                  <p className="text-[9px] uppercase tracking-wider text-slate-400 mt-1">Digests Sent</p>
+                </div>
+              </div>
+
+              {/* Send Digest */}
+              <div className="bg-[#0a1628] text-white rounded-lg p-6">
+                <h3 className="text-sm font-bold mb-4 flex items-center gap-2"><Mail size={16} className="text-[#c1912f]" /> Send Digest Email</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+                  <div>
+                    <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Frequency</label>
+                    <select value={digestForm.frequency} onChange={e => setDigestForm({ ...digestForm, frequency: e.target.value })} className="w-full p-2.5 bg-white/10 border border-white/20 rounded text-sm text-white outline-none">
+                      <option value="daily" className="text-black">Daily subscribers</option>
+                      <option value="weekly" className="text-black">Weekly subscribers</option>
+                      <option value="monthly" className="text-black">Monthly subscribers</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Subject (optional)</label>
+                    <input value={digestForm.subject} onChange={e => setDigestForm({ ...digestForm, subject: e.target.value })} className="w-full p-2.5 bg-white/10 border border-white/20 rounded text-sm text-white outline-none" placeholder="Auto-generated if empty" />
+                  </div>
+                  <div>
+                    <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Preview Text (optional)</label>
+                    <input value={digestForm.previewText} onChange={e => setDigestForm({ ...digestForm, previewText: e.target.value })} className="w-full p-2.5 bg-white/10 border border-white/20 rounded text-sm text-white outline-none" placeholder="Intro text above articles" />
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <button onClick={sendDigest} disabled={sendingDigest} className="bg-[#c1912f] text-white px-5 py-2.5 text-xs font-bold uppercase tracking-wider hover:bg-[#a07425] transition-colors rounded disabled:opacity-50">
+                    {sendingDigest ? 'Sending...' : `Send to ${digestForm.frequency} subscribers`}
+                  </button>
+                  <span className="text-white/30 text-xs">
+                    {subscribers.filter(s => !s.unsubscribed && s.frequency === digestForm.frequency).length} recipients
+                  </span>
+                </div>
+              </div>
+
+              {/* Digest History */}
+              {digestLog.length > 0 && (
+                <div className="bg-slate-50 border border-slate-100 rounded-lg p-5">
+                  <h3 className="text-sm font-bold mb-3">Digest History</h3>
+                  <div className="space-y-2">
+                    {digestLog.slice().reverse().slice(0, 10).map((d: any, i: number) => (
+                      <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs py-2 border-b border-slate-100 last:border-0">
+                        <div className="flex items-center gap-3">
+                          <span className={`text-[8px] font-bold px-2 py-0.5 uppercase rounded ${d.frequency === 'daily' ? 'bg-blue-100 text-blue-700' : d.frequency === 'weekly' ? 'bg-green-100 text-green-700' : 'bg-purple-100 text-purple-700'}`}>{d.frequency}</span>
+                          <span className="text-slate-500 truncate max-w-xs">{d.subject}</span>
+                        </div>
+                        <div className="flex items-center gap-4 text-slate-400">
+                          <span>{d.sent}/{d.recipientCount} sent</span>
+                          <span>{new Date(d.sentAt).toLocaleDateString()}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Subscriber List */}
+              <div>
+                <h3 className="text-sm font-bold mb-3">All Subscribers</h3>
+                {subscribers.length === 0 ? (
+                  <p className="text-slate-400 text-sm py-8 text-center">No subscribers yet.</p>
+                ) : (
+                  <div className="bg-white border border-slate-100 rounded-lg overflow-x-auto">
+                    <table className="w-full text-left">
+                      <thead>
+                        <tr className="bg-slate-50 text-[9px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100">
+                          <th className="p-3">Email</th>
+                          <th className="p-3">Frequency</th>
+                          <th className="p-3">Status</th>
+                          <th className="p-3">Subscribed</th>
+                          <th className="p-3 text-right">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100">
+                        {subscribers.map((sub: any) => (
+                          <tr key={sub.id} className="hover:bg-slate-50 transition-colors text-xs">
+                            <td className="p-3 font-semibold">{sub.email}</td>
+                            <td className="p-3">
+                              <span className={`text-[8px] font-bold px-2 py-0.5 uppercase rounded ${sub.frequency === 'daily' ? 'bg-blue-50 text-blue-600' : sub.frequency === 'weekly' ? 'bg-green-50 text-green-600' : 'bg-purple-50 text-purple-600'}`}>{sub.frequency}</span>
+                            </td>
+                            <td className="p-3">
+                              <span className={`text-[8px] font-bold px-2 py-0.5 uppercase rounded ${sub.unsubscribed ? 'bg-red-50 text-red-500' : 'bg-green-50 text-green-600'}`}>{sub.unsubscribed ? 'Unsubscribed' : 'Active'}</span>
+                            </td>
+                            <td className="p-3 text-slate-400">{new Date(sub.subscribedAt).toLocaleDateString()}</td>
+                            <td className="p-3 text-right">
+                              <button onClick={() => deleteSubscriber(sub.id)} className="text-slate-300 hover:text-red-500 transition-colors"><Trash2 size={14} /></button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </div>
             </div>
           )}
