@@ -11,14 +11,59 @@
     }
   ],
   "blogs": [],
-  "analytics": [],
+  "analytics": [
+    {
+      "id": "f706d7b3-8bfc-4939-8a68-bc8065e9af9f",
+      "page": "/users/new",
+      "referrer": "http://localhost:3000/users/new",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15",
+      "ip": "::1",
+      "timestamp": "2026-04-16T21:22:54.447Z",
+      "sessionId": "sid-1776374574445-enkz1fdqbio",
+      "screenWidth": 1470,
+      "screenHeight": 839
+    },
+    {
+      "id": "8058862e-b68c-4f74-94ed-d206d2c4d248",
+      "page": "/",
+      "referrer": "http://localhost:3000/users/new",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15",
+      "ip": "::1",
+      "timestamp": "2026-04-16T21:22:54.496Z",
+      "sessionId": "sid-1776374574445-enkz1fdqbio",
+      "screenWidth": 1470,
+      "screenHeight": 839
+    },
+    {
+      "id": "027c6956-ac22-4fb1-93dc-b3720fc2ec0f",
+      "page": "/",
+      "referrer": "",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15",
+      "ip": "::1",
+      "timestamp": "2026-04-16T21:23:02.574Z",
+      "sessionId": "sid-1776374582566-r25iacoylyk",
+      "screenWidth": 1470,
+      "screenHeight": 839
+    },
+    {
+      "id": "70de8dd9-87fc-411d-a499-1b1f59ee87ca",
+      "page": "/",
+      "referrer": "",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15",
+      "ip": "::1",
+      "timestamp": "2026-04-16T21:23:02.575Z",
+      "sessionId": "sid-1776374582566-r25iacoylyk",
+      "screenWidth": 1470,
+      "screenHeight": 839
+    }
+  ],
   "sessions": [],
   "twoFactorCodes": [
     {
       "userId": "7c0c03ad-f37e-474c-a122-877d2dcbe09f",
-      "code": "157160",
-      "tempToken": "b0f0c7bc-7c28-4244-9c5a-a254a0ab5d4c",
-      "expiresAt": "2026-04-16T20:11:57.278Z"
+      "code": "460119",
+      "tempToken": "0183dd81-a386-4db0-8da7-a971e9421d99",
+      "expiresAt": "2026-04-16T21:33:22.236Z"
     }
   ],
   "resetTokens": [],
