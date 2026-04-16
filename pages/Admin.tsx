@@ -32,8 +32,18 @@ const api = async (path: string, options: RequestInit = {}) => {
   const token = localStorage.getItem('admin_token');
   const headers: Record<string, string> = { 'Content-Type': 'application/json' };
   if (token) headers['Authorization'] = `Bearer ${token}`;
-  const res = await fetch(path, { ...options, headers: { ...headers, ...options.headers as any } });
-  const data = await res.json();
+  let res: Response;
+  try {
+    res = await fetch(path, { ...options, headers: { ...headers, ...options.headers as any } });
+  } catch {
+    throw new Error('Network error. Make sure the server is running.');
+  }
+  let data: any;
+  try {
+    data = await res.json();
+  } catch {
+    throw new Error(`Server returned status ${res.status}. Please try again.`);
+  }
   if (!res.ok) throw new Error(data.error || data.message || 'Request failed');
   return data;
 };
@@ -94,7 +104,7 @@ const Admin: React.FC = () => {
   };
 
   /* ================================================================ */
-  /*  INIT — check token                                               */
+  /*  INIT — check token + handle reset link from email                */
   /* ================================================================ */
   useEffect(() => {
     const token = localStorage.getItem('admin_token');
@@ -102,6 +112,16 @@ const Admin: React.FC = () => {
     if (token && user) {
       setCurrentUser(JSON.parse(user));
       setAuthStep('authenticated');
+      return;
+    }
+    // Check for ?reset=TOKEN in URL (from password reset email)
+    const params = new URLSearchParams(window.location.search);
+    const resetToken = params.get('reset');
+    if (resetToken) {
+      setResetForm(prev => ({ ...prev, token: resetToken }));
+      setAuthStep('reset');
+      // Clean URL
+      window.history.replaceState({}, '', window.location.pathname);
     }
   }, []);
 

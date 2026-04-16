@@ -1,18 +1,25 @@
 {
   "users": [
     {
-      "id": "90c11f0d-8b6f-4987-8923-76978ced7717",
+      "id": "7c0c03ad-f37e-474c-a122-877d2dcbe09f",
       "username": "admin",
-      "password": "$2b$10$GaZ8eChq7CVmdk1U5VHiXeUEdWgT4SljpRToxBxaks2/vzvXv1Z7a",
+      "password": "$2b$10$Q/F5h05Rd9LfA2nRxWr4XO9S.gaossJDSxSwJ.Y/Vtlf96dWr5cSK",
       "role": "superuser",
       "name": "System Administrator",
       "email": "admin@onsective.com",
-      "createdAt": "2026-04-16T19:15:47.671Z"
+      "createdAt": "2026-04-16T20:01:36.778Z"
     }
   ],
   "blogs": [],
   "analytics": [],
   "sessions": [],
-  "twoFactorCodes": [],
+  "twoFactorCodes": [
+    {
+      "userId": "7c0c03ad-f37e-474c-a122-877d2dcbe09f",
+      "code": "157160",
+      "tempToken": "b0f0c7bc-7c28-4244-9c5a-a254a0ab5d4c",
+      "expiresAt": "2026-04-16T20:11:57.278Z"
+    }
+  ],
   "resetTokens": []
 }

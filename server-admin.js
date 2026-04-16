@@ -166,8 +166,9 @@ router.post('/api/admin/login', async (req, res) => {
 
     writeDB(db);
 
-    // Send 2FA code via email
-    await adminTransporter.sendMail({
+    // Send 2FA code via email (non-blocking — login still works if email fails)
+    console.log(`[Admin 2FA] Code for ${user.username}: ${code}`);
+    adminTransporter.sendMail({
       from: `"Onsective Admin" <${process.env.EMAIL_USER || 'info@onsective.com'}>`,
       to: user.email,
       subject: 'Your Onsective Admin Login Code',
@@ -181,7 +182,7 @@ router.post('/api/admin/login', async (req, res) => {
           <p style="color: #64748b; font-size: 13px;">This code expires in 10 minutes. If you did not request this, ignore this email.</p>
         </div>
       `,
-    });
+    }).catch((err) => console.error('[Admin 2FA Email Error]', err.message));
 
     return res.status(200).json({
       message: 'Verification code sent to your email.',
@@ -288,9 +289,10 @@ router.post('/api/admin/forgot-password', async (req, res) => {
 
     writeDB(db);
 
-    const resetLink = `${req.protocol}://${req.get('host')}/admin/reset-password?token=${resetToken}`;
+    const resetLink = `${req.protocol}://${req.get('host')}/admin?reset=${resetToken}`;
 
-    await adminTransporter.sendMail({
+    console.log(`[Admin Reset] Token for ${user.email}: ${resetToken}`);
+    adminTransporter.sendMail({
       from: `"Onsective Admin" <${process.env.EMAIL_USER || 'info@onsective.com'}>`,
       to: user.email,
       subject: 'Password Reset - Onsective Admin',
@@ -301,10 +303,11 @@ router.post('/api/admin/forgot-password', async (req, res) => {
           <div style="text-align: center; margin: 25px 0;">
             <a href="${resetLink}" style="background: #020617; color: #C5A059; padding: 12px 30px; text-decoration: none; font-weight: bold; letter-spacing: 0.05em;">RESET PASSWORD</a>
           </div>
+          <p style="color: #64748b; font-size: 12px;">Or paste this token manually: <strong>${resetToken}</strong></p>
           <p style="color: #64748b; font-size: 13px;">This link expires in 1 hour. If you did not request this, ignore this email.</p>
         </div>
       `,
-    });
+    }).catch((err) => console.error('[Admin Reset Email Error]', err.message));
 
     return res.status(200).json({ message: 'If the email exists, a reset link has been sent.' });
   } catch (error) {
