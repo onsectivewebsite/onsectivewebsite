@@ -822,18 +822,21 @@
       align-items: center;
       justify-content: center;
       font-weight: 700;
-      font-size: 11px;
+      font-size: 9px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: rgba(193, 145, 47, 0.6);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
-    .cube-3d .front  { transform: translateZ(60px); }
-    .cube-3d .back   { transform: rotateY(180deg) translateZ(60px); }
-    .cube-3d .right  { transform: rotateY(90deg) translateZ(60px); }
-    .cube-3d .left   { transform: rotateY(-90deg) translateZ(60px); }
-    .cube-3d .top    { transform: rotateX(90deg) translateZ(60px); }
-    .cube-3d .bottom { transform: rotateX(-90deg) translateZ(60px); }
+    .cube-3d .front  { transform: translateZ(45px); }
+    .cube-3d .back   { transform: rotateY(180deg) translateZ(45px); }
+    .cube-3d .right  { transform: rotateY(90deg) translateZ(45px); }
+    .cube-3d .left   { transform: rotateY(-90deg) translateZ(45px); }
+    .cube-3d .top    { transform: rotateX(90deg) translateZ(45px); }
+    .cube-3d .bottom { transform: rotateX(-90deg) translateZ(45px); }
 
     @keyframes rotateCube {
       0%   { transform: rotateX(0deg) rotateY(0deg); }
@@ -948,10 +951,12 @@
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      font-size: 12px;
+      font-size: 10px;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: rgba(193, 145, 47, 0.7);
+      overflow: hidden;
+      white-space: nowrap;
     }
     .prism-3d .pf-front  { transform: translateZ(100px); }
     .prism-3d .pf-back   { transform: rotateY(180deg) translateZ(100px); }
@@ -1163,8 +1168,9 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 16px;
+      padding: 12px;
       box-sizing: border-box;
+      overflow: hidden;
     }
     /* Front face — logo + name */
     .brand-tower .tf-front {
@@ -1214,17 +1220,18 @@
     }
 
     .brand-tower .tower-logo {
-      width: 56px;
-      height: 56px;
+      width: 40px;
+      height: 40px;
       object-fit: contain;
-      margin-bottom: 16px;
+      margin-bottom: 8px;
       filter: brightness(0) invert(1) drop-shadow(0 0 20px rgba(193, 145, 47, 0.3));
+      flex-shrink: 0;
     }
     .brand-tower .tower-brand {
       font-family: 'Playfair Display', serif;
-      font-size: 16px;
+      font-size: 13px;
       font-weight: 900;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       background: linear-gradient(135deg, #c1912f 0%, #dbb872 50%, #c1912f 100%);
       -webkit-background-clip: text;
@@ -1234,21 +1241,23 @@
     }
     .brand-tower .tower-sub {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 10px;
+      font-size: 8px;
       font-weight: 600;
-      letter-spacing: 0.25em;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
       color: rgba(255, 255, 255, 0.35);
+      white-space: nowrap;
     }
     .brand-tower .tower-divider {
-      width: 40px;
+      width: 30px;
       height: 1px;
       background: linear-gradient(90deg, transparent, rgba(193, 145, 47, 0.5), transparent);
-      margin: 12px 0;
+      margin: 6px 0;
+      flex-shrink: 0;
     }
     .brand-tower .tower-tagline {
       font-family: 'Playfair Display', serif;
-      font-size: 13px;
+      font-size: 11px;
       font-weight: 700;
       font-style: italic;
       color: rgba(193, 145, 47, 0.6);
@@ -1257,35 +1266,41 @@
     }
     .brand-tower .tower-stat {
       font-family: 'Playfair Display', serif;
-      font-size: 28px;
+      font-size: 20px;
       font-weight: 900;
       color: rgba(193, 145, 47, 0.7);
       line-height: 1;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
     .brand-tower .tower-stat-label {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 9px;
+      font-size: 7px;
       font-weight: 600;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
       color: rgba(255, 255, 255, 0.3);
+      white-space: nowrap;
     }
     .brand-tower .tower-service-list {
       list-style: none;
       padding: 0;
       margin: 0;
       text-align: center;
+      overflow: hidden;
+      width: 100%;
     }
     .brand-tower .tower-service-list li {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 9px;
+      font-size: 7px;
       font-weight: 600;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: rgba(255, 255, 255, 0.35);
-      padding: 5px 0;
+      padding: 3px 0;
       border-bottom: 1px solid rgba(193, 145, 47, 0.08);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .brand-tower .tower-service-list li:last-child {
       border-bottom: none;
@@ -1616,31 +1631,45 @@
     /* ===== RESPONSIVE FIXES FOR MOBILE (375px) ===== */
 
     @media (max-width: 639px) {
-      /* Reduce 3D object sizes */
-      .cube-3d { width: 80px !important; height: 80px !important; }
-      .cube-3d .face { width: 80px !important; height: 80px !important; font-size: 9px !important; }
-      .prism-3d { width: 120px !important; height: 120px !important; }
-      .prism-3d .prism-face { width: 120px !important; height: 120px !important; font-size: 9px !important; }
-      .icosahedron-3d { width: 120px !important; height: 120px !important; }
-      .icosahedron-3d .ico-ring { width: 120px !important; height: 120px !important; }
-      .torus-3d { width: 120px !important; height: 120px !important; }
-      .torus-3d .torus-segment { width: 120px !important; height: 120px !important; }
-      .pyramid-3d { width: 120px !important; height: 120px !important; }
-      .concentric-spheres .sphere-ring { max-width: 120px; max-height: 120px; }
+      /* Reduce 3D object sizes and fix translateZ */
+      .cube-3d { width: 70px !important; height: 70px !important; }
+      .cube-3d .face { width: 70px !important; height: 70px !important; font-size: 7px !important; }
+      .cube-3d .front  { transform: translateZ(35px) !important; }
+      .cube-3d .back   { transform: rotateY(180deg) translateZ(35px) !important; }
+      .cube-3d .right  { transform: rotateY(90deg) translateZ(35px) !important; }
+      .cube-3d .left   { transform: rotateY(-90deg) translateZ(35px) !important; }
+      .cube-3d .top    { transform: rotateX(90deg) translateZ(35px) !important; }
+      .cube-3d .bottom { transform: rotateX(-90deg) translateZ(35px) !important; }
 
-      /* Brand tower orbit rings smaller */
+      .prism-3d { width: 100px !important; height: 100px !important; }
+      .prism-3d .prism-face { width: 100px !important; height: 100px !important; font-size: 7px !important; }
+      .prism-3d .pf-front  { transform: translateZ(50px) !important; }
+      .prism-3d .pf-back   { transform: rotateY(180deg) translateZ(50px) !important; }
+      .prism-3d .pf-right  { transform: rotateY(90deg) translateZ(50px) !important; }
+      .prism-3d .pf-left   { transform: rotateY(-90deg) translateZ(50px) !important; }
+      .prism-3d .pf-top    { transform: rotateX(90deg) translateZ(50px) !important; }
+      .prism-3d .pf-bottom { transform: rotateX(-90deg) translateZ(50px) !important; }
+
+      .icosahedron-3d { width: 100px !important; height: 100px !important; }
+      .icosahedron-3d .ico-ring { width: 100px !important; height: 100px !important; }
+      .torus-3d { width: 100px !important; height: 100px !important; }
+      .torus-3d .torus-segment { width: 100px !important; height: 100px !important; }
+      .pyramid-3d { width: 100px !important; height: 100px !important; }
+
+      /* Brand tower */
       .brand-orbit { display: none; }
-      .brand-tower-base { width: 120px; }
-
-      /* Reduce hero text sizes */
-      h1 { font-size: 2rem !important; }
+      .brand-tower-base { width: 100px; }
+      .brand-tower .tower-logo { width: 32px !important; height: 32px !important; margin-bottom: 6px !important; }
+      .brand-tower .tower-brand { font-size: 11px !important; }
+      .brand-tower .tower-tagline { font-size: 10px !important; }
+      .brand-tower .tower-stat { font-size: 16px !important; }
 
       /* Prevent ticker overflow */
       .ticker { gap: 0; }
-      .ticker a, .ticker > div { margin-left: 16px; margin-right: 16px; }
+      .ticker a, .ticker > div { margin-left: 12px; margin-right: 12px; }
 
-      /* Reduce section padding */
-      .px-10 { padding-left: 1rem; padding-right: 1rem; }
+      /* Global containment */
+      .particle-field { display: none; }
     }
 
     /* ===== CONTRAST FIXES ===== */

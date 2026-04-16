@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import nodemailer from 'nodemailer';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
+import adminRouter from './server-admin.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -180,6 +181,9 @@ app.get('/api/health', (req, res) => {
     service: 'Onsective Enterprise Backend'
   });
 });
+
+// Admin API routes
+app.use(adminRouter);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));

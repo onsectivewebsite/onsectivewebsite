@@ -737,14 +737,14 @@ const ServiceDetail: React.FC = () => {
               <p className="text-[#64748b] mb-6 font-['Plus_Jakarta_Sans']">Deep-rooted institutional expertise across the entire digital ecosystem. Each capability represents a sovereign domain of mastery refined across hundreds of deployments.</p>
 
               {/* 3D rotating element */}
-              <div className="hidden lg:flex justify-center my-8" style={{ perspective: '600px' }}>
-                <div className="cube-3d" style={{ width: '100px', height: '100px' }}>
-                  <div className="face front" style={{ width: '100px', height: '100px', transform: 'translateZ(50px)', fontSize: '9px' }}>Discover</div>
-                  <div className="face back" style={{ width: '100px', height: '100px', transform: 'rotateY(180deg) translateZ(50px)', fontSize: '9px' }}>Design</div>
-                  <div className="face right" style={{ width: '100px', height: '100px', transform: 'rotateY(90deg) translateZ(50px)', fontSize: '9px' }}>Deliver</div>
-                  <div className="face left" style={{ width: '100px', height: '100px', transform: 'rotateY(-90deg) translateZ(50px)', fontSize: '9px' }}>Optimize</div>
-                  <div className="face top" style={{ width: '100px', height: '100px', transform: 'rotateX(90deg) translateZ(50px)', fontSize: '9px' }}>Scale</div>
-                  <div className="face bottom" style={{ width: '100px', height: '100px', transform: 'rotateX(-90deg) translateZ(50px)', fontSize: '9px' }}>Govern</div>
+              <div className="hidden lg:flex justify-center my-8 overflow-hidden" style={{ perspective: '600px' }}>
+                <div className="cube-3d">
+                  <div className="face front">Discover</div>
+                  <div className="face back">Design</div>
+                  <div className="face right">Deliver</div>
+                  <div className="face left">Optimize</div>
+                  <div className="face top">Scale</div>
+                  <div className="face bottom">Govern</div>
                 </div>
               </div>
 

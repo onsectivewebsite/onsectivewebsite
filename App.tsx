@@ -77,10 +77,34 @@ const ScrollToTop = () => {
   return null;
 };
 
+// Analytics tracker — sends page views to backend
+const AnalyticsTracker = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    if (pathname.startsWith('/admin')) return;
+    const sessionId = sessionStorage.getItem('onsective_sid') || `sid-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    sessionStorage.setItem('onsective_sid', sessionId);
+    fetch('/api/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        page: pathname,
+        referrer: document.referrer,
+        userAgent: navigator.userAgent,
+        sessionId,
+        screenWidth: window.innerWidth,
+        screenHeight: window.innerHeight,
+      }),
+    }).catch(() => {});
+  }, [pathname]);
+  return null;
+};
+
 const App: React.FC = () => {
   return (
     <Router>
       <ScrollToTop />
+      <AnalyticsTracker />
       <Layout>
         <Suspense fallback={<Loading />}>
           <Routes>

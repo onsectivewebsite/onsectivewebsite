@@ -470,25 +470,25 @@ const Home: React.FC = () => {
                     <div className="tower-brand">Onsective</div>
                     <div className="tower-divider"></div>
                     <div className="tower-sub">Enterprise</div>
-                    <div style={{ height: '24px' }}></div>
+                    <div style={{ height: '8px' }}></div>
                     <div className="tower-sub">Est. 2026 — Toronto</div>
                   </div>
 
                   {/* Back — Tagline + Mission */}
                   <div className="tower-face tf-back">
-                    <img src="/assets/logo.png" alt="Onsective" className="tower-logo" style={{ width: '60px', height: '60px', opacity: 0.4 }} />
+                    <img src="/assets/logo.png" alt="Onsective" className="tower-logo" style={{ opacity: 0.4 }} />
                     <div className="tower-divider"></div>
                     <div className="tower-tagline">
                       "Command<br />The Future."
                     </div>
                     <div className="tower-divider"></div>
-                    <div className="tower-sub" style={{ marginTop: '12px' }}>Global Technology</div>
+                    <div className="tower-sub" style={{ marginTop: '4px' }}>Global Technology</div>
                     <div className="tower-sub">Consulting Institution</div>
                   </div>
 
                   {/* Right — Services */}
                   <div className="tower-face tf-right">
-                    <div className="tower-sub" style={{ marginBottom: '16px', color: 'rgba(193,145,47,0.5)' }}>Ten Practice Domains</div>
+                    <div className="tower-sub" style={{ marginBottom: '6px', color: 'rgba(193,145,47,0.5)' }}>Ten Practice Domains</div>
                     <ul className="tower-service-list">
                       <li>IT Strategy</li>
                       <li>Cloud Services</li>
@@ -505,8 +505,8 @@ const Home: React.FC = () => {
 
                   {/* Left — Stats */}
                   <div className="tower-face tf-left">
-                    <div className="tower-sub" style={{ marginBottom: '20px', color: 'rgba(193,145,47,0.5)' }}>By the Numbers</div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', alignItems: 'center' }}>
+                    <div className="tower-sub" style={{ marginBottom: '8px', color: 'rgba(193,145,47,0.5)' }}>By the Numbers</div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
                       <div style={{ textAlign: 'center' }}>
                         <div className="tower-stat">7+</div>
                         <div className="tower-stat-label">Nations</div>
@@ -514,12 +514,12 @@ const Home: React.FC = () => {
                       <div className="tower-divider"></div>
                       <div style={{ textAlign: 'center' }}>
                         <div className="tower-stat">120+</div>
-                        <div className="tower-stat-label">Enterprise Clients</div>
+                        <div className="tower-stat-label">Clients</div>
                       </div>
                       <div className="tower-divider"></div>
                       <div style={{ textAlign: 'center' }}>
                         <div className="tower-stat">500+</div>
-                        <div className="tower-stat-label">Projects Delivered</div>
+                        <div className="tower-stat-label">Projects</div>
                       </div>
                     </div>
                   </div>

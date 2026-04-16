@@ -241,6 +241,7 @@ const Footer: React.FC = () => {
                 <a href="https://employee.onsective.com" target="_blank" rel="noopener noreferrer" className="hover:text-brand-primary transition-colors flex items-center gap-1">
                   Employee Portal <ArrowUpRight size={10} />
                 </a>
+                <Link to="/admin" className="hover:text-brand-primary transition-colors">Admin</Link>
                 <span className="flex items-center gap-1.5 text-white/30">
                   <Globe size={13} /> Global / EN
                 </span>

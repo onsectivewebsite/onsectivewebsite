@@ -1,0 +1,18 @@
+{
+  "users": [
+    {
+      "id": "90c11f0d-8b6f-4987-8923-76978ced7717",
+      "username": "admin",
+      "password": "$2b$10$GaZ8eChq7CVmdk1U5VHiXeUEdWgT4SljpRToxBxaks2/vzvXv1Z7a",
+      "role": "superuser",
+      "name": "System Administrator",
+      "email": "admin@onsective.com",
+      "createdAt": "2026-04-16T19:15:47.671Z"
+    }
+  ],
+  "blogs": [],
+  "analytics": [],
+  "sessions": [],
+  "twoFactorCodes": [],
+  "resetTokens": []
+}
