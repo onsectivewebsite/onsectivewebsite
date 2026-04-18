@@ -11,8 +11,9 @@ import React, { useEffect, useRef, useState } from 'react';
  */
 
 // ------------------------------------------------------------------
-// Progress hook: tracks how far a tracked element has scrolled
-// through the viewport. Returns 0..1.
+// Progress hook: maps 0..1 to the *sticky-engaged window* of the
+// tracked element. Scene idles at 0 before pinning, animates fully
+// during pinning, and holds at 1 after — no dead zone.
 // ------------------------------------------------------------------
 const useScrollProgress = (ref: React.RefObject<HTMLElement>) => {
   const [p, setP] = useState(0);
@@ -25,9 +26,16 @@ const useScrollProgress = (ref: React.RefObject<HTMLElement>) => {
       frame = requestAnimationFrame(() => {
         const rect = el.getBoundingClientRect();
         const vh = window.innerHeight;
-        const total = rect.height + vh;
-        const scrolled = vh - rect.top;
-        setP(Math.max(0, Math.min(1, scrolled / total)));
+        const stickyRange = rect.height - vh;
+        if (stickyRange <= 0) {
+          // Section shorter than viewport — use simple entry/exit mapping.
+          const total = rect.height + vh;
+          const scrolled = vh - rect.top;
+          setP(Math.max(0, Math.min(1, scrolled / total)));
+          return;
+        }
+        const scrolledInSticky = -rect.top;
+        setP(Math.max(0, Math.min(1, scrolledInSticky / stickyRange)));
       });
     };
     update();
@@ -60,7 +68,7 @@ const Stage: React.FC<StageProps> = ({ numeral, eyebrow, title, body, stat, chil
   const progress = useScrollProgress(track);
 
   return (
-    <section ref={track} className="relative bg-[#0a1f35] text-white" style={{ minHeight: '200vh' }}>
+    <section ref={track} className="relative bg-[#0a1f35] text-white" style={{ minHeight: '160vh' }}>
       {/* Ambient layers */}
       <div className="absolute inset-0 pointer-events-none">
         <div
