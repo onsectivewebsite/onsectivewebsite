@@ -39,7 +39,39 @@ const MethodologyDetail: React.FC = () => {
     <>
       <SEOHead
         title={`${detail.title} — ${parentService.title} Methodology | Onsective`}
-        description={detail.tagline}
+        description={`${detail.tagline}. Onsective Enterprise Inc. delivers the ${detail.title} phase of our ${parentService.title.toLowerCase()} practice to 120+ enterprises across 7+ nations.`}
+        overrides={{
+          keywords: `Onsective ${detail.title}, Onsective ${parentService.title}, Onsective ${parentService.title} ${detail.title}, ${detail.title} methodology, ${parentService.title} ${detail.title} framework, ${parentService.title} consulting, ${detail.title} consulting Toronto, Onsective Enterprise, Onsective Inc, Onsec, Insec, ${detail.frameworks.slice(0, 4).join(', ')}`,
+          canonical: `https://onsective.com/services/${serviceId}/methodology/${methodologyId}`,
+          structuredData: {
+            '@type': 'Service',
+            '@id': `https://onsective.com/services/${serviceId}/methodology/${methodologyId}/#service`,
+            name: `${detail.title} — Onsective ${parentService.title} Methodology`,
+            serviceType: `${parentService.title} ${detail.title}`,
+            description: detail.tagline,
+            provider: {
+              '@type': 'Organization',
+              name: 'Onsective Enterprise',
+              alternateName: ['Onsective', 'Onsective Inc.', 'Onsec', 'Insec'],
+              url: 'https://onsective.com'
+            },
+            areaServed: 'Worldwide',
+            hasOfferCatalog: {
+              '@type': 'OfferCatalog',
+              name: `${detail.title} Deliverables`,
+              itemListElement: detail.deliverables.map(d => ({
+                '@type': 'Offer',
+                itemOffered: { '@type': 'Service', name: d }
+              }))
+            }
+          }
+        }}
+        breadcrumbs={[
+          { name: 'Home', url: 'https://onsective.com/' },
+          { name: 'Services', url: 'https://onsective.com/services' },
+          { name: parentService.title, url: `https://onsective.com${parentService.path}` },
+          { name: detail.title, url: `https://onsective.com/services/${serviceId}/methodology/${methodologyId}` }
+        ]}
       />
 
       {/* ===== HERO ===== */}

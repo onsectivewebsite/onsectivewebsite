@@ -1,27 +1,146 @@
-# Onsective Enterprise — robots.txt
-# https://onsective.com
+# =============================================================
+# Onsective Enterprise Inc. — robots.txt
+# Website: https://onsective.com
+# Alternate names: Onsective, Onsective Enterprise, Onsective Inc,
+#                  Onsective Consulting, Onsective Software,
+#                  Onsec, Insec, Insective
+# =============================================================
 
+# Default: all crawlers allowed on public pages
 User-agent: *
 Allow: /
-
-# Crawl-delay for polite crawling
-Crawl-delay: 1
-
-# Disallow admin and API routes
 Disallow: /admin
+Disallow: /admin/*
 Disallow: /api/
+Disallow: /api/*
 
-# Sitemap
-Sitemap: https://onsective.com/sitemap.xml
-
-# Google-specific
+# ---- Major Search Engines (fast indexing) ----
 User-agent: Googlebot
 Allow: /
 Disallow: /admin
 Disallow: /api/
 
-# Bing
+User-agent: Googlebot-Image
+Allow: /
+Disallow: /admin
+
+User-agent: Googlebot-News
+Allow: /
+Disallow: /admin
+
 User-agent: Bingbot
 Allow: /
 Disallow: /admin
 Disallow: /api/
+
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+User-agent: YandexBot
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+User-agent: Baiduspider
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+User-agent: Slurp
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+User-agent: Applebot
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+# ---- AI / LLM crawlers (explicit allow for brand visibility) ----
+User-agent: GPTBot
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+User-agent: Claude-Web
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+User-agent: Meta-ExternalAgent
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+User-agent: Bytespider
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+User-agent: CCBot
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+User-agent: Amazonbot
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+User-agent: FacebookBot
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+User-agent: LinkedInBot
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+User-agent: Twitterbot
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+# ---- Sitemaps ----
+Sitemap: https://onsective.com/sitemap.xml
+
+# ---- Host declaration (for Yandex) ----
+Host: https://onsective.com

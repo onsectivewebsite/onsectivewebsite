@@ -38,8 +38,42 @@ const CapabilityDetail: React.FC = () => {
   return (
     <>
       <SEOHead
-        title={`${capabilityData.title} | ${parentService?.title || 'Strategic'} Capability`}
-        description={capabilityData.tagline}
+        title={`${capabilityData.title} | ${parentService?.title || 'Strategic'} Capability | Onsective`}
+        description={`${capabilityData.tagline}. Onsective Enterprise Inc. delivers ${capabilityData.title} as part of our ${parentService?.title?.toLowerCase() || 'strategic'} practice to 120+ enterprise clients across 7+ nations.`}
+        overrides={{
+          keywords: `Onsective ${capabilityData.title}, ${capabilityData.title}, ${capabilityData.title} consulting, ${capabilityData.title} services, ${capabilityData.title} Toronto, ${capabilityData.title} Canada, ${parentService?.title || ''} ${capabilityData.title}, Onsective Enterprise, Onsective Inc, Onsec, Insec, ${capabilityData.frameworks?.slice(0, 4).join(', ') || ''}`,
+          canonical: `https://onsective.com/services/${serviceId}/capability/${capabilityId}`,
+          structuredData: {
+            '@type': 'Service',
+            '@id': `https://onsective.com/services/${serviceId}/capability/${capabilityId}/#service`,
+            name: `${capabilityData.title} — Onsective ${parentService?.title || 'Capability'}`,
+            serviceType: capabilityData.title,
+            description: capabilityData.tagline,
+            provider: {
+              '@type': 'Organization',
+              name: 'Onsective Enterprise',
+              alternateName: ['Onsective', 'Onsective Inc.', 'Onsec', 'Insec'],
+              url: 'https://onsective.com'
+            },
+            areaServed: 'Worldwide',
+            ...(capabilityData.deliverables && {
+              hasOfferCatalog: {
+                '@type': 'OfferCatalog',
+                name: `${capabilityData.title} Deliverables`,
+                itemListElement: capabilityData.deliverables.map(d => ({
+                  '@type': 'Offer',
+                  itemOffered: { '@type': 'Service', name: d }
+                }))
+              }
+            })
+          }
+        }}
+        breadcrumbs={[
+          { name: 'Home', url: 'https://onsective.com/' },
+          { name: 'Services', url: 'https://onsective.com/services' },
+          ...(parentService ? [{ name: parentService.title, url: `https://onsective.com${parentService.path}` }] : []),
+          { name: capabilityData.title, url: `https://onsective.com/services/${serviceId}/capability/${capabilityId}` }
+        ]}
       />
 
       {/* ===== HERO ===== */}
