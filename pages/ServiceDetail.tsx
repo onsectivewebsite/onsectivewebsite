@@ -6,6 +6,7 @@ import { SERVICES } from '../constants';
 import { ASSETS } from '../utils/assets';
 import { toSlug } from '../utils/slugs';
 import { getMethodologySlug } from '../data/methodology-details';
+import { getSceneForService } from '../components/UI/ServiceScene3D';
 
 const SERVICE_CONTENT: Record<string, any> = {
   'it-strategy': {
@@ -611,6 +612,12 @@ const ServiceDetail: React.FC = () => {
         </div>
       </section>
 
+      {/* ===== 3D SCROLL-LINKED SERVICE SCENE ===== */}
+      {(() => {
+        const Scene = getSceneForService(serviceMeta.id);
+        return Scene ? <Scene /> : null;
+      })()}
+
       {/* ===== DEEP DIVE — NEW SECTION ===== */}
       <section className="py-28 md:py-40 bg-[#f1f5f9] relative overflow-hidden">
         <div className="hex-grid-bg"></div>
@@ -894,6 +901,101 @@ const ServiceDetail: React.FC = () => {
                 <h3 className="text-lg font-['Playfair_Display'] font-bold text-[#1a1a2e] mb-3">{item.title}</h3>
                 <p className="text-[#64748b] text-sm leading-relaxed font-['Plus_Jakarta_Sans']">{item.desc}</p>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== SEO: LOCATIONS ===== */}
+      <section className="py-20 bg-[#f1f5f9] border-t border-[#e2e8f0]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-16">
+          <div className="text-center mb-12">
+            <span className="text-[#c1912f] text-xs font-semibold uppercase tracking-wider mb-3 block font-['Plus_Jakarta_Sans']">Global Presence</span>
+            <h2 className="text-2xl md:text-4xl font-['Playfair_Display'] text-[#1a1a2e] font-bold mb-3">
+              {serviceMeta.title} Delivered Across 10 Global Markets
+            </h2>
+            <p className="text-[#64748b] text-base max-w-2xl mx-auto font-['Plus_Jakarta_Sans']">
+              Onsective serves {serviceMeta.title.toLowerCase()} clients across every major global market. Explore delivery in your region.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+            {[
+              { id: 'toronto', city: 'Toronto', flag: '🇨🇦' },
+              { id: 'new-york', city: 'New York', flag: '🇺🇸' },
+              { id: 'london', city: 'London', flag: '🇬🇧' },
+              { id: 'dubai', city: 'Dubai', flag: '🇦🇪' },
+              { id: 'mumbai', city: 'Mumbai', flag: '🇮🇳' },
+              { id: 'singapore', city: 'Singapore', flag: '🇸🇬' },
+              { id: 'sydney', city: 'Sydney', flag: '🇦🇺' },
+              { id: 'berlin', city: 'Berlin', flag: '🇩🇪' },
+              { id: 'san-francisco', city: 'San Francisco', flag: '🇺🇸' },
+              { id: 'vancouver', city: 'Vancouver', flag: '🇨🇦' }
+            ].map(loc => (
+              <Link
+                key={loc.id}
+                to={`/services/${id}/in/${loc.id}`}
+                className="p-4 bg-white border border-[#e2e8f0] rounded-lg text-center hover:border-[#c1912f]/40 hover:-translate-y-0.5 transition-all"
+              >
+                <div className="text-2xl mb-1">{loc.flag}</div>
+                <div className="text-xs font-semibold text-[#1a1a2e] font-['Plus_Jakarta_Sans']">{serviceMeta.title}</div>
+                <div className="text-xs text-[#c1912f] font-['Plus_Jakarta_Sans']">in {loc.city}</div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== SEO: INDUSTRIES ===== */}
+      <section className="py-20 bg-white border-t border-[#e2e8f0]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-16">
+          <div className="text-center mb-12">
+            <span className="text-[#c1912f] text-xs font-semibold uppercase tracking-wider mb-3 block font-['Plus_Jakarta_Sans']">Industry Fit</span>
+            <h2 className="text-2xl md:text-4xl font-['Playfair_Display'] text-[#1a1a2e] font-bold mb-3">
+              {serviceMeta.title} Tuned to Your Industry
+            </h2>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+            {[
+              { id: 'banking', name: 'Banking' },
+              { id: 'healthcare', name: 'Healthcare' },
+              { id: 'retail', name: 'Retail' },
+              { id: 'manufacturing', name: 'Manufacturing' },
+              { id: 'energy', name: 'Energy' },
+              { id: 'technology', name: 'Technology' },
+              { id: 'professional-services', name: 'Professional Services' },
+              { id: 'education', name: 'Education' },
+              { id: 'government', name: 'Government' },
+              { id: 'media', name: 'Media' }
+            ].map(ind => (
+              <Link
+                key={ind.id}
+                to={`/services/${id}/for/${ind.id}`}
+                className="p-4 bg-[#f1f5f9] border border-[#e2e8f0] rounded-lg text-center hover:border-[#c1912f]/40 hover:bg-white transition-all"
+              >
+                <div className="text-sm font-semibold text-[#1a1a2e] font-['Plus_Jakarta_Sans']">{ind.name}</div>
+                <div className="text-xs text-[#c1912f] font-['Plus_Jakarta_Sans'] mt-1">→ {serviceMeta.title}</div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== SEO: INTENT LINKS ===== */}
+      <section className="py-16 bg-[#0d2b45] border-t border-white/10">
+        <div className="max-w-7xl mx-auto px-6 lg:px-16">
+          <div className="text-center mb-10">
+            <span className="text-[#c1912f] text-xs font-semibold uppercase tracking-wider mb-3 block font-['Plus_Jakarta_Sans']">Popular Searches</span>
+            <h2 className="text-xl md:text-2xl font-['Playfair_Display'] text-white font-bold">Common {serviceMeta.title} Questions</h2>
+          </div>
+          <div className="flex flex-wrap justify-center gap-3">
+            {['pricing', 'agency', 'company', 'consulting', 'firm', 'experts', 'solutions', 'services', 'near-me', 'reviews'].map(intent => (
+              <Link
+                key={intent}
+                to={`/services/${id}/intent/${intent}`}
+                className="px-5 py-2.5 bg-white/5 border border-white/10 rounded-full text-sm text-white/70 hover:bg-white/10 hover:text-white hover:border-[#c1912f]/40 transition-all font-['Plus_Jakarta_Sans']"
+              >
+                {serviceMeta.title} {intent.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
+              </Link>
             ))}
           </div>
         </div>

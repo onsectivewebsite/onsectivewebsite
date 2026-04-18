@@ -10,6 +10,7 @@ const Industries = lazy(() => import('./pages/Industries'));
 const ServiceDetail = lazy(() => import('./pages/ServiceDetail'));
 const CapabilityDetail = lazy(() => import('./pages/CapabilityDetail'));
 const MethodologyDetail = lazy(() => import('./pages/MethodologyDetail'));
+const SeoLanding = lazy(() => import('./pages/SeoLanding'));
 const IndustryDetail = lazy(() => import('./pages/IndustryDetail'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Insights = lazy(() => import('./pages/Insights'));
@@ -115,6 +116,13 @@ const App: React.FC = () => {
             <Route path="/services/:id" element={<ServiceDetail />} />
             <Route path="/services/:serviceId/capability/:capabilityId" element={<CapabilityDetail />} />
             <Route path="/services/:serviceId/methodology/:methodologyId" element={<MethodologyDetail />} />
+
+            {/* Programmatic SEO Landing Pages (500+ unique URLs) */}
+            <Route path="/services/:serviceId/in/:cityId" element={<SeoLanding mode="service-location" />} />
+            <Route path="/services/:serviceId/for/:industryId" element={<SeoLanding mode="service-industry" />} />
+            <Route path="/services/:serviceId/intent/:intentId" element={<SeoLanding mode="service-intent" />} />
+            <Route path="/industries/:industryId/in/:cityId" element={<SeoLanding mode="industry-location" />} />
+            <Route path="/guides/:slug" element={<SeoLanding mode="guide" />} />
 
             <Route path="/industries" element={<Industries />} />
             <Route path="/industries/:id" element={<IndustryDetail />} />
