@@ -9,6 +9,7 @@ const Services = lazy(() => import('./pages/Services'));
 const Industries = lazy(() => import('./pages/Industries'));
 const ServiceDetail = lazy(() => import('./pages/ServiceDetail'));
 const CapabilityDetail = lazy(() => import('./pages/CapabilityDetail'));
+const MethodologyDetail = lazy(() => import('./pages/MethodologyDetail'));
 const IndustryDetail = lazy(() => import('./pages/IndustryDetail'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Insights = lazy(() => import('./pages/Insights'));
@@ -113,6 +114,7 @@ const App: React.FC = () => {
             <Route path="/services" element={<Services />} />
             <Route path="/services/:id" element={<ServiceDetail />} />
             <Route path="/services/:serviceId/capability/:capabilityId" element={<CapabilityDetail />} />
+            <Route path="/services/:serviceId/methodology/:methodologyId" element={<MethodologyDetail />} />
 
             <Route path="/industries" element={<Industries />} />
             <Route path="/industries/:id" element={<IndustryDetail />} />

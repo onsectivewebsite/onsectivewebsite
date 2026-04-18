@@ -5,6 +5,7 @@ import SEOHead from '../components/SEO/SEOHead';
 import { SERVICES } from '../constants';
 import { ASSETS } from '../utils/assets';
 import { toSlug } from '../utils/slugs';
+import { getMethodologySlug } from '../data/methodology-details';
 
 const SERVICE_CONTENT: Record<string, any> = {
   'it-strategy': {
@@ -710,17 +711,21 @@ const ServiceDetail: React.FC = () => {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {content.methodology.map((step: any, i: number) => (
-              <div
+              <Link
                 key={i}
-                className="scroll-3d-enter bg-white/5 border border-white/10 p-8 md:p-10 text-left hover:bg-white/10 transition-all duration-300 rounded-lg holo-shimmer group"
+                to={`/services/${id}/methodology/${getMethodologySlug(step.title)}`}
+                className="scroll-3d-enter bg-white/5 border border-white/10 p-8 md:p-10 text-left hover:bg-white/10 hover:border-[#c1912f]/40 transition-all duration-300 rounded-lg holo-shimmer group block cursor-pointer"
                 style={{ transitionDelay: `${i * 150}ms` }}
               >
                 <div className="text-5xl md:text-6xl font-['Playfair_Display'] text-[#c1912f]/30 mb-6 font-bold group-hover:text-[#c1912f]/50 transition-colors">0{i + 1}</div>
-                <h3 className="text-xl font-['Playfair_Display'] mb-4 text-white font-bold">{step.title}</h3>
+                <h3 className="text-xl font-['Playfair_Display'] mb-4 text-white font-bold group-hover:text-[#c1912f] transition-colors">{step.title}</h3>
                 <p className="text-white/40 text-sm leading-relaxed font-['Plus_Jakarta_Sans']">{step.desc}</p>
+                <div className="mt-6 inline-flex items-center gap-2 text-xs font-semibold text-[#c1912f] font-['Plus_Jakarta_Sans'] opacity-0 group-hover:opacity-100 transition-opacity">
+                  Explore Phase <ArrowRight size={12} />
+                </div>
                 {/* Bottom accent */}
-                <div className="mt-6 h-[2px] bg-gradient-to-r from-[#c1912f]/50 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
-              </div>
+                <div className="mt-3 h-[2px] bg-gradient-to-r from-[#c1912f]/50 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+              </Link>
             ))}
           </div>
         </div>
