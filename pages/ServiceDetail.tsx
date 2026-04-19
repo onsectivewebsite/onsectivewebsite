@@ -7,6 +7,7 @@ import { ASSETS } from '../utils/assets';
 import { toSlug } from '../utils/slugs';
 import { getMethodologySlug } from '../data/methodology-details';
 import { getSceneForService } from '../components/UI/ServiceScene3D';
+import { SEO_GUIDES } from '../data/seo-landing';
 
 const SERVICE_CONTENT: Record<string, any> = {
   'it-strategy': {
@@ -1000,6 +1001,39 @@ const ServiceDetail: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* ===== POPULAR GUIDES FOR THIS SERVICE ===== */}
+      {(() => {
+        const relatedGuides = SEO_GUIDES.filter(g => g.relatedService === serviceMeta.id).slice(0, 18);
+        if (relatedGuides.length === 0) return null;
+        return (
+          <section className="py-20 bg-white border-t border-[#e2e8f0]">
+            <div className="max-w-7xl mx-auto px-6 lg:px-16">
+              <div className="text-center mb-12">
+                <span className="text-[#c1912f] text-xs font-semibold uppercase tracking-wider mb-3 block font-['Plus_Jakarta_Sans']">Learning Library</span>
+                <h2 className="text-2xl md:text-4xl font-['Playfair_Display'] text-[#1a1a2e] font-bold mb-3">
+                  Popular {serviceMeta.title} Guides
+                </h2>
+                <p className="text-[#64748b] text-base max-w-2xl mx-auto font-['Plus_Jakarta_Sans']">
+                  In-depth guides from Onsective's practice — institutional frameworks, evaluations, and playbooks.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {relatedGuides.map(guide => (
+                  <Link
+                    key={guide.slug}
+                    to={`/guides/${guide.slug}`}
+                    className="group p-5 bg-[#f1f5f9] border border-[#e2e8f0] rounded-lg hover:bg-white hover:border-[#c1912f]/40 transition-all"
+                  >
+                    <div className="text-xs font-semibold text-[#c1912f] uppercase tracking-wider mb-2 font-['Plus_Jakarta_Sans']">{guide.category}</div>
+                    <h3 className="text-sm font-semibold text-[#1a1a2e] group-hover:text-[#c1912f] transition-colors font-['Plus_Jakarta_Sans'] leading-snug">{guide.title}</h3>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      })()}
 
       {/* ===== RELATED SERVICES ===== */}
       <section className="py-28 md:py-40 bg-white border-t border-[#e2e8f0]">

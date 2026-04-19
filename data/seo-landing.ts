@@ -1115,6 +1115,12 @@ export const SEO_GUIDES: SeoGuide[] = [
 ];
 
 // ============================================================
+// Merge in the digital-marketing keyword guide bundle
+// ============================================================
+import { DM_KEYWORD_GUIDES } from './dm-keyword-guides';
+SEO_GUIDES.push(...DM_KEYWORD_GUIDES);
+
+// ============================================================
 // Helpers
 // ============================================================
 export const getLocation = (id: string) => SEO_LOCATIONS.find(l => l.id === id);

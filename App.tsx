@@ -11,6 +11,7 @@ const ServiceDetail = lazy(() => import('./pages/ServiceDetail'));
 const CapabilityDetail = lazy(() => import('./pages/CapabilityDetail'));
 const MethodologyDetail = lazy(() => import('./pages/MethodologyDetail'));
 const SeoLanding = lazy(() => import('./pages/SeoLanding'));
+const Resources = lazy(() => import('./pages/Resources'));
 const IndustryDetail = lazy(() => import('./pages/IndustryDetail'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Insights = lazy(() => import('./pages/Insights'));
@@ -123,6 +124,7 @@ const App: React.FC = () => {
             <Route path="/services/:serviceId/intent/:intentId" element={<SeoLanding mode="service-intent" />} />
             <Route path="/industries/:industryId/in/:cityId" element={<SeoLanding mode="industry-location" />} />
             <Route path="/guides/:slug" element={<SeoLanding mode="guide" />} />
+            <Route path="/resources" element={<Resources />} />
 
             <Route path="/industries" element={<Industries />} />
             <Route path="/industries/:id" element={<IndustryDetail />} />

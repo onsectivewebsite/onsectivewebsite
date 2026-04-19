@@ -31,6 +31,38 @@ const INTENTS = [
 ];
 
 const GUIDES = [
+  // Digital Marketing keyword guides (batch 2)
+  'what-is-digital-marketing', 'digital-marketing-definition', 'digital-marketing-meaning',
+  'digital-marketing-explained', 'que-es-marketing-digital', 'mercadeo-digital',
+  'agencia-de-marketing-digital', 'curso-de-marketing-digital',
+  'o-que-e-marketing-digital', 'marketing-digital-pdf',
+  'c-est-quoi-le-marketing-digital', 'formation-marketing-digital',
+  'digital-marketing-la-gi', 'digital-marketing-toha', 'shuzi-yingxiao',
+  'digital-marketing-courses', 'digital-marketing-course', 'digital-marketing-free-course',
+  'best-digital-marketing-course', 'online-marketing-courses', 'marketing-courses-online',
+  'marketing-courses', 'google-digital-marketing', 'google-ads-certification',
+  'google-digital-garage', 'google-digital-marketing-certification',
+  'hubspot-digital-marketing', 'digital-marketing-strategy', 'digital-marketing-strategies',
+  'digital-marketing-tips', 'digital-marketing-funnel', 'how-to-start-digital-marketing',
+  'digital-marketing-for-beginners', 'digital-marketing-basics', 'learn-digital-marketing',
+  'digital-marketing-careers', 'digital-marketing-jobs', 'digital-marketing-specialist',
+  'digital-marketing-manager', 'digital-marketing-executive', 'digital-marketer',
+  'digital-marketing-internship', 'digital-marketing-salary',
+  'digital-marketing-tools', 'digital-marketing-platforms', 'digital-marketing-channels',
+  'types-of-digital-marketing', 'digital-marketing-services', 'digital-marketing-company',
+  'digital-marketing-agency-near-me', 'best-digital-marketing-agency',
+  'marketing-agencies', 'marketing-agency',
+  'online-advertising', 'digital-advertising', 'internet-marketing', 'online-marketing',
+  'web-marketing', 'digital-marketing-business', 'ai-in-digital-marketing',
+  'digital-marketing-trends', 'benefits-of-digital-marketing', 'digital-marketing-examples',
+  'digital-marketing-success', 'what-is-seo-in-digital-marketing',
+  'digital-marketing-websites', 'digital-marketing-website',
+  'digital-marketing-images', 'digital-marketing-institute', 'digital-services',
+  'digital-technology', 'digital-agency', 'digital-market', 'media-marketing',
+  'google-marketing', 'learn-digital-with-google', 'digital-marketing-digital-branding',
+  'digital-marketing-pictures', 'digital-marketing-system', 'digital-marketing-pdf',
+  'digital-marketing-certificate', 'what-includes-in-digital-marketing',
+  // Original guide set
   'what-is-cloud-migration', 'aws-vs-azure-vs-gcp', 'kubernetes-enterprise-guide',
   'finops-explained', 'hybrid-cloud-architecture', 'mainframe-modernization',
   'devsecops-guide', 'cloud-native-explained', 'serverless-architecture',
@@ -92,6 +124,10 @@ for (const i of INDUSTRIES) for (const l of LOCATIONS) blocks.push(entry(`/indus
 // Guides
 blocks.push(`  <!-- Programmatic SEO: Topical Guides (${GUIDES.length} URLs) -->`);
 for (const g of GUIDES) blocks.push(entry(`/guides/${g}`, '0.65'));
+
+// Static resource pages
+blocks.push('  <!-- Off-page SEO landing pages -->');
+blocks.push(entry('/resources', '0.75'));
 
 const insertion = blocks.join('\n');
 
