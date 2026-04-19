@@ -225,33 +225,64 @@ const Contact: React.FC = () => {
         </div>
       </section>
 
-      {/* ===== GOOGLE BUSINESS PROFILE CTA ===== */}
+      {/* ===== GOOGLE BUSINESS PROFILE + LINKEDIN CTA ===== */}
       <section className="py-16 bg-white border-t border-brand-border">
-        <div className="max-w-5xl mx-auto px-6 lg:px-16">
-          <div className="bg-gradient-to-br from-brand-dark to-brand-navy-deep rounded-lg p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center gap-6 text-white">
-            <div className="w-14 h-14 rounded-lg bg-brand-primary/20 flex items-center justify-center shrink-0">
-              <svg width={24} height={24} viewBox="0 0 24 24" fill="none" className="text-brand-primary">
-                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1Z" fill="#4285F4"/>
-                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.99.66-2.26 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23Z" fill="#34A853"/>
-                <path d="M5.84 14.1a6.62 6.62 0 0 1 0-4.2V7.07H2.18a11 11 0 0 0 0 9.87l3.66-2.84Z" fill="#FBBC05"/>
-                <path d="M12 4.75c1.62 0 3.06.56 4.2 1.64l3.15-3.15C17.45 1.19 14.97.25 12 .25A11 11 0 0 0 2.18 7.07L5.84 9.9C6.71 7.3 9.14 4.75 12 4.75Z" fill="#EA4335"/>
-              </svg>
+        <div className="max-w-7xl mx-auto px-6 lg:px-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Google Business Profile */}
+            <div className="bg-gradient-to-br from-brand-dark to-brand-navy-deep rounded-lg p-8 flex flex-col gap-6 text-white">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-lg bg-brand-primary/20 flex items-center justify-center shrink-0">
+                  <svg width={22} height={22} viewBox="0 0 24 24" fill="none">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1Z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.99.66-2.26 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23Z" fill="#34A853"/>
+                    <path d="M5.84 14.1a6.62 6.62 0 0 1 0-4.2V7.07H2.18a11 11 0 0 0 0 9.87l3.66-2.84Z" fill="#FBBC05"/>
+                    <path d="M12 4.75c1.62 0 3.06.56 4.2 1.64l3.15-3.15C17.45 1.19 14.97.25 12 .25A11 11 0 0 0 2.18 7.07L5.84 9.9C6.71 7.3 9.14 4.75 12 4.75Z" fill="#EA4335"/>
+                  </svg>
+                </div>
+                <div className="flex-1">
+                  <div className="text-xs font-semibold text-brand-primary uppercase tracking-widest mb-1">Google Business Profile</div>
+                  <h3 className="text-lg md:text-xl font-display font-bold leading-tight">Find, Review, and Save Onsective on Google</h3>
+                  <p className="text-white/60 text-sm mt-2">
+                    View the Onsective location, hours, and contact information. Leaving a review supports local search visibility.
+                  </p>
+                </div>
+              </div>
+              <a
+                href="https://share.google/1FEaabgX3DE0px7L3"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-3 bg-brand-primary text-white font-semibold text-sm rounded-md hover:brightness-110 w-fit"
+              >
+                Open on Google <ArrowUpRight size={14} />
+              </a>
             </div>
-            <div className="flex-1">
-              <div className="text-xs font-semibold text-brand-primary uppercase tracking-widest mb-1">Google Business Profile</div>
-              <h3 className="text-xl md:text-2xl font-display font-bold">Find, Review, and Save Onsective on Google</h3>
-              <p className="text-white/60 text-sm mt-2">
-                Visit our official Google Business Profile to view the Onsective location, hours, contact information, and leave a review.
-              </p>
+
+            {/* LinkedIn Company Page */}
+            <div className="bg-gradient-to-br from-[#0077B5] to-[#004770] rounded-lg p-8 flex flex-col gap-6 text-white">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
+                  <svg width={22} height={22} viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.86-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.86 3.38-1.86 3.61 0 4.28 2.38 4.28 5.47v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.55V9h3.57v11.45ZM22.22 0H1.77C.79 0 0 .78 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .78 23.2 0 22.22 0Z"/>
+                  </svg>
+                </div>
+                <div className="flex-1">
+                  <div className="text-xs font-semibold text-white/80 uppercase tracking-widest mb-1">LinkedIn Company</div>
+                  <h3 className="text-lg md:text-xl font-display font-bold leading-tight">Follow Onsective on LinkedIn</h3>
+                  <p className="text-white/70 text-sm mt-2">
+                    Follow Onsective Enterprise for institutional insights, case studies, thought leadership, and career opportunities.
+                  </p>
+                </div>
+              </div>
+              <a
+                href="https://www.linkedin.com/company/onsective/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-3 bg-white text-[#0077B5] font-semibold text-sm rounded-md hover:bg-white/90 w-fit"
+              >
+                Follow on LinkedIn <ArrowUpRight size={14} />
+              </a>
             </div>
-            <a
-              href="https://share.google/1FEaabgX3DE0px7L3"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-brand-primary text-white font-semibold text-sm rounded-md hover:brightness-110 whitespace-nowrap shrink-0"
-            >
-              Open on Google <ArrowUpRight size={14} />
-            </a>
           </div>
         </div>
       </section>

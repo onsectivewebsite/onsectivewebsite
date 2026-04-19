@@ -51,7 +51,7 @@ const Onsective: React.FC = () => {
             },
             sameAs: [
               'https://share.google/1FEaabgX3DE0px7L3',
-              'https://www.linkedin.com/company/onsective',
+              'https://www.linkedin.com/company/onsective/',
               'https://www.instagram.com/onsective',
               'https://twitter.com/OnsectiveEnt',
               'https://www.facebook.com/onsective',
@@ -163,7 +163,7 @@ const Onsective: React.FC = () => {
               <div className="space-y-3">
                 {[
                   { label: 'Google Business Profile', url: 'https://share.google/1FEaabgX3DE0px7L3' },
-                  { label: 'LinkedIn', url: 'https://www.linkedin.com/company/onsective' },
+                  { label: 'LinkedIn', url: 'https://www.linkedin.com/company/onsective/' },
                   { label: 'Instagram', url: 'https://www.instagram.com/onsective' },
                   { label: 'X (Twitter)', url: 'https://twitter.com/OnsectiveEnt' },
                   { label: 'Facebook', url: 'https://www.facebook.com/onsective' },
