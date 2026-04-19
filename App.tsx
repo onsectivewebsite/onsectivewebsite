@@ -2,6 +2,8 @@ import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Layout/Navbar';
 import Footer from './components/Layout/Footer';
+import BackToTop from './components/UI/BackToTop';
+import CookieConsent from './components/UI/CookieConsent';
 
 // Lazy load pages for performance
 const Home = lazy(() => import('./pages/Home'));
@@ -69,6 +71,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         {children}
       </main>
       {!isAdmin && <Footer />}
+      {!isAdmin && <BackToTop />}
+      {!isAdmin && <CookieConsent />}
     </div>
   );
 };

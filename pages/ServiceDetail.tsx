@@ -7,6 +7,7 @@ import { ASSETS } from '../utils/assets';
 import { toSlug } from '../utils/slugs';
 import { getMethodologySlug } from '../data/methodology-details';
 import { getSceneForService } from '../components/UI/ServiceScene3D';
+import ROICalculator from '../components/UI/ROICalculator';
 import { SEO_GUIDES } from '../data/seo-landing';
 
 const SERVICE_CONTENT: Record<string, any> = {
@@ -643,6 +644,9 @@ const ServiceDetail: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* ===== INTERACTIVE ROI CALCULATOR (Digital Marketing only) ===== */}
+      {serviceMeta.id === 'digital-marketing' && <ROICalculator />}
 
       {/* ===== 3D SCROLL-LINKED SERVICE SCENE ===== */}
       {(() => {

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams, Navigate, Link } from 'react-router-dom';
-import { ChevronRight, ArrowRight, CheckCircle2, Phone, Sparkles } from 'lucide-react';
+import { ChevronRight, ArrowRight, CheckCircle2, Phone, Sparkles, Clock } from 'lucide-react';
 import SEOHead from '../components/SEO/SEOHead';
 import { SERVICES } from '../constants';
 import {
@@ -8,8 +8,11 @@ import {
   getIndustrySEO,
   getIntent,
   getGuide,
-  SEO_LOCATIONS
+  SEO_LOCATIONS,
+  SEO_GUIDES
 } from '../data/seo-landing';
+import ReadingProgress from '../components/UI/ReadingProgress';
+import ShareButtons from '../components/UI/ShareButtons';
 
 type Mode = 'service-location' | 'service-industry' | 'service-intent' | 'industry-location' | 'guide';
 
@@ -38,8 +41,14 @@ const SeoLanding: React.FC<Props> = ({ mode }) => {
     if (!guide) return <Navigate to="/insights" replace />;
     const relatedService = SERVICES.find(s => s.id === guide.relatedService);
 
+    const readMins = 2 + guide.sections.length * 2;
+    const relatedGuides = SEO_GUIDES
+      .filter(g => g.slug !== guide.slug && g.category === guide.category)
+      .slice(0, 4);
+
     return (
       <>
+        <ReadingProgress />
         <SEOHead
           title={guide.metaTitle}
           description={guide.metaDescription}
@@ -82,13 +91,18 @@ const SeoLanding: React.FC<Props> = ({ mode }) => {
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-['Playfair_Display'] font-bold text-white leading-[0.95] mb-6">
               {guide.title}
             </h1>
-            <p className="text-lg text-white/50 font-['Plus_Jakarta_Sans'] max-w-3xl leading-relaxed">
+            <p className="text-lg text-white/50 font-['Plus_Jakarta_Sans'] max-w-3xl leading-relaxed mb-6">
               {guide.metaDescription}
             </p>
+            <div className="flex items-center gap-5 text-xs text-white/40 font-['Plus_Jakarta_Sans']">
+              <span className="inline-flex items-center gap-1.5"><Clock size={12} /> {readMins} min read</span>
+              <span>·</span>
+              <span>Onsective Research</span>
+            </div>
           </div>
         </section>
 
-        <section className="py-20 bg-white">
+        <section className="py-16 bg-white">
           <div className="max-w-4xl mx-auto px-6 lg:px-16">
             {guide.sections.map((section, i) => (
               <div key={i} className="animate-on-scroll opacity-0 translate-y-6 transition-all duration-700 [&.is-visible]:opacity-100 [&.is-visible]:translate-y-0 mb-14">
@@ -96,6 +110,11 @@ const SeoLanding: React.FC<Props> = ({ mode }) => {
                 <p className="text-[#475569] font-['Plus_Jakarta_Sans'] leading-[1.9] text-base">{section.body}</p>
               </div>
             ))}
+
+            {/* Share cluster */}
+            <div className="mt-10 pt-8 border-t border-[#e2e8f0]">
+              <ShareButtons title={guide.title} />
+            </div>
 
             {relatedService && (
               <div className="mt-20 p-8 md:p-12 bg-[#f1f5f9] border-l-4 border-[#c1912f] rounded-lg">
@@ -114,6 +133,36 @@ const SeoLanding: React.FC<Props> = ({ mode }) => {
             )}
           </div>
         </section>
+
+        {/* Related guides */}
+        {relatedGuides.length > 0 && (
+          <section className="py-16 bg-[#f1f5f9] border-t border-[#e2e8f0]">
+            <div className="max-w-5xl mx-auto px-6 lg:px-16">
+              <div className="flex items-baseline justify-between mb-8">
+                <h3 className="text-2xl font-['Playfair_Display'] font-bold text-[#1a1a2e]">Continue Reading</h3>
+                <Link to="/insights" className="text-xs font-semibold text-[#c1912f] uppercase tracking-wider font-['Plus_Jakarta_Sans']">
+                  All articles <ArrowRight size={12} className="inline" />
+                </Link>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {relatedGuides.map(rg => (
+                  <Link
+                    key={rg.slug}
+                    to={`/guides/${rg.slug}`}
+                    className="group p-5 bg-white border border-[#e2e8f0] rounded-lg hover:border-[#c1912f]/40 transition-all"
+                  >
+                    <div className="text-xs font-semibold text-[#c1912f] uppercase tracking-wider mb-2 font-['Plus_Jakarta_Sans']">
+                      {rg.category}
+                    </div>
+                    <h4 className="text-base font-semibold text-[#1a1a2e] group-hover:text-[#c1912f] transition-colors font-['Plus_Jakarta_Sans'] leading-snug">
+                      {rg.title}
+                    </h4>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
       </>
     );
   }

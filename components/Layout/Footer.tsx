@@ -273,6 +273,7 @@ const Footer: React.FC = () => {
                 <Link to="/copyright" className="hover:text-brand-primary transition-colors">Copyright</Link>
                 <Link to="/accessibility" className="hover:text-brand-primary transition-colors">Accessibility</Link>
                 <Link to="/employee-handbook" className="hover:text-brand-primary transition-colors">Employee Handbook</Link>
+                <a href="/feed.xml" className="hover:text-brand-primary transition-colors">RSS</a>
                 <a href="https://employee.onsective.com" target="_blank" rel="noopener noreferrer" className="hover:text-brand-primary transition-colors flex items-center gap-1">
                   Employee Portal <ArrowUpRight size={10} />
                 </a>
