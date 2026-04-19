@@ -56,11 +56,11 @@ const INDUSTRY_IMAGES: Record<string, string> = {
   retail: ASSETS.IND_RETAIL,
   manufacturing: ASSETS.IND_MANUFACTURING,
   energy: ASSETS.IND_ENERGY,
-  technology: 'https://picsum.photos/id/48/1200/800',
-  'professional-services': 'https://picsum.photos/id/96/1200/800',
-  education: 'https://picsum.photos/id/180/1200/800',
-  government: 'https://picsum.photos/id/342/1200/800',
-  media: 'https://picsum.photos/id/366/1200/800'
+  technology: 'https://picsum.photos/seed/onsective-technology-sector/1200/800',
+  'professional-services': 'https://picsum.photos/seed/onsective-professional-services-sector/1200/800',
+  education: 'https://picsum.photos/seed/onsective-education-sector/1200/800',
+  government: 'https://picsum.photos/seed/onsective-government-sector/1200/800',
+  media: 'https://picsum.photos/seed/onsective-media-sector/1200/800'
 };
 
 /* ------------------------------------------------------------------ */
