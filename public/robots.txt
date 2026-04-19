@@ -141,6 +141,10 @@ Disallow: /api/
 
 # ---- Sitemaps ----
 Sitemap: https://onsective.com/sitemap.xml
+Sitemap: https://onsective.com/sitemap-core.xml
+Sitemap: https://onsective.com/sitemap-services.xml
+Sitemap: https://onsective.com/sitemap-guides.xml
+Sitemap: https://onsective.com/sitemap-insights.xml
 
 # ---- Host declaration (for Yandex) ----
 Host: https://onsective.com
