@@ -5,7 +5,7 @@ import SEOHead from '../components/SEO/SEOHead';
 import { SERVICES, GLOBAL_OFFICES, INDUSTRIES } from '../constants';
 import { ASSETS } from '../utils/assets';
 import { LATEST_INSIGHTS } from '../data/blog';
-import { StrategyCubeScene, CameraZoomScene, NeuralBrainScene } from '../components/UI/ServiceScene3D';
+import { StrategyCubeScene } from '../components/UI/ServiceScene3D';
 
 /* ------------------------------------------------------------------ */
 /*  useCounter — animates a number from 0 to target on scroll         */
@@ -784,11 +784,6 @@ const Home: React.FC = () => {
       </section>
 
       {/* ============================================================ */}
-      {/*  3D SCROLL SHOWCASE — NEURAL BRAIN                           */}
-      {/* ============================================================ */}
-      <NeuralBrainScene />
-
-      {/* ============================================================ */}
       {/*  INDUSTRIES                                                  */}
       {/* ============================================================ */}
       <section className="bg-white py-20 lg:py-28">
@@ -826,11 +821,6 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section>
-
-      {/* ============================================================ */}
-      {/*  3D SCROLL SHOWCASE — CAMERA ZOOM                            */}
-      {/* ============================================================ */}
-      <CameraZoomScene />
 
       {/* ============================================================ */}
       {/*  INSIGHTS                                                    */}

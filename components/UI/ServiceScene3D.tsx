@@ -68,7 +68,7 @@ const Stage: React.FC<StageProps> = ({ numeral, eyebrow, title, body, stat, chil
   const progress = useScrollProgress(track);
 
   return (
-    <section ref={track} className="relative bg-[#0a1f35] text-white" style={{ minHeight: '160vh' }}>
+    <section ref={track} className="relative bg-[#0a1f35] text-white" style={{ minHeight: '130vh' }}>
       {/* Ambient layers */}
       <div className="absolute inset-0 pointer-events-none">
         <div
