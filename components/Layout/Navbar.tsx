@@ -120,23 +120,28 @@ const Navbar: React.FC = () => {
               >
                 <Link
                   to={item.path}
-                  className={`px-4 h-full flex items-center gap-1 text-sm font-medium transition-colors relative ${
-                    location.pathname.startsWith(item.path)
+                  className={`group px-4 h-full flex items-center gap-1.5 text-[13px] font-semibold tracking-[0.05em] transition-colors relative ${
+                    activeMega === item.label
                       ? 'text-brand-primary'
-                      : 'text-brand-text hover:text-brand-primary'
+                      : location.pathname.startsWith(item.path) && item.path !== '/'
+                        ? 'text-brand-primary'
+                        : 'text-brand-text hover:text-brand-primary'
                   }`}
                 >
-                  {item.label.split(' ').map(w => w.charAt(0) + w.slice(1).toLowerCase()).join(' ')}
+                  <span>{item.label.split(' ').map(w => w.charAt(0) + w.slice(1).toLowerCase()).join(' ')}</span>
                   {item.children && (
                     <ChevronDown
-                      size={13}
-                      className={`transition-transform duration-200 ${activeMega === item.label ? 'rotate-180' : ''}`}
+                      size={12}
+                      strokeWidth={2.5}
+                      className={`transition-transform duration-300 ${activeMega === item.label ? 'rotate-180 text-brand-primary' : 'text-brand-muted group-hover:text-brand-primary'}`}
                     />
                   )}
-                  {/* Active underline */}
+                  {/* Active underline — thin gold rail */}
                   <span
-                    className={`absolute bottom-0 left-4 right-4 h-0.5 bg-brand-primary transition-opacity duration-200 ${
-                      activeMega === item.label || location.pathname.startsWith(item.path) ? 'opacity-100' : 'opacity-0'
+                    className={`absolute bottom-0 left-4 right-4 h-[2px] bg-gradient-to-r from-brand-primary via-brand-gold-light to-brand-primary transition-all duration-300 ${
+                      activeMega === item.label || (location.pathname.startsWith(item.path) && item.path !== '/')
+                        ? 'opacity-100 scale-x-100'
+                        : 'opacity-0 scale-x-50'
                     }`}
                   />
                 </Link>
@@ -249,57 +254,91 @@ const Navbar: React.FC = () => {
           </div>
         )}
 
-        {/* ===== MEGA MENU (desktop) ===== */}
+        {/* ===== MEGA MENU (desktop) — premium navy panel ===== */}
         {activeMega && NAV_ITEMS.find(i => i.label === activeMega)?.children && (
           <div
-            className="hidden xl:block absolute left-0 right-0 top-full bg-white border-t border-brand-border z-[190]"
+            className="hidden xl:block absolute left-0 right-0 top-full z-[190] mega-menu-animate"
             onMouseLeave={() => setActiveMega(null)}
           >
-            <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
-              <div className="grid grid-cols-12 gap-8">
-                {/* Left intro */}
-                <div className="col-span-3 pr-6 border-r border-brand-border">
-                  <h3 className="text-lg font-display font-bold text-brand-dark mb-2">
-                    {NAV_ITEMS.find(i => i.label === activeMega)?.label
-                      .split(' ')
-                      .map(w => w.charAt(0) + w.slice(1).toLowerCase())
-                      .join(' ')}
-                  </h3>
-                  <p className="text-brand-muted text-sm leading-relaxed mb-5">
-                    {NAV_ITEMS.find(i => i.label === activeMega)?.description ||
-                      'Explore our solutions tailored for enterprise organizations.'}
-                  </p>
-                  <Link
-                    to={NAV_ITEMS.find(i => i.label === activeMega)?.path || '/'}
-                    onClick={() => setActiveMega(null)}
-                    className="inline-flex items-center gap-1.5 text-brand-primary text-sm font-semibold hover:gap-2.5 transition-all"
-                  >
-                    View All <ArrowRight size={14} />
-                  </Link>
-                </div>
-
-                {/* Children grid */}
-                <div className="col-span-9 grid grid-cols-3 gap-x-6 gap-y-1">
-                  {NAV_ITEMS.find(i => i.label === activeMega)?.children?.map((child, idx) => (
+            {/* Subtle gold accent line at the top */}
+            <div className="h-[2px] bg-gradient-to-r from-transparent via-brand-primary to-transparent" />
+            <div className="bg-white border-b border-brand-border shadow-[0_20px_50px_-10px_rgba(13,43,69,0.15)]">
+              <div className="max-w-7xl mx-auto px-6 lg:px-8 py-10">
+                <div className="grid grid-cols-12 gap-10">
+                  {/* Left intro — premium dark panel */}
+                  <div className="col-span-3 relative">
+                    <div className="absolute -left-6 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-brand-primary/40 to-transparent hidden" />
+                    <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-brand-primary mb-3 block">
+                      Onsective · Chapter
+                    </span>
+                    <h3 className="text-2xl font-display font-bold text-brand-dark mb-3 leading-tight">
+                      {NAV_ITEMS.find(i => i.label === activeMega)?.label
+                        .split(' ')
+                        .map(w => w.charAt(0) + w.slice(1).toLowerCase())
+                        .join(' ')}
+                    </h3>
+                    <p className="text-brand-muted text-[13px] leading-[1.65] mb-6">
+                      {NAV_ITEMS.find(i => i.label === activeMega)?.description ||
+                        'Explore our solutions tailored for enterprise organizations.'}
+                    </p>
                     <Link
-                      key={idx}
-                      to={child.path}
+                      to={NAV_ITEMS.find(i => i.label === activeMega)?.path || '/'}
                       onClick={() => setActiveMega(null)}
-                      className="block px-3 py-2.5 rounded-md hover:bg-brand-light transition-colors group"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-brand-dark text-white text-xs font-semibold tracking-wider uppercase rounded-md hover:bg-brand-primary transition-all duration-300 hover:gap-2.5"
                     >
-                      <div className="text-sm font-medium text-brand-text group-hover:text-brand-primary transition-colors">
-                        {child.label}
-                      </div>
-                      {child.description && (
-                        <div className="text-xs text-brand-muted mt-0.5 line-clamp-1">{child.description}</div>
-                      )}
+                      View All <ArrowRight size={12} />
                     </Link>
-                  ))}
+                  </div>
+
+                  {/* Vertical gold divider */}
+                  <div className="col-span-px hidden" aria-hidden="true" />
+
+                  {/* Children grid — two columns with better cards */}
+                  <div className="col-span-9 grid grid-cols-3 gap-x-2 gap-y-1 border-l border-brand-border/60 pl-10 -ml-px">
+                    {NAV_ITEMS.find(i => i.label === activeMega)?.children?.map((child, idx) => (
+                      <Link
+                        key={idx}
+                        to={child.path}
+                        onClick={() => setActiveMega(null)}
+                        className="group relative block px-4 py-3 rounded-md transition-all duration-200 hover:bg-brand-light"
+                      >
+                        {/* Gold left accent that slides in on hover */}
+                        <span className="absolute left-0 top-3 bottom-3 w-[2px] bg-brand-primary rounded-full opacity-0 scale-y-50 group-hover:opacity-100 group-hover:scale-y-100 transition-all duration-300 origin-center" />
+                        <div className="flex items-start gap-2.5">
+                          <div className="flex-1 min-w-0">
+                            <div className="text-[13px] font-bold text-brand-dark group-hover:text-brand-primary transition-colors leading-snug">
+                              {child.label}
+                            </div>
+                            {child.description && (
+                              <div className="text-[11px] text-brand-muted mt-1 line-clamp-2 leading-relaxed">
+                                {child.description}
+                              </div>
+                            )}
+                          </div>
+                          <ArrowRight
+                            size={12}
+                            className="text-brand-primary opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 shrink-0 mt-0.5"
+                          />
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         )}
+
+        {/* Mega menu animation */}
+        <style>{`
+          .mega-menu-animate {
+            animation: megaFadeIn 280ms cubic-bezier(0.16, 1, 0.3, 1);
+          }
+          @keyframes megaFadeIn {
+            0% { opacity: 0; transform: translateY(-8px); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+        `}</style>
       </nav>
 
       {/* ===== MOBILE MENU — full screen white overlay ===== */}
