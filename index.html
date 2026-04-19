@@ -897,46 +897,79 @@
         0 10px 20px -5px rgba(193, 145, 47, 0.08);
     }
 
+    /* --- 3D Stage — shared by cube, prism, and icosahedron --- */
+    /* Provides breathing room so rotating corners never clip.      */
+    /* Width and height are 2.4× the largest diagonal of the model. */
+    .cube-stage {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 300px;
+      margin-bottom: 1rem;
+      overflow: visible;
+    }
+    @media (min-width: 640px) {
+      .cube-stage { min-height: 340px; margin-bottom: 2rem; }
+    }
+    /* Soft radial floor light behind each 3D object */
+    .cube-stage::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 55%, rgba(193,145,47,0.18), rgba(193,145,47,0.04) 35%, transparent 65%);
+      filter: blur(10px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .cube-stage > * { position: relative; z-index: 1; }
+
     /* --- 3D Rotating Cube --- */
     .cube-3d {
-      width: 90px;
-      height: 90px;
+      width: 110px;
+      height: 110px;
       transform-style: preserve-3d;
-      animation: rotateCube 12s linear infinite;
+      animation: rotateCube 18s ease-in-out infinite;
+      filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.45));
     }
 
     .cube-3d .face {
       position: absolute;
-      width: 90px;
-      height: 90px;
-      border: 1px solid rgba(193, 145, 47, 0.3);
-      background: rgba(193, 145, 47, 0.05);
+      width: 110px;
+      height: 110px;
+      border: 1px solid rgba(193, 145, 47, 0.5);
+      background:
+        linear-gradient(135deg, rgba(193, 145, 47, 0.18), rgba(193, 145, 47, 0.02) 50%, rgba(13, 43, 69, 0.55)),
+        radial-gradient(circle at 30% 30%, rgba(232, 200, 116, 0.25), transparent 65%);
+      box-shadow: inset 0 0 24px rgba(193, 145, 47, 0.15);
+      backdrop-filter: blur(4px);
       display: flex;
       align-items: center;
       justify-content: center;
+      font-family: 'Playfair Display', serif;
       font-weight: 700;
-      font-size: 9px;
-      letter-spacing: 0.1em;
+      font-size: 12px;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: rgba(193, 145, 47, 0.6);
+      color: rgba(232, 200, 116, 0.95);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
 
-    .cube-3d .front  { transform: translateZ(45px); }
-    .cube-3d .back   { transform: rotateY(180deg) translateZ(45px); }
-    .cube-3d .right  { transform: rotateY(90deg) translateZ(45px); }
-    .cube-3d .left   { transform: rotateY(-90deg) translateZ(45px); }
-    .cube-3d .top    { transform: rotateX(90deg) translateZ(45px); }
-    .cube-3d .bottom { transform: rotateX(-90deg) translateZ(45px); }
+    .cube-3d .front  { transform: translateZ(55px); }
+    .cube-3d .back   { transform: rotateY(180deg) translateZ(55px); }
+    .cube-3d .right  { transform: rotateY(90deg) translateZ(55px); }
+    .cube-3d .left   { transform: rotateY(-90deg) translateZ(55px); }
+    .cube-3d .top    { transform: rotateX(90deg) translateZ(55px); }
+    .cube-3d .bottom { transform: rotateX(-90deg) translateZ(55px); }
 
     @keyframes rotateCube {
-      0%   { transform: rotateX(0deg) rotateY(0deg); }
-      25%  { transform: rotateX(90deg) rotateY(90deg); }
-      50%  { transform: rotateX(180deg) rotateY(180deg); }
-      75%  { transform: rotateX(270deg) rotateY(270deg); }
-      100% { transform: rotateX(360deg) rotateY(360deg); }
+      0%   { transform: rotateX(-10deg) rotateY(0deg); }
+      50%  { transform: rotateX(20deg) rotateY(180deg); }
+      100% { transform: rotateX(-10deg) rotateY(360deg); }
     }
 
     /* --- 3D Parallax on Scroll --- */
@@ -1026,37 +1059,43 @@
       100% { background-position: 60px 52px; }
     }
 
-    /* --- 3D Service Prism (replaces cube, bigger & more faces visible) --- */
+    /* --- 3D Service Prism — premium glass-gold model --- */
     .prism-3d {
-      width: 200px;
-      height: 200px;
+      width: 160px;
+      height: 160px;
       transform-style: preserve-3d;
-      animation: prismRotate 20s ease-in-out infinite;
+      animation: prismRotate 22s ease-in-out infinite;
+      filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.55));
     }
     .prism-3d .prism-face {
       position: absolute;
-      width: 200px;
-      height: 200px;
-      border: 1px solid rgba(193, 145, 47, 0.25);
-      background: linear-gradient(135deg, rgba(193, 145, 47, 0.08), rgba(193, 145, 47, 0.02));
+      width: 160px;
+      height: 160px;
+      border: 1px solid rgba(193, 145, 47, 0.45);
+      background:
+        linear-gradient(135deg, rgba(193, 145, 47, 0.22), rgba(193, 145, 47, 0.04) 50%, rgba(13, 43, 69, 0.6)),
+        radial-gradient(circle at 28% 28%, rgba(232, 200, 116, 0.28), transparent 62%);
+      box-shadow: inset 0 0 32px rgba(193, 145, 47, 0.18);
       backdrop-filter: blur(4px);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 800;
-      font-size: 10px;
-      letter-spacing: 0.15em;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(193, 145, 47, 0.7);
+      color: rgba(232, 200, 116, 0.95);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
       overflow: hidden;
       white-space: nowrap;
     }
-    .prism-3d .pf-front  { transform: translateZ(100px); }
-    .prism-3d .pf-back   { transform: rotateY(180deg) translateZ(100px); }
-    .prism-3d .pf-right  { transform: rotateY(90deg) translateZ(100px); }
-    .prism-3d .pf-left   { transform: rotateY(-90deg) translateZ(100px); }
-    .prism-3d .pf-top    { transform: rotateX(90deg) translateZ(100px); }
-    .prism-3d .pf-bottom { transform: rotateX(-90deg) translateZ(100px); }
+    .prism-3d .pf-front  { transform: translateZ(80px); }
+    .prism-3d .pf-back   { transform: rotateY(180deg) translateZ(80px); }
+    .prism-3d .pf-right  { transform: rotateY(90deg) translateZ(80px); }
+    .prism-3d .pf-left   { transform: rotateY(-90deg) translateZ(80px); }
+    .prism-3d .pf-top    { transform: rotateX(90deg) translateZ(80px); }
+    .prism-3d .pf-bottom { transform: rotateX(-90deg) translateZ(80px); }
     @keyframes prismRotate {
       0%   { transform: rotateX(-15deg) rotateY(0deg); }
       25%  { transform: rotateX(5deg) rotateY(90deg); }
@@ -1438,17 +1477,27 @@
 
     /* --- 3D Rotating Icosahedron (wireframe sphere) --- */
     .icosahedron-3d {
-      width: 200px;
-      height: 200px;
+      width: 180px;
+      height: 180px;
       transform-style: preserve-3d;
-      animation: icosahedronSpin 25s linear infinite;
+      animation: icosahedronSpin 28s linear infinite;
       position: relative;
+      filter: drop-shadow(0 20px 30px rgba(193, 145, 47, 0.15));
     }
     .icosahedron-3d .ico-ring {
       position: absolute;
       inset: 0;
-      border: 1px solid rgba(193, 145, 47, 0.15);
+      border: 1.5px solid rgba(193, 145, 47, 0.4);
       border-radius: 50%;
+      box-shadow: 0 0 20px rgba(193, 145, 47, 0.15), inset 0 0 20px rgba(193, 145, 47, 0.1);
+    }
+    .icosahedron-3d::before {
+      content: '';
+      position: absolute;
+      inset: 30%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232, 200, 116, 0.5), rgba(193, 145, 47, 0) 70%);
+      filter: blur(8px);
     }
     .icosahedron-3d .ico-ring:nth-child(1) { transform: rotateX(0deg); }
     .icosahedron-3d .ico-ring:nth-child(2) { transform: rotateX(60deg); }
@@ -1725,26 +1774,27 @@
 
     @media (max-width: 639px) {
       /* Reduce 3D object sizes and fix translateZ */
-      .cube-3d { width: 70px !important; height: 70px !important; }
-      .cube-3d .face { width: 70px !important; height: 70px !important; font-size: 7px !important; }
-      .cube-3d .front  { transform: translateZ(35px) !important; }
-      .cube-3d .back   { transform: rotateY(180deg) translateZ(35px) !important; }
-      .cube-3d .right  { transform: rotateY(90deg) translateZ(35px) !important; }
-      .cube-3d .left   { transform: rotateY(-90deg) translateZ(35px) !important; }
-      .cube-3d .top    { transform: rotateX(90deg) translateZ(35px) !important; }
-      .cube-3d .bottom { transform: rotateX(-90deg) translateZ(35px) !important; }
+      .cube-stage { min-height: 220px !important; }
+      .cube-3d { width: 80px !important; height: 80px !important; }
+      .cube-3d .face { width: 80px !important; height: 80px !important; font-size: 9px !important; }
+      .cube-3d .front  { transform: translateZ(40px) !important; }
+      .cube-3d .back   { transform: rotateY(180deg) translateZ(40px) !important; }
+      .cube-3d .right  { transform: rotateY(90deg) translateZ(40px) !important; }
+      .cube-3d .left   { transform: rotateY(-90deg) translateZ(40px) !important; }
+      .cube-3d .top    { transform: rotateX(90deg) translateZ(40px) !important; }
+      .cube-3d .bottom { transform: rotateX(-90deg) translateZ(40px) !important; }
 
-      .prism-3d { width: 100px !important; height: 100px !important; }
-      .prism-3d .prism-face { width: 100px !important; height: 100px !important; font-size: 7px !important; }
-      .prism-3d .pf-front  { transform: translateZ(50px) !important; }
-      .prism-3d .pf-back   { transform: rotateY(180deg) translateZ(50px) !important; }
-      .prism-3d .pf-right  { transform: rotateY(90deg) translateZ(50px) !important; }
-      .prism-3d .pf-left   { transform: rotateY(-90deg) translateZ(50px) !important; }
-      .prism-3d .pf-top    { transform: rotateX(90deg) translateZ(50px) !important; }
-      .prism-3d .pf-bottom { transform: rotateX(-90deg) translateZ(50px) !important; }
+      .prism-3d { width: 110px !important; height: 110px !important; }
+      .prism-3d .prism-face { width: 110px !important; height: 110px !important; font-size: 9px !important; }
+      .prism-3d .pf-front  { transform: translateZ(55px) !important; }
+      .prism-3d .pf-back   { transform: rotateY(180deg) translateZ(55px) !important; }
+      .prism-3d .pf-right  { transform: rotateY(90deg) translateZ(55px) !important; }
+      .prism-3d .pf-left   { transform: rotateY(-90deg) translateZ(55px) !important; }
+      .prism-3d .pf-top    { transform: rotateX(90deg) translateZ(55px) !important; }
+      .prism-3d .pf-bottom { transform: rotateX(-90deg) translateZ(55px) !important; }
 
-      .icosahedron-3d { width: 100px !important; height: 100px !important; }
-      .icosahedron-3d .ico-ring { width: 100px !important; height: 100px !important; }
+      .icosahedron-3d { width: 120px !important; height: 120px !important; }
+      .icosahedron-3d .ico-ring { width: 120px !important; height: 120px !important; }
       .torus-3d { width: 100px !important; height: 100px !important; }
       .torus-3d .torus-segment { width: 100px !important; height: 100px !important; }
       .pyramid-3d { width: 100px !important; height: 100px !important; }
