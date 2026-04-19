@@ -2,7 +2,6 @@ import { NavItem } from '../types';
 import { SERVICES, INDUSTRIES } from './content';
 
 export const NAV_ITEMS: NavItem[] = [
-  { label: 'HOME', path: '/' },
   {
     label: 'CAPABILITIES',
     path: '/services',

@@ -11,6 +11,11 @@ const INDUSTRY_IMAGES: Record<string, string> = {
   retail: ASSETS.IND_RETAIL,
   manufacturing: ASSETS.IND_MANUFACTURING,
   energy: ASSETS.IND_ENERGY,
+  technology: 'https://picsum.photos/id/48/1200/800',
+  'professional-services': 'https://picsum.photos/id/96/1200/800',
+  education: 'https://picsum.photos/id/180/1200/800',
+  government: 'https://picsum.photos/id/342/1200/800',
+  media: 'https://picsum.photos/id/366/1200/800'
 };
 
 const INDUSTRY_STATS: Record<string, string> = {
@@ -19,6 +24,11 @@ const INDUSTRY_STATS: Record<string, string> = {
   retail: '60+ Retail Brands Optimized',
   manufacturing: '35+ Smart Factories Deployed',
   energy: '20+ Grid Modernization Programs',
+  technology: '80+ SaaS & Tech Firms Scaled',
+  'professional-services': '50+ Advisory Firms Engaged',
+  education: '30+ Academic Institutions Transformed',
+  government: '15+ Public Sector Programs Delivered',
+  media: '25+ Media & Entertainment Brands Served',
 };
 
 const Industries: React.FC = () => {

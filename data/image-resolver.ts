@@ -26,35 +26,6 @@ for (let i = 0; i <= 1084; i++) {
   PICSUM_IDS.push(i);
 }
 
-// Category → keyword cluster catalogue for the Unsplash relevance
-// layer (used as a secondary tag, not the primary image source).
-const KEYWORD_CLUSTERS: Record<string, string[]> = {
-  'Digital Marketing': ['digital-marketing,laptop', 'marketing,analytics', 'campaign,strategy', 'social-media,growth'],
-  'SEO': ['search-engine,keywords', 'website-audit,performance', 'technical-seo,code', 'content-strategy,ranking'],
-  'Google My Business': ['local-business,storefront', 'map-pin,location', 'customer-review,rating'],
-  'Social Media': ['instagram-content', 'linkedin-office', 'tiktok-creator', 'youtube-studio'],
-  'Content Marketing': ['content-creation,keyboard', 'blog-writing,coffee', 'editorial-meeting'],
-  'Email Marketing': ['email-inbox,message', 'newsletter,subscribe', 'email-automation'],
-  'Paid Advertising': ['google-ads,ppc', 'meta-ads,facebook', 'programmatic-advertising'],
-  'Conversion Rate Optimization': ['ab-testing,experiment', 'landing-page,design', 'user-experience'],
-  'Analytics & Measurement': ['data-analytics,dashboard', 'google-analytics', 'business-intelligence'],
-  'Local SEO': ['local-map,navigation', 'business-directory', 'storefront,community'],
-  'Custom Software': ['software-development,code', 'developer-workspace', 'programming,keyboard'],
-  'Custom Software Development': ['full-stack,developer', 'mobile-app,ios', 'saas-platform'],
-  'Cybersecurity': ['cybersecurity,shield', 'network-security,server-rack', 'data-protection'],
-  'Cybersecurity Depth': ['ethical-hacker,penetration', 'soc-analyst,monitoring', 'zero-trust'],
-  'Cloud': ['cloud-computing,data-center', 'aws,azure,cloud', 'kubernetes,containers'],
-  'Cloud Architecture': ['cloud-infrastructure', 'server-rack,lights', 'devops-pipeline'],
-  'AI': ['artificial-intelligence,robot', 'machine-learning,neural', 'data-science'],
-  'AI & Machine Learning': ['generative-ai,llm', 'mlops,data-pipeline', 'neural-network'],
-  'IT Strategy': ['enterprise-architecture', 'cio-boardroom', 'digital-transformation'],
-  'Industry Playbooks': ['business-playbook,strategy', 'industry-analysis,research'],
-  'Tools & Comparisons': ['software-comparison,screens', 'technology-stack,logos'],
-  'How-To Deep Dives': ['tutorial,step-by-step', 'learning,study,book'],
-  'Experience': ['user-experience,design', 'prototype,wireframe,figma'],
-  'Brand': ['brand-strategy,guidelines', 'visual-identity,logo']
-};
-
 const hash = (s: string): number => {
   let h = 5381;
   for (let i = 0; i < s.length; i++) {
@@ -84,16 +55,13 @@ export const resolveImage = (slug: string, category: string, width = 1200, heigh
 };
 
 /**
- * Relevance-optimised variant — used for featured cards where topic
- * fit matters more than uniqueness. Returns an Unsplash Source URL
- * keyed on category with a slug-derived signature for variety.
+ * Alias for resolveImage — kept for backwards compatibility with
+ * callers that historically requested a "topical" variant. Both now
+ * use the same reliable Picsum-ID-based resolution since Unsplash
+ * Source API was deprecated in 2024 and its URLs no longer return
+ * consistent images.
  */
-export const resolveTopicalImage = (slug: string, category: string, width = 1200, height = 750): string => {
-  const clusters = KEYWORD_CLUSTERS[category] || ['business-technology,office'];
-  const cluster = clusters[hash(slug) % clusters.length];
-  const sig = hash(slug + ':' + cluster);
-  return `https://source.unsplash.com/${width}x${height}/?${encodeURIComponent(cluster)}&sig=${sig}`;
-};
+export const resolveTopicalImage = resolveImage;
 
 export const resolveImageGeneric = (slug: string, width = 1200, height = 750): string =>
   resolveImage(slug, 'Digital Marketing', width, height);

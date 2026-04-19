@@ -47,19 +47,20 @@ const useCounter = (target: number, duration = 1600) => {
 /* ------------------------------------------------------------------ */
 /*  INDUSTRY IMAGE MAP                                                */
 /* ------------------------------------------------------------------ */
-// High-relevance Unsplash photos per industry. Explicit sig values
-// lock each industry to a consistent, distinct, topical photo.
+// Every industry gets a distinct image. Original five use local
+// curated photos; the five new sectors use specific Picsum IDs so
+// they always load and each is unique.
 const INDUSTRY_IMAGES: Record<string, string> = {
-  banking: 'https://source.unsplash.com/1200x800/?bank,skyscraper,wall-street,finance-building&sig=4011',
-  healthcare: 'https://source.unsplash.com/1200x800/?hospital,doctor,medical-technology,healthcare-facility&sig=4021',
-  retail: 'https://source.unsplash.com/1200x800/?retail-store,shopping-mall,boutique,ecommerce-warehouse&sig=4031',
-  manufacturing: 'https://source.unsplash.com/1200x800/?factory,manufacturing-plant,industrial-robot,production-line&sig=4041',
-  energy: 'https://source.unsplash.com/1200x800/?wind-turbine,solar-farm,power-grid,renewable-energy&sig=4051',
-  technology: 'https://source.unsplash.com/1200x800/?tech-company,software-office,silicon-valley,startup-hq&sig=4061',
-  'professional-services': 'https://source.unsplash.com/1200x800/?law-firm,consultancy,executive-meeting,boardroom-table&sig=4071',
-  education: 'https://source.unsplash.com/1200x800/?university-campus,lecture-hall,students-studying,classroom&sig=4081',
-  government: 'https://source.unsplash.com/1200x800/?capitol-building,parliament,public-sector,government-office&sig=4091',
-  media: 'https://source.unsplash.com/1200x800/?television-studio,broadcast-camera,production-set,newsroom&sig=4101'
+  banking: ASSETS.IND_BANKING,
+  healthcare: ASSETS.IND_HEALTH,
+  retail: ASSETS.IND_RETAIL,
+  manufacturing: ASSETS.IND_MANUFACTURING,
+  energy: ASSETS.IND_ENERGY,
+  technology: 'https://picsum.photos/id/48/1200/800',
+  'professional-services': 'https://picsum.photos/id/96/1200/800',
+  education: 'https://picsum.photos/id/180/1200/800',
+  government: 'https://picsum.photos/id/342/1200/800',
+  media: 'https://picsum.photos/id/366/1200/800'
 };
 
 /* ------------------------------------------------------------------ */
