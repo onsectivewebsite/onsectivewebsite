@@ -145,6 +145,22 @@ if (fs.existsSync(blogSlugsPath)) {
   for (const s of blogSlugs) blocks.push(entry(`/guides/${s}`, '0.60'));
 }
 
+// 300 service-adjacent blog posts (blog-300)
+const blog300Path = path.resolve('scripts/blog-300-slugs.json');
+if (fs.existsSync(blog300Path)) {
+  const slugs = JSON.parse(fs.readFileSync(blog300Path, 'utf-8'));
+  blocks.push(`  <!-- Programmatic SEO: 300 service-adjacent blog posts -->`);
+  for (const s of slugs) blocks.push(entry(`/guides/${s}`, '0.55'));
+}
+
+// Original auto-generated insights from data/blog.ts.
+// That file generates 560 posts via 70 keywords × 8 title templates,
+// reachable at /insights/insight-1 through /insights/insight-560.
+blocks.push(`  <!-- Original 560 auto-generated insights -->`);
+for (let i = 1; i <= 560; i++) {
+  blocks.push(entry(`/insights/insight-${i}`, '0.55'));
+}
+
 const insertion = blocks.join('\n');
 
 // Patch sitemap

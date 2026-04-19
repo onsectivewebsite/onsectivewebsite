@@ -1127,6 +1127,12 @@ import { BLOG_500 } from './blog-500';
 SEO_GUIDES.push(...BLOG_500);
 
 // ============================================================
+// Merge in the 300-post extension (service-adjacent topics)
+// ============================================================
+import { BLOG_300 } from './blog-300';
+SEO_GUIDES.push(...BLOG_300);
+
+// ============================================================
 // Helpers
 // ============================================================
 export const getLocation = (id: string) => SEO_LOCATIONS.find(l => l.id === id);

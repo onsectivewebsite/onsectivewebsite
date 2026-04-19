@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Download, FileText } from 'lucide-react';
+import { Download, FileText, ExternalLink } from 'lucide-react';
 import SEOHead from '../components/SEO/SEOHead';
 
 const SITE_URL = 'https://onsective.com';
@@ -60,44 +60,55 @@ const EmployeeHandbook: React.FC = () => {
               <h2 className="text-xl font-['Playfair_Display'] font-bold text-[#1a1a2e] mb-1">Onsective Inc Employee Handbook</h2>
               <p className="text-sm text-[#64748b] font-['Plus_Jakarta_Sans']">PDF document · Official version</p>
             </div>
-            <a
-              href={PDF_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#c1912f] text-white font-semibold text-sm rounded-md font-['Plus_Jakarta_Sans'] hover:brightness-110"
-            >
-              <Download size={14} /> Download PDF
-            </a>
+            <div className="flex gap-2 flex-wrap">
+              <a
+                href={PDF_URL}
+                download="Onsective-Inc-Employee-Handbook.pdf"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[#c1912f] text-white font-semibold text-sm rounded-md font-['Plus_Jakarta_Sans'] hover:brightness-110"
+              >
+                <Download size={14} /> Download
+              </a>
+              <a
+                href={PDF_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 border border-[#1a1a2e]/20 text-[#1a1a2e] font-semibold text-sm rounded-md font-['Plus_Jakarta_Sans'] hover:border-[#c1912f]"
+              >
+                <ExternalLink size={14} /> Open in new tab
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* EMBEDDED VIEWER */}
+      {/* EMBEDDED VIEWER — iframe is the most compatible approach.  */}
+      {/* If the browser blocks PDF inline rendering, the fallback   */}
+      {/* block below is revealed via the Google Docs viewer link.   */}
       <section className="pb-20 bg-white">
         <div className="max-w-5xl mx-auto px-6 lg:px-16">
           <div className="bg-[#0d2b45] rounded-lg overflow-hidden border border-[#e2e8f0]">
-            <object
-              data={PDF_URL}
-              type="application/pdf"
-              className="w-full"
-              style={{ height: '80vh', minHeight: '600px' }}
-            >
-              <div className="p-12 text-center text-white">
-                <FileText size={40} className="text-[#c1912f] mx-auto mb-4" />
-                <p className="font-['Plus_Jakarta_Sans'] text-white/80 mb-4">
-                  Your browser doesn't support inline PDF viewing.
-                </p>
-                <a
-                  href={PDF_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#c1912f] text-white font-semibold text-sm rounded-md font-['Plus_Jakarta_Sans']"
-                >
-                  <Download size={14} /> Open PDF in New Tab
-                </a>
-              </div>
-            </object>
+            <iframe
+              src={PDF_URL + '#view=FitH'}
+              title="Onsective Employee Handbook PDF"
+              className="w-full block"
+              style={{ height: '80vh', minHeight: '600px', border: 0 }}
+            />
           </div>
+          <p className="text-xs text-[#64748b] mt-4 text-center font-['Plus_Jakarta_Sans']">
+            PDF not rendering? Try{' '}
+            <a
+              href={`https://docs.google.com/viewer?url=https://onsective.com${PDF_URL}&embedded=true`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#c1912f] underline"
+            >
+              opening in Google Docs Viewer
+            </a>
+            {' '}or{' '}
+            <a href={PDF_URL} download="Onsective-Inc-Employee-Handbook.pdf" className="text-[#c1912f] underline">
+              downloading the PDF directly
+            </a>.
+          </p>
         </div>
       </section>
 

@@ -10,6 +10,18 @@
 [build.environment]
   NODE_VERSION = "20"
 
+# Explicit headers for PDF documents so they render inline in the
+# browser's native PDF viewer and download with the correct filename
+# when the user clicks the Download button.
+[[headers]]
+  for = "/document/*"
+  [headers.values]
+    Content-Type = "application/pdf"
+    X-Content-Type-Options = "nosniff"
+    Cache-Control = "public, max-age=3600"
+
+# SPA fallback — static files are served first (PDFs, sitemap, feed,
+# assets). Only unmatched paths fall through to index.html.
 [[redirects]]
   from = "/*"
   to = "/index.html"
