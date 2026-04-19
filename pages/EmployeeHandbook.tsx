@@ -90,8 +90,8 @@ const EmployeeHandbook: React.FC = () => {
             <iframe
               src={PDF_URL + '#view=FitH'}
               title="Onsective Employee Handbook PDF"
-              className="w-full block"
-              style={{ height: '80vh', minHeight: '600px', border: 0 }}
+              className="w-full block h-[60vh] sm:h-[75vh]"
+              style={{ minHeight: '420px', border: 0 }}
             />
           </div>
           <p className="text-xs text-[#64748b] mt-4 text-center font-['Plus_Jakarta_Sans']">

@@ -268,9 +268,9 @@ const Footer: React.FC = () => {
                 <p>&copy; {currentYear} {COMPANY_NAME} Enterprise Inc. All rights reserved.</p>
                 <p className="mt-1 text-white/10 text-xs">All content, media, videos, and intellectual property are protected under Canadian and international copyright law.</p>
               </div>
-              <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-white/25">
-                <Link to="/privacy" className="hover:text-brand-primary transition-colors">Privacy Policy</Link>
-                <Link to="/terms" className="hover:text-brand-primary transition-colors">Terms of Use</Link>
+              <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 sm:gap-x-6 text-xs sm:text-sm text-white/25">
+                <Link to="/privacy" className="hover:text-brand-primary transition-colors">Privacy</Link>
+                <Link to="/terms" className="hover:text-brand-primary transition-colors">Terms</Link>
                 <Link to="/copyright" className="hover:text-brand-primary transition-colors">Copyright</Link>
                 <Link to="/accessibility" className="hover:text-brand-primary transition-colors">Accessibility</Link>
                 <Link to="/employee-handbook" className="hover:text-brand-primary transition-colors">Employee Handbook</Link>
@@ -280,7 +280,7 @@ const Footer: React.FC = () => {
                 </a>
                 <Link to="/admin" className="hover:text-brand-primary transition-colors">Admin</Link>
                 <span className="flex items-center gap-1.5 text-white/30">
-                  <Globe size={13} /> Global / EN
+                  <Globe size={12} /> Global / EN
                 </span>
               </div>
             </div>

@@ -106,52 +106,52 @@ const Onsective: React.FC = () => {
               <span className="text-[#c1912f] text-xs font-semibold uppercase tracking-wider mb-4 block font-['Plus_Jakarta_Sans']">Onsective at a Glance</span>
               <h2 className="text-3xl font-['Playfair_Display'] font-bold text-[#1a1a2e] mb-6">Institutional Facts</h2>
               <dl className="space-y-4">
-                <div className="flex gap-3">
-                  <dt className="w-36 shrink-0 text-sm font-semibold text-[#64748b] font-['Plus_Jakarta_Sans']">Legal Name</dt>
+                <div className="flex flex-col sm:flex-row gap-1 sm:gap-3">
+                  <dt className="sm:w-36 sm:shrink-0 text-xs sm:text-sm font-semibold text-[#64748b] uppercase sm:normal-case tracking-wider sm:tracking-normal font-['Plus_Jakarta_Sans']">Legal Name</dt>
                   <dd className="text-sm text-[#1a1a2e] font-['Plus_Jakarta_Sans']">Onsective Enterprise Inc.</dd>
                 </div>
-                <div className="flex gap-3">
-                  <dt className="w-36 shrink-0 text-sm font-semibold text-[#64748b] font-['Plus_Jakarta_Sans']">Also Known As</dt>
+                <div className="flex flex-col sm:flex-row gap-1 sm:gap-3">
+                  <dt className="sm:w-36 sm:shrink-0 text-xs sm:text-sm font-semibold text-[#64748b] uppercase sm:normal-case tracking-wider sm:tracking-normal font-['Plus_Jakarta_Sans']">Also Known As</dt>
                   <dd className="text-sm text-[#1a1a2e] font-['Plus_Jakarta_Sans']">Onsective · Onsective Enterprise · Onsective Consulting · Onsective Software · Onsec · Insec</dd>
                 </div>
-                <div className="flex gap-3">
-                  <dt className="w-36 shrink-0 text-sm font-semibold text-[#64748b] font-['Plus_Jakarta_Sans']">Founded</dt>
+                <div className="flex flex-col sm:flex-row gap-1 sm:gap-3">
+                  <dt className="sm:w-36 sm:shrink-0 text-xs sm:text-sm font-semibold text-[#64748b] uppercase sm:normal-case tracking-wider sm:tracking-normal font-['Plus_Jakarta_Sans']">Founded</dt>
                   <dd className="text-sm text-[#1a1a2e] font-['Plus_Jakarta_Sans']">2026</dd>
                 </div>
-                <div className="flex gap-3">
-                  <dt className="w-36 shrink-0 text-sm font-semibold text-[#64748b] font-['Plus_Jakarta_Sans']">Headquarters</dt>
+                <div className="flex flex-col sm:flex-row gap-1 sm:gap-3">
+                  <dt className="sm:w-36 sm:shrink-0 text-xs sm:text-sm font-semibold text-[#64748b] uppercase sm:normal-case tracking-wider sm:tracking-normal font-['Plus_Jakarta_Sans']">Headquarters</dt>
                   <dd className="text-sm text-[#1a1a2e] font-['Plus_Jakarta_Sans']">1111 Albion Rd, Etobicoke, Ontario M9V 1A6, Canada</dd>
                 </div>
-                <div className="flex gap-3">
-                  <dt className="w-36 shrink-0 text-sm font-semibold text-[#64748b] font-['Plus_Jakarta_Sans']">Industry</dt>
+                <div className="flex flex-col sm:flex-row gap-1 sm:gap-3">
+                  <dt className="sm:w-36 sm:shrink-0 text-xs sm:text-sm font-semibold text-[#64748b] uppercase sm:normal-case tracking-wider sm:tracking-normal font-['Plus_Jakarta_Sans']">Industry</dt>
                   <dd className="text-sm text-[#1a1a2e] font-['Plus_Jakarta_Sans']">Technology Consulting · Digital Transformation</dd>
                 </div>
-                <div className="flex gap-3">
-                  <dt className="w-36 shrink-0 text-sm font-semibold text-[#64748b] font-['Plus_Jakarta_Sans']">Website</dt>
+                <div className="flex flex-col sm:flex-row gap-1 sm:gap-3">
+                  <dt className="sm:w-36 sm:shrink-0 text-xs sm:text-sm font-semibold text-[#64748b] uppercase sm:normal-case tracking-wider sm:tracking-normal font-['Plus_Jakarta_Sans']">Website</dt>
                   <dd className="text-sm text-[#1a1a2e] font-['Plus_Jakarta_Sans']"><a href="https://onsective.com" className="text-[#c1912f]">https://onsective.com</a></dd>
                 </div>
-                <div className="flex gap-3">
-                  <dt className="w-36 shrink-0 text-sm font-semibold text-[#64748b] font-['Plus_Jakarta_Sans']">Phone</dt>
+                <div className="flex flex-col sm:flex-row gap-1 sm:gap-3">
+                  <dt className="sm:w-36 sm:shrink-0 text-xs sm:text-sm font-semibold text-[#64748b] uppercase sm:normal-case tracking-wider sm:tracking-normal font-['Plus_Jakarta_Sans']">Phone</dt>
                   <dd className="text-sm text-[#1a1a2e] font-['Plus_Jakarta_Sans']"><a href="tel:+16726737900" className="text-[#c1912f]">+1-672-673-7900</a></dd>
                 </div>
-                <div className="flex gap-3">
-                  <dt className="w-36 shrink-0 text-sm font-semibold text-[#64748b] font-['Plus_Jakarta_Sans']">Email</dt>
+                <div className="flex flex-col sm:flex-row gap-1 sm:gap-3">
+                  <dt className="sm:w-36 sm:shrink-0 text-xs sm:text-sm font-semibold text-[#64748b] uppercase sm:normal-case tracking-wider sm:tracking-normal font-['Plus_Jakarta_Sans']">Email</dt>
                   <dd className="text-sm text-[#1a1a2e] font-['Plus_Jakarta_Sans']"><a href="mailto:contact@onsective.com" className="text-[#c1912f]">contact@onsective.com</a></dd>
                 </div>
-                <div className="flex gap-3">
-                  <dt className="w-36 shrink-0 text-sm font-semibold text-[#64748b] font-['Plus_Jakarta_Sans']">Enterprise Clients</dt>
+                <div className="flex flex-col sm:flex-row gap-1 sm:gap-3">
+                  <dt className="sm:w-36 sm:shrink-0 text-xs sm:text-sm font-semibold text-[#64748b] uppercase sm:normal-case tracking-wider sm:tracking-normal font-['Plus_Jakarta_Sans']">Enterprise Clients</dt>
                   <dd className="text-sm text-[#1a1a2e] font-['Plus_Jakarta_Sans']">120+</dd>
                 </div>
-                <div className="flex gap-3">
-                  <dt className="w-36 shrink-0 text-sm font-semibold text-[#64748b] font-['Plus_Jakarta_Sans']">Global Markets</dt>
+                <div className="flex flex-col sm:flex-row gap-1 sm:gap-3">
+                  <dt className="sm:w-36 sm:shrink-0 text-xs sm:text-sm font-semibold text-[#64748b] uppercase sm:normal-case tracking-wider sm:tracking-normal font-['Plus_Jakarta_Sans']">Global Markets</dt>
                   <dd className="text-sm text-[#1a1a2e] font-['Plus_Jakarta_Sans']">7+ Nations (Canada, USA, UK, UAE, India, Singapore, Australia, Germany)</dd>
                 </div>
-                <div className="flex gap-3">
-                  <dt className="w-36 shrink-0 text-sm font-semibold text-[#64748b] font-['Plus_Jakarta_Sans']">Projects Delivered</dt>
+                <div className="flex flex-col sm:flex-row gap-1 sm:gap-3">
+                  <dt className="sm:w-36 sm:shrink-0 text-xs sm:text-sm font-semibold text-[#64748b] uppercase sm:normal-case tracking-wider sm:tracking-normal font-['Plus_Jakarta_Sans']">Projects Delivered</dt>
                   <dd className="text-sm text-[#1a1a2e] font-['Plus_Jakarta_Sans']">500+</dd>
                 </div>
-                <div className="flex gap-3">
-                  <dt className="w-36 shrink-0 text-sm font-semibold text-[#64748b] font-['Plus_Jakarta_Sans']">Platform Uptime</dt>
+                <div className="flex flex-col sm:flex-row gap-1 sm:gap-3">
+                  <dt className="sm:w-36 sm:shrink-0 text-xs sm:text-sm font-semibold text-[#64748b] uppercase sm:normal-case tracking-wider sm:tracking-normal font-['Plus_Jakarta_Sans']">Platform Uptime</dt>
                   <dd className="text-sm text-[#1a1a2e] font-['Plus_Jakarta_Sans']">99.9%</dd>
                 </div>
               </dl>

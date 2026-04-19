@@ -68,7 +68,11 @@ const Stage: React.FC<StageProps> = ({ numeral, eyebrow, title, body, stat, chil
   const progress = useScrollProgress(track);
 
   return (
-    <section ref={track} className="relative bg-[#0a1f35] text-white" style={{ minHeight: '130vh' }}>
+    <section
+      ref={track}
+      className="relative bg-[#0a1f35] text-white"
+      style={{ minHeight: '120vh' }}
+    >
       {/* Ambient layers */}
       <div className="absolute inset-0 pointer-events-none">
         <div
@@ -117,34 +121,34 @@ const Stage: React.FC<StageProps> = ({ numeral, eyebrow, title, body, stat, chil
         })}
 
         {/* Content grid */}
-        <div className="relative z-10 max-w-7xl w-full mx-auto px-6 sm:px-10 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        <div className="relative z-10 max-w-7xl w-full mx-auto px-5 sm:px-10 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-10 lg:gap-14 items-center">
           {/* Caption — magazine feel */}
           <div className="lg:col-span-5 order-2 lg:order-1">
-            <div className="flex items-center gap-4 mb-8">
-              <span className="text-[#c1912f] text-[11px] font-semibold uppercase tracking-[0.25em] font-['Plus_Jakarta_Sans']">
+            <div className="flex items-center gap-3 sm:gap-4 mb-5 sm:mb-8">
+              <span className="text-[#c1912f] text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] sm:tracking-[0.25em] font-['Plus_Jakarta_Sans']">
                 {eyebrow}
               </span>
               <div className="flex-1 h-px bg-gradient-to-r from-[#c1912f]/60 to-transparent" />
             </div>
             <h3
-              className="font-['Playfair_Display'] font-bold text-white leading-[1.02] mb-7"
-              style={{ fontSize: 'clamp(2rem, 4.2vw, 3.75rem)', letterSpacing: '-0.02em' }}
+              className="font-['Playfair_Display'] font-bold text-white leading-[1.02] mb-4 sm:mb-7"
+              style={{ fontSize: 'clamp(1.5rem, 4.2vw, 3.75rem)', letterSpacing: '-0.02em' }}
             >
               {title}
             </h3>
-            <p className="text-white/55 font-['Plus_Jakarta_Sans'] leading-[1.75] text-base md:text-lg max-w-xl">
+            <p className="text-white/55 font-['Plus_Jakarta_Sans'] leading-[1.7] text-sm sm:text-base md:text-lg max-w-xl">
               {body}
             </p>
 
             {stat && (
-              <div className="mt-10 inline-flex items-baseline gap-4 px-6 py-5 border border-[#c1912f]/25 rounded-sm bg-white/[0.02] backdrop-blur-sm">
+              <div className="mt-6 sm:mt-10 inline-flex items-baseline gap-3 sm:gap-4 px-4 sm:px-6 py-3 sm:py-5 border border-[#c1912f]/25 rounded-sm bg-white/[0.02] backdrop-blur-sm">
                 <span
                   className="font-['Playfair_Display'] font-bold text-[#c1912f] leading-none"
-                  style={{ fontSize: 'clamp(2.5rem, 4vw, 3.5rem)' }}
+                  style={{ fontSize: 'clamp(1.75rem, 4vw, 3.5rem)' }}
                 >
                   {stat.value}
                 </span>
-                <span className="text-[11px] uppercase tracking-[0.2em] text-white/50 font-['Plus_Jakarta_Sans']">
+                <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-white/50 font-['Plus_Jakarta_Sans']">
                   {stat.label}
                 </span>
               </div>
@@ -152,13 +156,10 @@ const Stage: React.FC<StageProps> = ({ numeral, eyebrow, title, body, stat, chil
           </div>
 
           {/* Scene — sized with both width AND height caps so it never clips */}
-          <div className="lg:col-span-7 order-1 lg:order-2 flex items-center justify-center">
+          <div className="lg:col-span-7 order-1 lg:order-2 flex items-center justify-center w-full">
             <div
-              className="relative w-full flex items-center justify-center"
-              style={{
-                maxWidth: 'min(640px, 62vh)',
-                aspectRatio: '1 / 1'
-              }}
+              className="relative flex items-center justify-center aspect-square mx-auto w-full"
+              style={{ maxWidth: '560px', maxHeight: '55vh' }}
             >
               {/* Gold halo */}
               <div

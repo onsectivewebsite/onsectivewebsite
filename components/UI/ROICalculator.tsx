@@ -99,16 +99,16 @@ const ROICalculator: React.FC = () => {
             </div>
 
             {/* Delta */}
-            <div className="md:col-span-2 bg-gradient-to-br from-[#c1912f]/20 to-[#c1912f]/5 border border-[#c1912f]/40 rounded-lg p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center gap-6">
-              <div className="flex-1">
-                <div className="text-[11px] font-semibold uppercase tracking-widest text-[#c1912f] font-['Plus_Jakarta_Sans'] mb-2">Projected Monthly Uplift</div>
+            <div className="md:col-span-2 bg-gradient-to-br from-[#c1912f]/20 to-[#c1912f]/5 border border-[#c1912f]/40 rounded-lg p-5 sm:p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center gap-5 md:gap-6">
+              <div className="flex-1 w-full">
+                <div className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-widest text-[#c1912f] font-['Plus_Jakarta_Sans'] mb-2">Projected Monthly Uplift</div>
                 <div
-                  className="font-['Playfair_Display'] font-bold text-white leading-none"
-                  style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)' }}
+                  className="font-['Playfair_Display'] font-bold text-white leading-none break-words"
+                  style={{ fontSize: 'clamp(1.6rem, 5vw, 3.5rem)' }}
                 >
                   +{fmt(results.delta.revenue)}
                 </div>
-                <div className="text-sm text-white/60 mt-2 font-['Plus_Jakarta_Sans']">
+                <div className="text-xs sm:text-sm text-white/60 mt-2 font-['Plus_Jakarta_Sans']">
                   That's {results.delta.roasX.toFixed(1)}× your current ROAS — compounding month over month.
                 </div>
               </div>

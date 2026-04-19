@@ -16,7 +16,7 @@ const BackToTop: React.FC = () => {
       type="button"
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       aria-label="Back to top"
-      className={`fixed bottom-6 right-6 z-[60] w-11 h-11 rounded-full bg-[#0d2b45] text-[#c1912f] border border-[#c1912f]/40 shadow-lg hover:bg-[#c1912f] hover:text-white flex items-center justify-center transition-all duration-300 ${
+      className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[60] w-11 h-11 rounded-full bg-[#0d2b45] text-[#c1912f] border border-[#c1912f]/40 shadow-lg hover:bg-[#c1912f] hover:text-white flex items-center justify-center transition-all duration-300 ${
         visible ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'
       }`}
     >
