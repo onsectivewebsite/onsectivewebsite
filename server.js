@@ -5,16 +5,39 @@ import nodemailer from 'nodemailer';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
 import adminRouter from './server-admin.js';
+import { createSEOHandler } from './seo-middleware.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const DIST_DIR = path.join(__dirname, 'dist');
 
 // Middleware
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'dist')));
+
+// Static assets (JS, CSS, images, sitemap.xml, robots.txt, feed.xml, PDFs…)
+// are served directly from dist/. `index: false` disables Express's default
+// behavior of auto-serving dist/index.html for `/` — we route `/` through
+// the SEO handler so crawlers get a per-URL canonical/title/description.
+app.use(express.static(DIST_DIR, {
+  index: false,
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith('.xml')) {
+      res.set('Content-Type', 'application/xml; charset=utf-8');
+      res.set('Cache-Control', 'public, max-age=300');
+    } else if (filePath.endsWith('robots.txt')) {
+      res.set('Content-Type', 'text/plain; charset=utf-8');
+      res.set('Cache-Control', 'public, max-age=3600');
+    } else if (filePath.endsWith('.pdf')) {
+      res.set('Content-Type', 'application/pdf');
+      res.set('Cache-Control', 'public, max-age=3600');
+    }
+  },
+}));
+
+const seoHandler = createSEOHandler(DIST_DIR);
 
 /**
  * GOOGLE SHEETS SETUP
@@ -185,9 +208,9 @@ app.get('/api/health', (req, res) => {
 // Admin API routes
 app.use(adminRouter);
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
+// SPA catch-all — serves index.html with per-URL canonical/title/meta
+// rewrites so crawlers don't see every route as a homepage duplicate.
+app.get('*', seoHandler);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

@@ -140,11 +140,12 @@ Disallow: /admin
 Disallow: /api/
 
 # ---- Sitemaps ----
+# Sitemap index is the canonical entry point — search engines crawl it
+# and discover the four sub-sitemaps. The sub-sitemaps are listed
+# explicitly as a fallback for crawlers that don't follow sitemap
+# indexes aggressively.
 Sitemap: https://onsective.com/sitemap.xml
 Sitemap: https://onsective.com/sitemap-core.xml
 Sitemap: https://onsective.com/sitemap-services.xml
 Sitemap: https://onsective.com/sitemap-guides.xml
 Sitemap: https://onsective.com/sitemap-insights.xml
-
-# ---- Host declaration (for Yandex) ----
-Host: https://onsective.com
