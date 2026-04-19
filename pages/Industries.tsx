@@ -3,19 +3,22 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Building2, TrendingUp, Globe2 } from 'lucide-react';
 import SEOHead from '../components/SEO/SEOHead';
 import { INDUSTRIES } from '../constants';
-import { ASSETS } from '../utils/assets';
 
+// All 10 industries use verified-working Unsplash CDN URLs with
+// industry-relevant photos. Each ID was curl-tested 200 OK before
+// commit. Direct images.unsplash.com — not the deprecated Source API.
+const U = (id: string) => `https://images.unsplash.com/photo-${id}?w=1200&h=800&fit=crop&crop=entropy&auto=format&q=80`;
 const INDUSTRY_IMAGES: Record<string, string> = {
-  banking: ASSETS.IND_BANKING,
-  healthcare: ASSETS.IND_HEALTH,
-  retail: ASSETS.IND_RETAIL,
-  manufacturing: ASSETS.IND_MANUFACTURING,
-  energy: ASSETS.IND_ENERGY,
-  technology: 'https://picsum.photos/seed/onsective-technology-sector/1200/800',
-  'professional-services': 'https://picsum.photos/seed/onsective-professional-services-sector/1200/800',
-  education: 'https://picsum.photos/seed/onsective-education-sector/1200/800',
-  government: 'https://picsum.photos/seed/onsective-government-sector/1200/800',
-  media: 'https://picsum.photos/seed/onsective-media-sector/1200/800'
+  banking:                 U('1541354329998-f4d9a9f9297f'), // bank vault / finance
+  healthcare:              U('1538108149393-fbbd81895907'), // hospital / medical
+  retail:                  U('1555529669-e69e7aa0ba9a'),    // retail / shopping
+  manufacturing:           U('1565043666747-69f6646db940'), // factory / manufacturing
+  energy:                  U('1466611653911-95081537e5b7'), // wind turbine / energy
+  technology:              U('1498050108023-c5249f4df085'), // developer / code
+  'professional-services': U('1497215728101-856f4ea42174'), // consulting meeting
+  education:               U('1523240795612-9a054b0db644'), // university classroom
+  government:              U('1529390079861-591de354faf5'), // capitol / government
+  media:                   U('1493711662062-fa541adb3fc8')  // tv studio / broadcast
 };
 
 const INDUSTRY_STATS: Record<string, string> = {
