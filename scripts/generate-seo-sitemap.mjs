@@ -128,6 +128,9 @@ for (const g of GUIDES) blocks.push(entry(`/guides/${g}`, '0.65'));
 // Static resource pages
 blocks.push('  <!-- Off-page SEO landing pages -->');
 blocks.push(entry('/resources', '0.75'));
+blocks.push(entry('/onsective', '0.95'));
+blocks.push(entry('/about-onsective', '0.85'));
+blocks.push(entry('/onsective-enterprise', '0.85'));
 
 const insertion = blocks.join('\n');
 

@@ -211,10 +211,12 @@ const Footer: React.FC = () => {
               <h4 className="text-white font-bold text-sm uppercase tracking-[0.15em] mb-6">Company</h4>
               <ul className="space-y-3">
                 {[
+                  { label: 'About Onsective', path: '/onsective' },
                   { label: 'About Us', path: '/about' },
                   { label: 'Our Vision', path: '/vision' },
                   { label: 'Leadership', path: '/about' },
                   { label: 'Insights', path: '/insights' },
+                  { label: 'Resources', path: '/resources' },
                   { label: 'Events', path: '/events' },
                   { label: 'Careers', path: '/careers' },
                   { label: 'Investors', path: '/investors' },
