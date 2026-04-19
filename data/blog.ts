@@ -1,4 +1,5 @@
 import { BlogPost } from '../types';
+import { resolveImage } from './image-resolver';
 
 // @ts-ignore — kept for potential future use
 const _LEGACY_IMAGES = [
@@ -163,8 +164,8 @@ const generateBlogPosts = (): BlogPost[] => {
         const excerpt = excerptTemplate.replace(/\{kw\}/g, kw);
         const monthIndex = (id - 1) % MONTHS.length;
         const readTime = 4 + (id % 9);
-        // Every post gets a truly unique image — picsum.photos serves a different photo per seed ID
-        const uniqueImage = `https://picsum.photos/seed/onsective-${id}/800/500`;
+        // Topic-relevant photo via Unsplash Source, deterministic per post.
+        const uniqueImage = resolveImage(`insight-${id}-${kw}`, topic.category, 1200, 750);
 
         posts.push({
           id: `insight-${id}`,

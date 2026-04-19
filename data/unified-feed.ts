@@ -8,6 +8,7 @@
 import { ALL_INSIGHTS } from './blog';
 import { SEO_GUIDES } from './seo-landing';
 import { BlogPost } from '../types';
+import { resolveImage } from './image-resolver';
 
 const MONTHS_CYCLE = [
   'Apr 2026', 'Mar 2026', 'Feb 2026', 'Jan 2026',
@@ -40,7 +41,7 @@ const guideToPost = (g: { slug: string; title: string; metaDescription: string; 
     category: g.category,
     date: MONTHS_CYCLE[monthIdx],
     readTime: `${readMins} min read`,
-    image: `https://picsum.photos/seed/onsective-${g.slug}/1200/750`
+    image: resolveImage(g.slug, g.category, 1200, 750)
   };
 };
 

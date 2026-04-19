@@ -94,11 +94,18 @@ const Navbar: React.FC = () => {
         onMouseLeave={() => setActiveMega(null)}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center justify-between">
-          {/* Logo */}
-          <Link to="/" className="flex items-center shrink-0" aria-label="Home">
+          {/* Logo — clicking always takes to home and scrolls to top. */}
+          <Link
+            to="/"
+            onClick={() => {
+              if (location.pathname === '/') window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className="flex items-center shrink-0"
+            aria-label="Onsective — Home"
+          >
             <img
               src="/assets/logo.png"
-              alt="Onsective"
+              alt="Onsective — go to home"
               className="w-32 h-auto object-contain"
             />
           </Link>

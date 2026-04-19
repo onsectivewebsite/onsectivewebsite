@@ -48,11 +48,18 @@ const useCounter = (target: number, duration = 1600) => {
 /*  INDUSTRY IMAGE MAP                                                */
 /* ------------------------------------------------------------------ */
 const INDUSTRY_IMAGES: Record<string, string> = {
+  // Local curated assets for the five flagship sectors.
   banking: ASSETS.IND_BANKING,
   healthcare: ASSETS.IND_HEALTH,
   retail: ASSETS.IND_RETAIL,
   manufacturing: ASSETS.IND_MANUFACTURING,
   energy: ASSETS.IND_ENERGY,
+  // Unsplash-sourced, topic-relevant photos for the new sectors.
+  technology: 'https://source.unsplash.com/1200x800/?technology,saas,startup-office&sig=211',
+  'professional-services': 'https://source.unsplash.com/1200x800/?consulting,advisory,boardroom&sig=223',
+  education: 'https://source.unsplash.com/1200x800/?education,university,campus&sig=237',
+  government: 'https://source.unsplash.com/1200x800/?government,capitol,public-sector&sig=241',
+  media: 'https://source.unsplash.com/1200x800/?media,broadcast,studio&sig=253'
 };
 
 /* ------------------------------------------------------------------ */
