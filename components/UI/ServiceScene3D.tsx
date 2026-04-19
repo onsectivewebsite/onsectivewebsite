@@ -87,12 +87,12 @@ const Stage: React.FC<StageProps> = ({ numeral, eyebrow, title, body, stat, chil
 
       {/* Sticky stage — perfectly centered, never clipped */}
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
-        {/* Gigantic numeral backdrop */}
+        {/* Large numeral backdrop — scaled per viewport so it never overflows mobile */}
         <div
-          className="absolute select-none pointer-events-none font-['Playfair_Display'] font-bold leading-none"
+          className="absolute select-none pointer-events-none font-['Playfair_Display'] font-bold leading-none max-w-full overflow-hidden"
           style={{
-            fontSize: 'clamp(20rem, 60vh, 55rem)',
-            color: 'rgba(193,145,47,0.04)',
+            fontSize: 'clamp(8rem, 32vw, 40rem)',
+            color: 'rgba(193,145,47,0.05)',
             letterSpacing: '-0.05em',
             transform: `translateY(${-8 + progress * 8}px)`
           }}
