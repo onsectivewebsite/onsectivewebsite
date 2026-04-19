@@ -131,6 +131,11 @@ blocks.push(entry('/resources', '0.75'));
 blocks.push(entry('/onsective', '0.95'));
 blocks.push(entry('/about-onsective', '0.85'));
 blocks.push(entry('/onsective-enterprise', '0.85'));
+blocks.push(entry('/employee-handbook', '0.55'));
+// New industry detail pages
+for (const i of ['technology', 'professional-services', 'education', 'government', 'media']) {
+  blocks.push(entry(`/industries/${i}`, '0.80'));
+}
 
 // 500 SEO-targeted blog posts
 const blogSlugsPath = path.resolve('scripts/blog-500-slugs.json');

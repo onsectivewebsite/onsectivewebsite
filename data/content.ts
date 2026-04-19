@@ -108,6 +108,36 @@ export const INDUSTRIES: Industry[] = [
     description: 'Grid modernization, renewable integration, and intelligent infrastructure platforms architected for the sovereign energy transition.',
     path: '/industries/energy'
   },
+  {
+    id: 'technology',
+    title: 'TECHNOLOGY & SAAS',
+    description: 'Multi-tenant SaaS architecture, developer platforms, product-led growth infrastructure, and enterprise-readiness engineering for B2B technology firms.',
+    path: '/industries/technology'
+  },
+  {
+    id: 'professional-services',
+    title: 'PROFESSIONAL SERVICES',
+    description: 'Thought leadership at scale, matter/knowledge management, and digital client acquisition systems for consulting, legal, accounting, and advisory firms.',
+    path: '/industries/professional-services'
+  },
+  {
+    id: 'education',
+    title: 'EDUCATION & EDTECH',
+    description: 'Learning platforms, student information systems, enrolment marketing, and accessibility compliance for higher education, K-12, and corporate learning.',
+    path: '/industries/education'
+  },
+  {
+    id: 'government',
+    title: 'GOVERNMENT & PUBLIC SECTOR',
+    description: 'Citizen services portals, sovereign cloud architecture, cyber defence operations, and legacy modernisation for federal, state, and municipal government.',
+    path: '/industries/government'
+  },
+  {
+    id: 'media',
+    title: 'MEDIA & ENTERTAINMENT',
+    description: 'Streaming infrastructure, rights and royalty management, audience intelligence, and subscription economics for publishers, broadcasters, and streaming platforms.',
+    path: '/industries/media'
+  },
 ];
 
 // --- PERFORMANCE METRICS ---

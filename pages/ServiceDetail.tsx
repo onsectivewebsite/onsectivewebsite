@@ -302,6 +302,11 @@ const SERVICE_CONTENT: Record<string, any> = {
   },
   'digital-marketing': {
     heroImage: ASSETS.SERVICE_MARKETING,
+    portfolioPdf: {
+      url: '/document/Onsective-portfolio-Digital-marketing.pdf',
+      title: 'Onsective Digital Marketing Portfolio',
+      subtitle: 'Case studies, frameworks, and engagement structure — PDF.'
+    },
     tagline: 'Full-funnel campaign orchestration combining paid media precision, content gravity, and institutional analytics for measurable market influence.',
     challenge: 'The proliferation of channels has created a fragmented marketing landscape where most organizations optimize in silos, measure in vanity metrics, and allocate budget based on last-click convenience rather than true incrementality. The result is wasted capital, missed opportunities, and an inability to connect marketing investment to business outcomes with the precision that institutional stakeholders demand. True marketing performance requires unified attribution, cross-channel orchestration, and the discipline to invest where the data — not intuition — points.',
     quote: 'Precision marketing engineered for institutional-grade outcomes.',
@@ -588,8 +593,34 @@ const ServiceDetail: React.FC = () => {
         </div>
       </section>
 
+      {/* ===== PORTFOLIO PDF (only shown if service has one) ===== */}
+      {content.portfolioPdf && (
+        <section className="bg-[#f1f5f9] py-10 border-b border-[#e2e8f0]">
+          <div className="max-w-5xl mx-auto px-6 lg:px-16">
+            <div className="bg-white border border-[#c1912f]/20 rounded-lg p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center gap-5">
+              <div className="w-14 h-14 rounded-lg bg-[#c1912f]/10 flex items-center justify-center shrink-0">
+                <Layers size={24} className="text-[#c1912f]" />
+              </div>
+              <div className="flex-1">
+                <div className="text-xs font-semibold text-[#c1912f] uppercase tracking-wider mb-1 font-['Plus_Jakarta_Sans']">Download · PDF</div>
+                <h3 className="text-lg font-['Playfair_Display'] font-bold text-[#1a1a2e]">{content.portfolioPdf.title}</h3>
+                <p className="text-sm text-[#64748b] font-['Plus_Jakarta_Sans']">{content.portfolioPdf.subtitle}</p>
+              </div>
+              <a
+                href={content.portfolioPdf.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[#c1912f] text-white font-semibold text-sm rounded-md font-['Plus_Jakarta_Sans'] hover:brightness-110 whitespace-nowrap"
+              >
+                View Portfolio <ArrowRight size={14} />
+              </a>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ===== THE CHALLENGE + STATS ===== */}
-      <section className="py-28 md:py-40 bg-white">
+      <section className="py-20 md:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
             <div className="animate-on-scroll opacity-0 -translate-x-8 transition-all duration-700 [&.is-visible]:opacity-100 [&.is-visible]:translate-x-0">
@@ -620,7 +651,7 @@ const ServiceDetail: React.FC = () => {
       })()}
 
       {/* ===== DEEP DIVE — NEW SECTION ===== */}
-      <section className="py-28 md:py-40 bg-[#f1f5f9] relative overflow-hidden">
+      <section className="py-20 md:py-28 bg-[#f1f5f9] relative overflow-hidden">
         <div className="hex-grid-bg"></div>
         <div className="max-w-7xl mx-auto px-6 lg:px-16 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 items-start">
@@ -696,7 +727,7 @@ const ServiceDetail: React.FC = () => {
       </section>
 
       {/* ===== OUR APPROACH (3 STEPS) ===== */}
-      <section className="py-28 md:py-40 bg-[#0d2b45] relative overflow-hidden">
+      <section className="py-20 md:py-28 bg-[#0d2b45] relative overflow-hidden">
         <div className="absolute inset-0 perspective-grid opacity-20"></div>
         <div className="particle-field">
           {Array.from({ length: 8 }).map((_, i) => (
@@ -740,7 +771,7 @@ const ServiceDetail: React.FC = () => {
       </section>
 
       {/* ===== CAPABILITIES ===== */}
-      <section className="py-28 md:py-40 bg-white relative overflow-hidden">
+      <section className="py-20 md:py-28 bg-white relative overflow-hidden">
         <div className="hex-grid-bg"></div>
         <div className="max-w-7xl mx-auto px-6 lg:px-16 relative z-10">
           <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
@@ -788,7 +819,7 @@ const ServiceDetail: React.FC = () => {
 
       {/* ===== INDUSTRY APPLICATIONS ===== */}
       {content.industryApplications && (
-        <section className="py-28 md:py-40 bg-[#0d2b45] relative overflow-hidden">
+        <section className="py-20 md:py-28 bg-[#0d2b45] relative overflow-hidden">
           <div className="absolute inset-0 perspective-grid opacity-15"></div>
           <div className="particle-field">
             {Array.from({ length: 6 }).map((_, i) => (
@@ -835,7 +866,7 @@ const ServiceDetail: React.FC = () => {
 
       {/* ===== FAQ ===== */}
       {content.faq && (
-        <section className="py-28 md:py-40 bg-white border-t border-[#e2e8f0]">
+        <section className="py-20 md:py-28 bg-white border-t border-[#e2e8f0]">
           <div className="max-w-4xl mx-auto px-6 lg:px-16">
             <div className="text-center mb-16 animate-on-scroll opacity-0 translate-y-8 transition-all duration-700 [&.is-visible]:opacity-100 [&.is-visible]:translate-y-0">
               <span className="text-[#c1912f] text-xs font-semibold uppercase tracking-wider mb-4 block font-['Plus_Jakarta_Sans']">Common Questions</span>
@@ -864,7 +895,7 @@ const ServiceDetail: React.FC = () => {
       )}
 
       {/* ===== WHY THIS SERVICE — NEW SECTION ===== */}
-      <section className="py-28 md:py-40 bg-[#f1f5f9] border-t border-[#e2e8f0]">
+      <section className="py-20 md:py-28 bg-[#f1f5f9] border-t border-[#e2e8f0]">
         <div className="max-w-7xl mx-auto px-6 lg:px-16">
           <div className="text-center mb-16 text-reveal-3d">
             <span className="text-[#c1912f] text-xs font-semibold uppercase tracking-wider mb-4 block font-['Plus_Jakarta_Sans']">The Onsective Advantage</span>
@@ -1036,7 +1067,7 @@ const ServiceDetail: React.FC = () => {
       })()}
 
       {/* ===== RELATED SERVICES ===== */}
-      <section className="py-28 md:py-40 bg-white border-t border-[#e2e8f0]">
+      <section className="py-20 md:py-28 bg-white border-t border-[#e2e8f0]">
         <div className="max-w-7xl mx-auto px-6 lg:px-16">
           <div className="text-center mb-16 animate-on-scroll opacity-0 translate-y-8 transition-all duration-700 [&.is-visible]:opacity-100 [&.is-visible]:translate-y-0">
             <span className="text-[#c1912f] text-xs font-semibold uppercase tracking-wider mb-4 block font-['Plus_Jakarta_Sans']">Explore Further</span>
@@ -1065,7 +1096,7 @@ const ServiceDetail: React.FC = () => {
       </section>
 
       {/* ===== CTA ===== */}
-      <section className="py-28 md:py-40 bg-[#0d2b45] relative overflow-hidden">
+      <section className="py-20 md:py-28 bg-[#0d2b45] relative overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'linear-gradient(135deg, transparent 40%, #c1912f 40.5%, #c1912f 41%, transparent 41.5%)' }}></div>
         <div className="particle-field">
           {Array.from({ length: 6 }).map((_, i) => (

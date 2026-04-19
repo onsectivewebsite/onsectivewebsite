@@ -131,7 +131,7 @@ const CapabilityDetail: React.FC = () => {
       </section>
 
       {/* ===== DESCRIPTION + OUTCOMES ===== */}
-      <section className="py-28 md:py-40 bg-white">
+      <section className="py-20 md:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-16">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 lg:gap-24">
             <div className="lg:col-span-3 animate-on-scroll opacity-0 -translate-x-8 transition-all duration-700 [&.is-visible]:opacity-100 [&.is-visible]:translate-x-0">
@@ -170,7 +170,7 @@ const CapabilityDetail: React.FC = () => {
 
       {/* ===== SIGNATURE FEATURES (OPTIONAL) ===== */}
       {capabilityData.signatureFeatures && capabilityData.signatureFeatures.length > 0 && (
-        <section className="py-28 md:py-40 bg-[#f1f5f9] border-t border-[#e2e8f0]">
+        <section className="py-20 md:py-28 bg-[#f1f5f9] border-t border-[#e2e8f0]">
           <div className="max-w-7xl mx-auto px-6 lg:px-16">
             <div className="text-center mb-16 animate-on-scroll opacity-0 translate-y-8 transition-all duration-700 [&.is-visible]:opacity-100 [&.is-visible]:translate-y-0">
               <span className="text-[#c1912f] text-xs font-semibold uppercase tracking-wider mb-4 block font-['Plus_Jakarta_Sans']">Signature Distinctions</span>
@@ -198,7 +198,7 @@ const CapabilityDetail: React.FC = () => {
       )}
 
       {/* ===== METHODOLOGY STEPS ===== */}
-      <section className="py-28 md:py-40 bg-[#0d2b45] relative overflow-hidden">
+      <section className="py-20 md:py-28 bg-[#0d2b45] relative overflow-hidden">
         <div className="absolute inset-0 perspective-grid opacity-20" />
         <div className="max-w-7xl mx-auto px-6 lg:px-16 relative z-10">
           <div className="text-center mb-20">
@@ -228,7 +228,7 @@ const CapabilityDetail: React.FC = () => {
 
       {/* ===== FRAMEWORKS + DELIVERABLES ===== */}
       {(capabilityData.frameworks || capabilityData.deliverables) && (
-        <section className="py-28 md:py-40 bg-[#f1f5f9]">
+        <section className="py-20 md:py-28 bg-[#f1f5f9]">
           <div className="max-w-7xl mx-auto px-6 lg:px-16">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {capabilityData.frameworks && (
@@ -284,7 +284,7 @@ const CapabilityDetail: React.FC = () => {
       )}
 
       {/* ===== CTA ===== */}
-      <section className="py-28 md:py-40 bg-[#c1912f]">
+      <section className="py-20 md:py-28 bg-[#c1912f]">
         <div className="max-w-7xl mx-auto px-6 lg:px-16 text-center animate-on-scroll opacity-0 translate-y-8 transition-all duration-700 [&.is-visible]:opacity-100 [&.is-visible]:translate-y-0">
           <h2 className="text-4xl md:text-6xl font-['Playfair_Display'] text-white mb-6 leading-tight font-bold">Deploy {capabilityData.title}</h2>
           <p className="text-white/80 text-lg mb-12 max-w-2xl mx-auto leading-relaxed font-['Plus_Jakarta_Sans']">

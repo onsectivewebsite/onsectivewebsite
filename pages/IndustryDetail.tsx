@@ -48,6 +48,41 @@ const INDUSTRY_CONTENT: Record<string, any> = {
     trends: 'Decarbonization and grid modernization require high-performance digital backbones to manage distributed assets. The energy transition demands intelligent infrastructure that can balance renewable intermittency, optimize asset performance, and enable real-time trading. Utilities that digitize their operations will lead the transition to a sustainable energy future.',
     solutions: ['Smart Grid Intelligence', 'Renewable Asset Optimization', 'Field Workforce Mobility', 'Energy Trading Platforms'],
     relatedServiceIds: ['it-strategy', 'ai-automation', 'cybersecurity']
+  },
+  'technology': {
+    title: 'Technology & SaaS',
+    subtitle: 'Engineering Platforms That Compound',
+    trends: 'The SaaS and B2B technology landscape rewards operators who master multi-tenant architecture, product-led growth, pipeline generation, and enterprise readiness in parallel. AI integration is rapidly becoming table stakes rather than differentiation. Winners are institutions that can execute across product, growth, and platform simultaneously.',
+    solutions: ['Multi-Tenant SaaS Architecture', 'Developer Platform Engineering', 'Product-Led Growth Infrastructure', 'Enterprise Sales Enablement'],
+    relatedServiceIds: ['custom-software', 'digital-marketing', 'enterprise-seo']
+  },
+  'professional-services': {
+    title: 'Professional Services',
+    subtitle: 'Authority at Institutional Scale',
+    trends: 'Consulting, legal, accounting, and advisory firms face rising commoditisation pressure. Differentiation now depends on thought leadership at scale, matter/knowledge management, and digital client acquisition. The firms that industrialise their expertise through content, technology, and brand will command premium economics.',
+    solutions: ['Thought Leadership Platforms', 'Matter & Knowledge Management', 'Client Acquisition Systems', 'Talent Brand Engineering'],
+    relatedServiceIds: ['brand-management', 'enterprise-seo', 'digital-marketing']
+  },
+  'education': {
+    title: 'Education & EdTech',
+    subtitle: 'Digital Learning at Institutional Scale',
+    trends: 'Higher education, K-12, and corporate learning are converging around digital delivery, outcome measurement, and AI-augmented pedagogy. Student information systems, learning platforms, and accessibility compliance are now baseline requirements. Institutions that operationalise their digital estate retain enrolment share and outcomes leadership.',
+    solutions: ['Learning Platform Engineering', 'Student Information Systems', 'Enrolment Marketing Systems', 'Accessibility & Compliance'],
+    relatedServiceIds: ['custom-software', 'digital-marketing', 'digital-experience']
+  },
+  'government': {
+    title: 'Government & Public Sector',
+    subtitle: 'Sovereign Digital Services',
+    trends: 'Federal, state, and municipal governments are modernising legacy estates, consolidating citizen services into digital portals, and hardening cyber defence. Data sovereignty, FedRAMP-equivalent compliance, and mission-critical reliability define the procurement bar. Onsective operates with the compliance rigour and delivery discipline this sector demands.',
+    solutions: ['Citizen Services Portals', 'Sovereign Cloud Architecture', 'Cyber Defence Operations', 'Legacy Modernisation'],
+    relatedServiceIds: ['cybersecurity', 'cloud-services', 'it-strategy']
+  },
+  'media': {
+    title: 'Media & Entertainment',
+    subtitle: 'Content, Distribution, Monetisation',
+    trends: 'Media companies balance streaming economics, subscription retention, advertising marketplace complexity, and IP management. Rights management and audience analytics increasingly depend on AI. Publishers, broadcasters, and streaming platforms that modernise distribution and measurement architecture compound audience and revenue advantage.',
+    solutions: ['Streaming Infrastructure', 'Rights & Royalty Management', 'Audience Intelligence Platforms', 'Subscription Economics'],
+    relatedServiceIds: ['digital-experience', 'ai-automation', 'custom-software']
   }
 };
 

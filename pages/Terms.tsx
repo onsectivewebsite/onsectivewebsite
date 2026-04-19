@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Shield, FileText, AlertTriangle } from 'lucide-react';
 import SEOHead from '../components/SEO/SEOHead';
 import { COMPANY_NAME, CONTACT_EMAIL, HEADQUARTERS_ADDRESS } from '../data/company';
@@ -46,7 +47,8 @@ const Terms: React.FC = () => {
                         <a href="#liability" className="block hover:text-brand-primary transition-colors">7. Liability Limits</a>
                         <a href="#indemnification" className="block hover:text-brand-primary transition-colors">8. Indemnification</a>
                         <a href="#governing" className="block hover:text-brand-primary transition-colors">9. Governing Law</a>
-                        <a href="#contact" className="block hover:text-brand-primary transition-colors">10. Contact</a>
+                        <a href="#handbook" className="block hover:text-brand-primary transition-colors">15. Employee Handbook</a>
+                        <a href="#contact" className="block hover:text-brand-primary transition-colors">Contact</a>
                     </div>
                 </div>
 
@@ -173,6 +175,19 @@ const Terms: React.FC = () => {
                     <h2>14. Entire Agreement</h2>
                     <p>
                         The Terms of Use and our Privacy Policy constitute the sole and entire agreement between you and {COMPANY_NAME} regarding the Website and supersede all prior and contemporaneous understandings, agreements, representations, and warranties, both written and oral, regarding the Website.
+                    </p>
+
+                    <h2 id="handbook">15. Employment Terms and the Employee Handbook</h2>
+                    <p>
+                        The terms governing employment with {COMPANY_NAME} Enterprise Inc. — including code of conduct, workplace standards, benefits, leave policies, and separation protocols — are codified in the official Employee Handbook. Employees, contractors, and authorised representatives are subject to the terms of the Handbook in addition to these Terms of Use.
+                    </p>
+                    <p>
+                        The latest version of the Employee Handbook is available for review here:{' '}
+                        <Link to="/employee-handbook" className="font-bold text-brand-primary">Onsective Employee Handbook</Link>
+                        {' '}or direct PDF:{' '}
+                        <a href="/document/Onsective-Inc-Employee-Handbook.pdf" target="_blank" rel="noopener noreferrer" className="font-bold text-brand-primary">
+                            Download Employee Handbook (PDF)
+                        </a>.
                     </p>
 
                     <div className="bg-gray-50 border border-gray-200 p-8 rounded-xl mt-12" id="contact">

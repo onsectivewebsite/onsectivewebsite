@@ -123,7 +123,7 @@ const MethodologyDetail: React.FC = () => {
       </section>
 
       {/* ===== OVERVIEW + OUTCOMES ===== */}
-      <section className="py-28 md:py-40 bg-white">
+      <section className="py-20 md:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-16">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 lg:gap-24">
             <div className="lg:col-span-3 animate-on-scroll opacity-0 -translate-x-8 transition-all duration-700 [&.is-visible]:opacity-100 [&.is-visible]:translate-x-0">
@@ -161,7 +161,7 @@ const MethodologyDetail: React.FC = () => {
       </section>
 
       {/* ===== PHASES — HOW WE EXECUTE ===== */}
-      <section className="py-28 md:py-40 bg-[#0d2b45] relative overflow-hidden">
+      <section className="py-20 md:py-28 bg-[#0d2b45] relative overflow-hidden">
         <div className="absolute inset-0 perspective-grid opacity-20" />
         <div className="max-w-7xl mx-auto px-6 lg:px-16 relative z-10">
           <div className="text-center mb-20">
@@ -194,7 +194,7 @@ const MethodologyDetail: React.FC = () => {
       </section>
 
       {/* ===== FRAMEWORKS + DELIVERABLES ===== */}
-      <section className="py-28 md:py-40 bg-[#f1f5f9]">
+      <section className="py-20 md:py-28 bg-[#f1f5f9]">
         <div className="max-w-7xl mx-auto px-6 lg:px-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Frameworks */}
@@ -248,7 +248,7 @@ const MethodologyDetail: React.FC = () => {
 
       {/* ===== RELATED CAPABILITIES ===== */}
       {detail.relatedCapabilities && detail.relatedCapabilities.length > 0 && (
-        <section className="py-28 md:py-40 bg-white">
+        <section className="py-20 md:py-28 bg-white">
           <div className="max-w-7xl mx-auto px-6 lg:px-16">
             <div className="text-center mb-16 animate-on-scroll opacity-0 translate-y-8 transition-all duration-700 [&.is-visible]:opacity-100 [&.is-visible]:translate-y-0">
               <span className="text-[#c1912f] text-xs font-semibold uppercase tracking-wider mb-4 block font-['Plus_Jakarta_Sans']">Compounding Capabilities</span>
@@ -280,7 +280,7 @@ const MethodologyDetail: React.FC = () => {
       <OtherPhases serviceId={serviceId!} currentMethodologyId={methodologyId!} />
 
       {/* ===== CTA ===== */}
-      <section className="py-28 md:py-40 bg-[#c1912f] relative overflow-hidden">
+      <section className="py-20 md:py-28 bg-[#c1912f] relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 lg:px-16 text-center animate-on-scroll opacity-0 translate-y-8 transition-all duration-700 [&.is-visible]:opacity-100 [&.is-visible]:translate-y-0">
           <h2 className="text-4xl md:text-6xl font-['Playfair_Display'] text-white mb-6 leading-tight font-bold">
             Deploy the {detail.title} Discipline
@@ -329,7 +329,7 @@ const OtherPhases: React.FC<{ serviceId: string; currentMethodologyId: string }>
   if (others.length === 0) return null;
 
   return (
-    <section className="py-28 md:py-40 bg-[#f1f5f9] border-t border-[#e2e8f0]">
+    <section className="py-20 md:py-28 bg-[#f1f5f9] border-t border-[#e2e8f0]">
       <div className="max-w-7xl mx-auto px-6 lg:px-16">
         <div className="text-center mb-16 animate-on-scroll opacity-0 translate-y-8 transition-all duration-700 [&.is-visible]:opacity-100 [&.is-visible]:translate-y-0">
           <span className="text-[#c1912f] text-xs font-semibold uppercase tracking-wider mb-4 block font-['Plus_Jakarta_Sans']">Continue Exploring</span>
