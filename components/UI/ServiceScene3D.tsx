@@ -149,19 +149,6 @@ const Stage: React.FC<StageProps> = ({ numeral, eyebrow, title, body, stat, chil
                 </span>
               </div>
             )}
-
-            {/* Thin progress rail */}
-            <div className="mt-10 flex items-center gap-4">
-              <div className="flex-1 h-px bg-white/10 overflow-hidden">
-                <div
-                  className="h-full bg-[#c1912f] transition-[width] duration-100 ease-out"
-                  style={{ width: `${progress * 100}%` }}
-                />
-              </div>
-              <span className="text-[10px] text-white/30 tabular-nums tracking-widest font-['Plus_Jakarta_Sans']">
-                {String(Math.round(progress * 100)).padStart(2, '0')}
-              </span>
-            </div>
           </div>
 
           {/* Scene — sized with both width AND height caps so it never clips */}
