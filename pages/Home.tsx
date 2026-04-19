@@ -689,7 +689,7 @@ const Home: React.FC = () => {
           <div className="grid grid-cols-3 gap-4 sm:gap-8 lg:gap-12 items-center">
             {/* Left: 3D Cube */}
             <div className="text-center animate-on-scroll">
-              <div className="cube-stage" style={{ perspective: '900px' }}>
+              <div className="cube-stage" style={{ perspective: '500px' }}>
                 <div className="cube-3d">
                   <div className="face front">Strategy</div>
                   <div className="face back">Cloud</div>
@@ -705,7 +705,7 @@ const Home: React.FC = () => {
 
             {/* Center: 3D Prism */}
             <div className="text-center animate-on-scroll delay-200">
-              <div className="cube-stage" style={{ perspective: '1100px' }}>
+              <div className="cube-stage" style={{ perspective: '500px' }}>
                 <div className="prism-3d">
                   <div className="prism-face pf-front">Discover</div>
                   <div className="prism-face pf-back">Design</div>
@@ -721,7 +721,7 @@ const Home: React.FC = () => {
 
             {/* Right: 3D Icosahedron */}
             <div className="text-center animate-on-scroll delay-400">
-              <div className="cube-stage" style={{ perspective: '900px' }}>
+              <div className="cube-stage" style={{ perspective: '500px' }}>
                 <div className="icosahedron-3d">
                   {Array.from({ length: 6 }).map((_, i) => (
                     <div key={i} className="ico-ring" />

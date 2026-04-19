@@ -750,7 +750,7 @@ const ServiceDetail: React.FC = () => {
               <p className="text-[#64748b] mb-6 font-['Plus_Jakarta_Sans']">Deep-rooted institutional expertise across the entire digital ecosystem. Each capability represents a sovereign domain of mastery refined across hundreds of deployments.</p>
 
               {/* 3D rotating element */}
-              <div className="hidden lg:block cube-stage my-8" style={{ perspective: '900px' }}>
+              <div className="hidden lg:block cube-stage my-8" style={{ perspective: '500px' }}>
                 <div className="cube-3d">
                   <div className="face front">Discover</div>
                   <div className="face back">Design</div>

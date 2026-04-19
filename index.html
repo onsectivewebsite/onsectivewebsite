@@ -985,9 +985,13 @@
     .cube-3d .bottom { transform: rotateX(-90deg) translateZ(50px); }
 
     @keyframes rotateCube {
-      0%   { transform: rotateX(-10deg) rotateY(0deg); }
-      50%  { transform: rotateX(20deg) rotateY(180deg); }
-      100% { transform: rotateX(-10deg) rotateY(360deg); }
+      0%   { transform: rotateX(-20deg) rotateY(0deg)   rotateZ(0deg); }
+      16%  { transform: rotateX(-45deg) rotateY(60deg)  rotateZ(5deg); }
+      33%  { transform: rotateX(30deg)  rotateY(120deg) rotateZ(-5deg); }
+      50%  { transform: rotateX(-20deg) rotateY(180deg) rotateZ(0deg); }
+      66%  { transform: rotateX(45deg)  rotateY(240deg) rotateZ(5deg); }
+      83%  { transform: rotateX(-30deg) rotateY(300deg) rotateZ(-5deg); }
+      100% { transform: rotateX(-20deg) rotateY(360deg) rotateZ(0deg); }
     }
 
     /* --- 3D Parallax on Scroll --- */
@@ -1112,11 +1116,13 @@
     .prism-3d .pf-top    { transform: rotateX(90deg) translateZ(55px); }
     .prism-3d .pf-bottom { transform: rotateX(-90deg) translateZ(55px); }
     @keyframes prismRotate {
-      0%   { transform: rotateX(-15deg) rotateY(0deg); }
-      25%  { transform: rotateX(5deg) rotateY(90deg); }
-      50%  { transform: rotateX(-10deg) rotateY(180deg); }
-      75%  { transform: rotateX(5deg) rotateY(270deg); }
-      100% { transform: rotateX(-15deg) rotateY(360deg); }
+      0%   { transform: rotateX(-25deg) rotateY(0deg)   rotateZ(0deg); }
+      16%  { transform: rotateX(-50deg) rotateY(60deg)  rotateZ(8deg); }
+      33%  { transform: rotateX(25deg)  rotateY(120deg) rotateZ(-8deg); }
+      50%  { transform: rotateX(-25deg) rotateY(180deg) rotateZ(0deg); }
+      66%  { transform: rotateX(50deg)  rotateY(240deg) rotateZ(8deg); }
+      83%  { transform: rotateX(-25deg) rotateY(300deg) rotateZ(-8deg); }
+      100% { transform: rotateX(-25deg) rotateY(360deg) rotateZ(0deg); }
     }
 
     /* --- Floating 3D Depth Layers (parallax cards) --- */
@@ -1490,39 +1496,47 @@
 
     /* ===== ADDITIONAL 3D OBJECTS & ANIMATIONS ===== */
 
-    /* --- 3D Rotating Icosahedron (wireframe sphere) --- */
+    /* --- 3D Rotating Wireframe Sphere --- */
+    /* Six rings spun on distinct axes, each keeping its transform    */
+    /* through preserve-3d on the parent. Parent spins through all    */
+    /* three axes so the sphere reads as volumetric, not flat.        */
     .icosahedron-3d {
       width: 130px;
       height: 130px;
       transform-style: preserve-3d;
-      animation: icosahedronSpin 28s linear infinite;
+      animation: icosahedronSpin 18s linear infinite;
       position: relative;
       filter: drop-shadow(0 14px 22px rgba(193, 145, 47, 0.15));
     }
     .icosahedron-3d .ico-ring {
       position: absolute;
       inset: 0;
-      border: 1.2px solid rgba(193, 145, 47, 0.45);
+      border: 1.5px solid rgba(193, 145, 47, 0.55);
       border-radius: 50%;
-      box-shadow: 0 0 14px rgba(193, 145, 47, 0.12), inset 0 0 14px rgba(193, 145, 47, 0.08);
+      box-shadow: 0 0 14px rgba(193, 145, 47, 0.15), inset 0 0 14px rgba(193, 145, 47, 0.1);
+      transform-style: preserve-3d;
     }
+    /* Each ring rotated to a distinct plane. */
+    .icosahedron-3d .ico-ring:nth-child(1) { transform: rotateX(0deg)   rotateY(0deg); }
+    .icosahedron-3d .ico-ring:nth-child(2) { transform: rotateX(0deg)   rotateY(30deg); }
+    .icosahedron-3d .ico-ring:nth-child(3) { transform: rotateX(0deg)   rotateY(60deg); }
+    .icosahedron-3d .ico-ring:nth-child(4) { transform: rotateX(0deg)   rotateY(90deg); }
+    .icosahedron-3d .ico-ring:nth-child(5) { transform: rotateX(60deg)  rotateY(0deg); }
+    .icosahedron-3d .ico-ring:nth-child(6) { transform: rotateX(-60deg) rotateY(0deg); }
     .icosahedron-3d::before {
       content: '';
       position: absolute;
       inset: 32%;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(232, 200, 116, 0.45), rgba(193, 145, 47, 0) 70%);
+      background: radial-gradient(circle, rgba(232, 200, 116, 0.55), rgba(193, 145, 47, 0) 70%);
       filter: blur(6px);
     }
-    .icosahedron-3d .ico-ring:nth-child(1) { transform: rotateX(0deg); }
-    .icosahedron-3d .ico-ring:nth-child(2) { transform: rotateX(60deg); }
-    .icosahedron-3d .ico-ring:nth-child(3) { transform: rotateX(120deg); }
-    .icosahedron-3d .ico-ring:nth-child(4) { transform: rotateY(60deg); }
-    .icosahedron-3d .ico-ring:nth-child(5) { transform: rotateY(120deg); }
-    .icosahedron-3d .ico-ring:nth-child(6) { transform: rotateZ(60deg); }
     @keyframes icosahedronSpin {
-      0%   { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
-      100% { transform: rotateX(360deg) rotateY(180deg) rotateZ(90deg); }
+      0%   { transform: rotateX(-15deg) rotateY(0deg)   rotateZ(0deg); }
+      25%  { transform: rotateX(25deg)  rotateY(90deg)  rotateZ(10deg); }
+      50%  { transform: rotateX(-15deg) rotateY(180deg) rotateZ(0deg); }
+      75%  { transform: rotateX(25deg)  rotateY(270deg) rotateZ(-10deg); }
+      100% { transform: rotateX(-15deg) rotateY(360deg) rotateZ(0deg); }
     }
 
     /* --- 3D DNA Helix (double strand) --- */
