@@ -465,9 +465,24 @@
   }
   </script>
 
-  <!-- Preconnect for performance -->
+  <!-- ============================================================ -->
+  <!-- PERFORMANCE — preconnect + preload hints                      -->
+  <!-- Preconnect warms up DNS/TLS for image CDNs before first paint -->
+  <!-- Preload: logo (navbar + loader) + hero video + critical font  -->
+  <!-- ============================================================ -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://source.unsplash.com" crossorigin />
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+  <link rel="preconnect" href="https://picsum.photos" crossorigin />
+  <link rel="dns-prefetch" href="https://fastly.picsum.photos" />
+
+  <!-- Preload the logo (first-paint critical, used in preamble + nav) -->
+  <link rel="preload" as="image" href="/assets/logo.png" fetchpriority="high" />
+  <!-- Preload the primary hero video/poster (homepage above-the-fold) -->
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1800&q=90" fetchpriority="high" />
+  <!-- Preload the primary display font style (Playfair Display bold) -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@300;400;500;600;700;800;900&display=swap" />
   <link rel="icon" type="image/jpeg" href="/assets/icon.jpg" />
   <script src="/tailwind.js"></script>
   <link

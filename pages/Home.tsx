@@ -47,19 +47,19 @@ const useCounter = (target: number, duration = 1600) => {
 /* ------------------------------------------------------------------ */
 /*  INDUSTRY IMAGE MAP                                                */
 /* ------------------------------------------------------------------ */
+// High-relevance Unsplash photos per industry. Explicit sig values
+// lock each industry to a consistent, distinct, topical photo.
 const INDUSTRY_IMAGES: Record<string, string> = {
-  // Local curated assets for the five flagship sectors.
-  banking: ASSETS.IND_BANKING,
-  healthcare: ASSETS.IND_HEALTH,
-  retail: ASSETS.IND_RETAIL,
-  manufacturing: ASSETS.IND_MANUFACTURING,
-  energy: ASSETS.IND_ENERGY,
-  // Unsplash-sourced, topic-relevant photos for the new sectors.
-  technology: 'https://source.unsplash.com/1200x800/?technology,saas,startup-office&sig=211',
-  'professional-services': 'https://source.unsplash.com/1200x800/?consulting,advisory,boardroom&sig=223',
-  education: 'https://source.unsplash.com/1200x800/?education,university,campus&sig=237',
-  government: 'https://source.unsplash.com/1200x800/?government,capitol,public-sector&sig=241',
-  media: 'https://source.unsplash.com/1200x800/?media,broadcast,studio&sig=253'
+  banking: 'https://source.unsplash.com/1200x800/?bank,skyscraper,wall-street,finance-building&sig=4011',
+  healthcare: 'https://source.unsplash.com/1200x800/?hospital,doctor,medical-technology,healthcare-facility&sig=4021',
+  retail: 'https://source.unsplash.com/1200x800/?retail-store,shopping-mall,boutique,ecommerce-warehouse&sig=4031',
+  manufacturing: 'https://source.unsplash.com/1200x800/?factory,manufacturing-plant,industrial-robot,production-line&sig=4041',
+  energy: 'https://source.unsplash.com/1200x800/?wind-turbine,solar-farm,power-grid,renewable-energy&sig=4051',
+  technology: 'https://source.unsplash.com/1200x800/?tech-company,software-office,silicon-valley,startup-hq&sig=4061',
+  'professional-services': 'https://source.unsplash.com/1200x800/?law-firm,consultancy,executive-meeting,boardroom-table&sig=4071',
+  education: 'https://source.unsplash.com/1200x800/?university-campus,lecture-hall,students-studying,classroom&sig=4081',
+  government: 'https://source.unsplash.com/1200x800/?capitol-building,parliament,public-sector,government-office&sig=4091',
+  media: 'https://source.unsplash.com/1200x800/?television-studio,broadcast-camera,production-set,newsroom&sig=4101'
 };
 
 /* ------------------------------------------------------------------ */
