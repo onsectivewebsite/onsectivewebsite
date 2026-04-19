@@ -132,6 +132,14 @@ blocks.push(entry('/onsective', '0.95'));
 blocks.push(entry('/about-onsective', '0.85'));
 blocks.push(entry('/onsective-enterprise', '0.85'));
 
+// 500 SEO-targeted blog posts
+const blogSlugsPath = path.resolve('scripts/blog-500-slugs.json');
+if (fs.existsSync(blogSlugsPath)) {
+  const blogSlugs = JSON.parse(fs.readFileSync(blogSlugsPath, 'utf-8'));
+  blocks.push(`  <!-- Programmatic SEO: 500 keyword-targeted blog posts -->`);
+  for (const s of blogSlugs) blocks.push(entry(`/guides/${s}`, '0.60'));
+}
+
 const insertion = blocks.join('\n');
 
 // Patch sitemap

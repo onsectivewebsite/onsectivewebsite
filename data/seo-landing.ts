@@ -1121,6 +1121,12 @@ import { DM_KEYWORD_GUIDES } from './dm-keyword-guides';
 SEO_GUIDES.push(...DM_KEYWORD_GUIDES);
 
 // ============================================================
+// Merge in the 500-post SEO blog bundle
+// ============================================================
+import { BLOG_500 } from './blog-500';
+SEO_GUIDES.push(...BLOG_500);
+
+// ============================================================
 // Helpers
 // ============================================================
 export const getLocation = (id: string) => SEO_LOCATIONS.find(l => l.id === id);
