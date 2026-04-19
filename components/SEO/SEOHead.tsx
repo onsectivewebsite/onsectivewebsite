@@ -101,6 +101,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({ title, description, pageKey, override
           areaServed: 'Worldwide',
         },
         sameAs: [
+          'https://share.google/1FEaabgX3DE0px7L3',
           'https://www.linkedin.com/company/onsective',
           'https://www.instagram.com/onsective',
           'https://twitter.com/OnsectiveEnt',

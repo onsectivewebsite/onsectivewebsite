@@ -50,6 +50,7 @@ const Onsective: React.FC = () => {
               addressCountry: 'CA'
             },
             sameAs: [
+              'https://share.google/1FEaabgX3DE0px7L3',
               'https://www.linkedin.com/company/onsective',
               'https://www.instagram.com/onsective',
               'https://twitter.com/OnsectiveEnt',
@@ -57,6 +58,7 @@ const Onsective: React.FC = () => {
               'https://www.youtube.com/@onsective',
               'https://github.com/onsectivewebsite'
             ],
+            hasMap: 'https://share.google/1FEaabgX3DE0px7L3',
             description: 'Onsective Enterprise Inc. is a global technology consulting institution specialising in digital transformation, cloud migration, cybersecurity, AI automation, enterprise SEO, digital marketing, and brand management.'
           }
         }}
@@ -160,6 +162,7 @@ const Onsective: React.FC = () => {
               <h2 className="text-3xl font-['Playfair_Display'] font-bold mb-6">Official Channels</h2>
               <div className="space-y-3">
                 {[
+                  { label: 'Google Business Profile', url: 'https://share.google/1FEaabgX3DE0px7L3' },
                   { label: 'LinkedIn', url: 'https://www.linkedin.com/company/onsective' },
                   { label: 'Instagram', url: 'https://www.instagram.com/onsective' },
                   { label: 'X (Twitter)', url: 'https://twitter.com/OnsectiveEnt' },

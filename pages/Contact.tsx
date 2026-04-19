@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Phone, MapPin, Clock, ChevronDown, CheckCircle, AlertCircle, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, ChevronDown, CheckCircle, AlertCircle, Send, ArrowUpRight } from 'lucide-react';
 import SEOHead from '../components/SEO/SEOHead';
 import { CONTACT_EMAIL, CONTACT_PHONE, SERVICES, GLOBAL_OFFICES } from '../constants';
 
@@ -221,6 +221,37 @@ const Contact: React.FC = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== GOOGLE BUSINESS PROFILE CTA ===== */}
+      <section className="py-16 bg-white border-t border-brand-border">
+        <div className="max-w-5xl mx-auto px-6 lg:px-16">
+          <div className="bg-gradient-to-br from-brand-dark to-brand-navy-deep rounded-lg p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center gap-6 text-white">
+            <div className="w-14 h-14 rounded-lg bg-brand-primary/20 flex items-center justify-center shrink-0">
+              <svg width={24} height={24} viewBox="0 0 24 24" fill="none" className="text-brand-primary">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1Z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.99.66-2.26 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23Z" fill="#34A853"/>
+                <path d="M5.84 14.1a6.62 6.62 0 0 1 0-4.2V7.07H2.18a11 11 0 0 0 0 9.87l3.66-2.84Z" fill="#FBBC05"/>
+                <path d="M12 4.75c1.62 0 3.06.56 4.2 1.64l3.15-3.15C17.45 1.19 14.97.25 12 .25A11 11 0 0 0 2.18 7.07L5.84 9.9C6.71 7.3 9.14 4.75 12 4.75Z" fill="#EA4335"/>
+              </svg>
+            </div>
+            <div className="flex-1">
+              <div className="text-xs font-semibold text-brand-primary uppercase tracking-widest mb-1">Google Business Profile</div>
+              <h3 className="text-xl md:text-2xl font-display font-bold">Find, Review, and Save Onsective on Google</h3>
+              <p className="text-white/60 text-sm mt-2">
+                Visit our official Google Business Profile to view the Onsective location, hours, contact information, and leave a review.
+              </p>
+            </div>
+            <a
+              href="https://share.google/1FEaabgX3DE0px7L3"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-brand-primary text-white font-semibold text-sm rounded-md hover:brightness-110 whitespace-nowrap shrink-0"
+            >
+              Open on Google <ArrowUpRight size={14} />
+            </a>
           </div>
         </div>
       </section>

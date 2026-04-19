@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   MapPin, Phone, Mail, ArrowRight, ArrowUpRight, Globe,
-  Linkedin, Instagram, Youtube, Facebook,
+  Linkedin, Instagram, Youtube, Facebook, Star,
 } from 'lucide-react';
 import {
   COMPANY_NAME, SERVICES, INDUSTRIES, CONTACT_EMAIL, CONTACT_PHONE,
@@ -26,6 +26,7 @@ const Footer: React.FC = () => {
   )}`;
 
   const socialLinks = [
+    { label: 'Google Business Profile', href: 'https://share.google/1FEaabgX3DE0px7L3', icon: <Star size={18} /> },
     { label: 'LinkedIn', href: LINKEDIN_URL, icon: <Linkedin size={18} /> },
     { label: 'Instagram', href: INSTAGRAM_URL, icon: <Instagram size={18} /> },
     { label: 'X', href: X_URL, icon: <XIcon /> },
