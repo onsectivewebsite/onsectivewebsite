@@ -13,7 +13,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { REMOVED_URLS } from '../seo-removed-urls.js';
+import { REMOVED_PATHS } from '../seo-removed-urls.js';
 
 const SITE = 'https://onsective.com';
 const LASTMOD = new Date().toISOString().slice(0, 10);
@@ -60,7 +60,7 @@ const CAPABILITIES = {
 };
 
 const entry = (loc, pri = '0.65', changefreq = 'monthly') => {
-  if (REMOVED_URLS.has(loc)) return null;
+  if (REMOVED_PATHS.has(loc)) return null;
   return `  <url><loc>${SITE}${loc}</loc><lastmod>${LASTMOD}</lastmod><changefreq>${changefreq}</changefreq><priority>${pri}</priority></url>`;
 };
 
