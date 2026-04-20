@@ -13,6 +13,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { REMOVED_URLS } from '../seo-removed-urls.js';
 
 const SITE = 'https://onsective.com';
 const LASTMOD = new Date().toISOString().slice(0, 10);
@@ -58,17 +59,20 @@ const CAPABILITIES = {
   'custom-software': ['web-application-development', 'mobile-app-development', 'saas-platform-engineering', 'api-design-microservices', 'devops-ci-cd-pipelines', 'legacy-system-modernization']
 };
 
-const entry = (loc, pri = '0.65', changefreq = 'monthly') =>
-  `  <url><loc>${SITE}${loc}</loc><lastmod>${LASTMOD}</lastmod><changefreq>${changefreq}</changefreq><priority>${pri}</priority></url>`;
+const entry = (loc, pri = '0.65', changefreq = 'monthly') => {
+  if (REMOVED_URLS.has(loc)) return null;
+  return `  <url><loc>${SITE}${loc}</loc><lastmod>${LASTMOD}</lastmod><changefreq>${changefreq}</changefreq><priority>${pri}</priority></url>`;
+};
 
 const writeSitemap = (filename, urls) => {
+  const clean = urls.filter(Boolean);
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.join('\n')}
+${clean.join('\n')}
 </urlset>
 `;
   fs.writeFileSync(path.resolve('public', filename), body);
-  console.log(`  ${filename}: ${urls.length} URLs`);
+  console.log(`  ${filename}: ${clean.length} URLs`);
 };
 
 console.log('Building sitemap index and sub-sitemaps...\n');

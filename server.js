@@ -6,6 +6,7 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
 import adminRouter from './server-admin.js';
 import { createSEOHandler } from './seo-middleware.js';
+import { isRemoved } from './seo-removed-urls.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -207,6 +208,17 @@ app.get('/api/health', (req, res) => {
 
 // Admin API routes
 app.use(adminRouter);
+
+// Retired URLs — return 410 Gone with noindex so search engines drop
+// them from the index. Must sit before the SPA catch-all.
+app.get('*', (req, res, next) => {
+  if (!isRemoved(req.path)) return next();
+  res.status(410);
+  res.set('Content-Type', 'text/html; charset=utf-8');
+  res.set('X-Robots-Tag', 'noindex, nofollow');
+  res.set('Cache-Control', 'public, max-age=3600');
+  res.send('<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex, nofollow"><title>410 Gone — Onsective</title></head><body><h1>410 Gone</h1><p>This page has been permanently removed.</p><p><a href="https://onsective.com/">Return to Onsective</a></p></body></html>');
+});
 
 // SPA catch-all — serves index.html with per-URL canonical/title/meta
 // rewrites so crawlers don't see every route as a homepage duplicate.
