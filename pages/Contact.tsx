@@ -87,7 +87,10 @@ const Contact: React.FC = () => {
 
   return (
     <>
-      <SEOHead pageKey="contact" />
+      <SEOHead
+        pageKey="contact"
+        faqItems={FAQ_ITEMS.map(f => ({ q: f.question, a: f.answer }))}
+      />
 
       {/* ===== SECTION 1: HERO ===== */}
       <section className="bg-brand-dark pt-40 pb-20">

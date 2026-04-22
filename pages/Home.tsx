@@ -1,11 +1,38 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ChevronRight, ChevronLeft, Globe, Users, BarChart3, Shield, Zap, Cpu, Code2 } from 'lucide-react';
+import { ArrowRight, ChevronRight, ChevronLeft, ChevronDown, Globe, Users, BarChart3, Shield, Zap, Cpu, Code2 } from 'lucide-react';
 import SEOHead from '../components/SEO/SEOHead';
 import { SERVICES, GLOBAL_OFFICES, INDUSTRIES } from '../constants';
 import { ASSETS } from '../utils/assets';
 import { LATEST_INSIGHTS } from '../data/blog';
 import { StrategyCubeScene } from '../components/UI/ServiceScene3D';
+
+const HOME_FAQ_ITEMS = [
+  {
+    question: 'What is Onsective?',
+    answer: 'Onsective Enterprise Inc. is a global technology consulting institution headquartered in Toronto, Canada. We operate as ten integrated practice domains — IT strategy, cloud services, cybersecurity, digital experience design, AI and automation, enterprise SEO, digital marketing, social media, custom software development, and brand management — delivered through principal-led engagements across North America, Europe, the Middle East, and Asia-Pacific.',
+  },
+  {
+    question: 'Where is Onsective headquartered and where does it operate globally?',
+    answer: 'Onsective is headquartered at 1111 Albion Rd, Etobicoke, Ontario M9V 1A6, Canada. We operate sovereign delivery hubs in Toronto, New York, London, Dubai, Mumbai, Singapore, Sydney, Berlin, San Francisco, and Vancouver — pairing local regulatory fluency with global institutional scale.',
+  },
+  {
+    question: 'Is Onsective a consulting firm or a digital agency?',
+    answer: 'Neither label fits cleanly. Onsective operates as a consulting institution with agency-grade execution capability. Unlike traditional consultancies that stop at slide decks, we carry every engagement through to production. Unlike traditional agencies that optimize for volume, our delivery model is principal-led and outcome-indexed — no junior outsourcing, no handoffs to offshore production teams.',
+  },
+  {
+    question: 'Who are Onsective’s typical clients?',
+    answer: 'Our portfolio spans Fortune 500 enterprises, Tier-1 banks, Tier-1 healthcare institutions, global retailers, and high-growth operators preparing for institutional scale. We accept engagements where institutional rigor materially changes the outcome — which is why our retention rate sits at 99% and our aggregate client rating is 4.9 out of 5.',
+  },
+  {
+    question: 'How are Onsective engagements commercially structured?',
+    answer: 'Every engagement runs under one of three commercial structures. Fixed-scope project fees for defined deliverables with clear success criteria. Monthly retainers for sustained capability across cloud, security, SEO, marketing, or managed software. Outcome-indexed models where compensation is tied directly to measurable P&L impact. In all three, principal-led delivery is the constant.',
+  },
+  {
+    question: 'Where can I access Onsective’s published research and frameworks?',
+    answer: 'Onsective publishes over 1,200 strategic essays, field guides, and executable frameworks at onsective.com/insights. The catalog covers cloud economics, AI governance, enterprise SEO strategy, cybersecurity posture, and marketing attribution. A newsletter subscription is available via onsective.com/contact, and the full archive is available as an RSS feed at onsective.com/feed.xml.',
+  },
+];
 
 /* ------------------------------------------------------------------ */
 /*  useCounter — animates a number from 0 to target on scroll         */
@@ -145,6 +172,7 @@ const TRUST_WORDS = ['STRATEGY', 'INTELLIGENCE', 'CLOUD', 'SECURITY', 'SOFTWARE'
 const Home: React.FC = () => {
   /* ---------- Hero carousel state ---------- */
   const [activeSlide, setActiveSlide] = useState(0);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const startAutoRotate = () => {
@@ -205,12 +233,15 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <SEOHead pageKey="home" />
+      <SEOHead
+        pageKey="home"
+        faqItems={HOME_FAQ_ITEMS.map(f => ({ q: f.question, a: f.answer }))}
+      />
 
       {/* ============================================================ */}
       {/*  HERO — ROTATING CAROUSEL                                    */}
       {/* ============================================================ */}
-      <section className="relative h-screen min-h-[600px] max-h-[900px] overflow-hidden">
+      <section className="relative h-[100svh] min-h-[640px] max-h-[980px] overflow-hidden">
         {/* Particle field overlay */}
         <div className="particle-field z-[5]">
           {Array.from({ length: 20 }).map((_, i) => (
@@ -946,6 +977,46 @@ const Home: React.FC = () => {
             <p className="text-brand-muted text-lg leading-relaxed">
               With sovereign presence across 7+ nations, we deliver with local regulatory expertise and the full force of global institutional scale. Our distributed delivery model ensures that wherever capital flows, Onsective principals are already on the ground.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================ */}
+      {/*  FREQUENTLY ASKED QUESTIONS                                  */}
+      {/* ============================================================ */}
+      <section className="py-24 lg:py-32 bg-brand-light">
+        <div className="max-w-3xl mx-auto px-6 lg:px-16">
+          <div className="text-center mb-16 animate-on-scroll">
+            <span className="text-brand-primary font-semibold text-xs tracking-[0.2em] uppercase block mb-4">About Onsective</span>
+            <h2 className="font-display text-4xl lg:text-5xl font-bold text-brand-dark">
+              Frequently Asked Questions
+            </h2>
+          </div>
+
+          <div className="space-y-4">
+            {HOME_FAQ_ITEMS.map((faq, idx) => (
+              <div
+                key={idx}
+                className="border border-brand-border rounded-lg overflow-hidden bg-white animate-on-scroll"
+                style={{ transitionDelay: `${idx * 80}ms` }}
+              >
+                <button
+                  onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                  className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left hover:bg-brand-light/50 transition-colors"
+                >
+                  <span className="font-semibold text-brand-dark text-sm">{faq.question}</span>
+                  <ChevronDown
+                    size={18}
+                    className={`text-brand-muted flex-shrink-0 transition-transform duration-300 ${openFaq === idx ? 'rotate-180' : ''}`}
+                  />
+                </button>
+                <div
+                  className={`overflow-hidden transition-all duration-300 ${openFaq === idx ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
+                >
+                  <p className="px-6 pb-5 text-brand-muted text-sm leading-relaxed">{faq.answer}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

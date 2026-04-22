@@ -267,6 +267,7 @@ const Footer: React.FC = () => {
               <div className="text-white/20 text-sm text-center lg:text-left">
                 <p>&copy; {currentYear} {COMPANY_NAME} Enterprise Inc. All rights reserved.</p>
                 <p className="mt-1 text-white/10 text-xs">All content, media, videos, and intellectual property are protected under Canadian and international copyright law.</p>
+                <p className="mt-1 text-white/25 text-xs">All digital marketing services are provided by <a href="https://itsnottechy.com" target="_blank" rel="noopener noreferrer" className="text-white/50 font-medium hover:text-brand-primary transition-colors">It's Not Techy</a>.</p>
               </div>
               <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 sm:gap-x-6 text-xs sm:text-sm text-white/25">
                 <Link to="/privacy" className="hover:text-brand-primary transition-colors">Privacy</Link>
