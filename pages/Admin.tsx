@@ -452,7 +452,7 @@ const Admin: React.FC = () => {
           </div>
 
           {/* Footer */}
-          <p className="text-center text-slate-600 text-[8px] uppercase tracking-[0.4em] mt-6">Onsective Enterprise Inc. &copy; 2026</p>
+          <p className="text-center text-slate-600 text-[8px] uppercase tracking-[0.4em] mt-6">Onsective Inc. &copy; 2026</p>
         </div>
       </div>
     );

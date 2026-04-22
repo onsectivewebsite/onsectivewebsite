@@ -179,7 +179,7 @@ const Terms: React.FC = () => {
 
                     <h2 id="handbook">15. Employment Terms and the Employee Handbook</h2>
                     <p>
-                        The terms governing employment with {COMPANY_NAME} Enterprise Inc. — including code of conduct, workplace standards, benefits, leave policies, and separation protocols — are codified in the official Employee Handbook. Employees, contractors, and authorised representatives are subject to the terms of the Handbook in addition to these Terms of Use.
+                        The terms governing employment with {COMPANY_NAME} Inc. — including code of conduct, workplace standards, benefits, leave policies, and separation protocols — are codified in the official Employee Handbook. Employees, contractors, and authorised representatives are subject to the terms of the Handbook in addition to these Terms of Use.
                     </p>
                     <p>
                         The latest version of the Employee Handbook is available for review here:{' '}

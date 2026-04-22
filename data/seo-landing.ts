@@ -183,7 +183,7 @@ export const SEO_INTENTS: SeoIntent[] = [
     id: 'company',
     label: 'Company',
     headline: (s) => `${s} Company`,
-    intro: (s) => `Onsective Enterprise Inc. is a leading ${s.toLowerCase()} company trusted by 120+ enterprise clients across 7+ sovereign markets. Our delivery model combines senior principal leadership with world-class engineering execution.`,
+    intro: (s) => `Onsective Inc. is a leading ${s.toLowerCase()} company trusted by 120+ enterprise clients across 7+ sovereign markets. Our delivery model combines senior principal leadership with world-class engineering execution.`,
     keywords: (s) => `${s} company, best ${s.toLowerCase()} company, top ${s.toLowerCase()} companies, ${s.toLowerCase()} company Toronto, leading ${s.toLowerCase()} companies, enterprise ${s.toLowerCase()} company`
   },
   {

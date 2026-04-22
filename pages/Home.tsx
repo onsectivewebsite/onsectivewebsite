@@ -10,7 +10,7 @@ import { StrategyCubeScene } from '../components/UI/ServiceScene3D';
 const HOME_FAQ_ITEMS = [
   {
     question: 'What is Onsective?',
-    answer: 'Onsective Enterprise Inc. is a global technology consulting institution headquartered in Toronto, Canada. We operate as ten integrated practice domains — IT strategy, cloud services, cybersecurity, digital experience design, AI and automation, enterprise SEO, digital marketing, social media, custom software development, and brand management — delivered through principal-led engagements across North America, Europe, the Middle East, and Asia-Pacific.',
+    answer: 'Onsective Inc. is a global technology consulting institution headquartered in Toronto, Canada. We operate as ten integrated practice domains — IT strategy, cloud services, cybersecurity, digital experience design, AI and automation, enterprise SEO, digital marketing, social media, custom software development, and brand management — delivered through principal-led engagements across North America, Europe, the Middle East, and Asia-Pacific.',
   },
   {
     question: 'Where is Onsective headquartered and where does it operate globally?',

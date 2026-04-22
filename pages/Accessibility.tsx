@@ -35,7 +35,7 @@ const Accessibility: React.FC = () => {
             Accessibility
           </h1>
           <p className="text-lg md:text-xl text-white/50 max-w-3xl leading-relaxed font-['Plus_Jakarta_Sans']">
-            Onsective Enterprise Inc. is committed to ensuring digital accessibility for all users, including people with disabilities. We continuously work to improve the user experience for everyone.
+            Onsective Inc. is committed to ensuring digital accessibility for all users, including people with disabilities. We continuously work to improve the user experience for everyone.
           </p>
         </div>
       </section>

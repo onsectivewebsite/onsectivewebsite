@@ -398,6 +398,24 @@ const Services: React.FC = () => {
         </div>
       </section>
 
+      {/* ===== SUBSIDIARY DISCLOSURE ===== */}
+      <section className="bg-brand-light border-y border-brand-border py-6">
+        <div className="max-w-4xl mx-auto px-6 lg:px-16 text-center">
+          <p className="text-brand-muted text-xs sm:text-sm leading-relaxed">
+            All digital marketing services on this page are delivered by{' '}
+            <a
+              href="https://itsnottechy.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-brand-primary hover:underline"
+            >
+              It&rsquo;s Not Techy
+            </a>
+            , a subsidiary of Onsective Inc.
+          </p>
+        </div>
+      </section>
+
       {/* ===== CTA ===== */}
       <section className="py-24 bg-brand-primary relative overflow-hidden">
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'linear-gradient(135deg, transparent 40%, #fff 40.5%, #fff 41%, transparent 41.5%)' }}></div>

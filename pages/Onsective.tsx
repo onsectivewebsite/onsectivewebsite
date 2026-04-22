@@ -21,17 +21,17 @@ const Onsective: React.FC = () => {
     <>
       <SEOHead
         title="Onsective — Global Digital Transformation Consulting Institution"
-        description="Onsective (Onsective Enterprise Inc.) is a global technology consulting institution headquartered in Toronto, Canada. Serving 120+ enterprises across 7+ nations in digital transformation, cloud, cybersecurity, AI, enterprise SEO, digital marketing, and brand management."
+        description="Onsective (Onsective Inc.) is a global technology consulting institution headquartered in Toronto, Canada. Serving 120+ enterprises across 7+ nations in digital transformation, cloud, cybersecurity, AI, enterprise SEO, digital marketing, and brand management."
         overrides={{
-          keywords: 'Onsective, Onsective Enterprise, Onsective Enterprise Inc, Onsective Inc, Onsective Consulting, Onsective Software, Onsective Technologies, Onsective Digital, Onsective Global, Onsective Toronto, Onsective Canada, Onsec, Onsec Enterprise, Insec, Insective, onsective.com, what is Onsective, who is Onsective, Onsective company, Onsective services, Onsective reviews, Onsective careers, Onsective contact, OnsecBoard, OnsecEmployee',
+          keywords: 'Onsective, Onsective Enterprise, Onsective Inc, Onsective Inc, Onsective Consulting, Onsective Software, Onsective Technologies, Onsective Digital, Onsective Global, Onsective Toronto, Onsective Canada, Onsec, Onsec Enterprise, Insec, Insective, onsective.com, what is Onsective, who is Onsective, Onsective company, Onsective services, Onsective reviews, Onsective careers, Onsective contact, OnsecBoard, OnsecEmployee',
           canonical: `${SITE_URL}/onsective`,
           structuredData: {
             '@type': 'Organization',
             '@id': `${SITE_URL}/#organization-entity`,
             name: 'Onsective Enterprise',
-            legalName: 'Onsective Enterprise Inc.',
+            legalName: 'Onsective Inc.',
             alternateName: [
-              'Onsective', 'Onsective Enterprise Inc.', 'Onsective Inc', 'Onsective Consulting',
+              'Onsective', 'Onsective Inc.', 'Onsective Inc', 'Onsective Consulting',
               'Onsective Software', 'Onsective Technologies', 'Onsective Digital', 'Onsective Global',
               'Onsec', 'Onsec Enterprise', 'Insec', 'Insective'
             ],
@@ -59,7 +59,7 @@ const Onsective: React.FC = () => {
               'https://github.com/onsectivewebsite'
             ],
             hasMap: 'https://share.google/1FEaabgX3DE0px7L3',
-            description: 'Onsective Enterprise Inc. is a global technology consulting institution specialising in digital transformation, cloud migration, cybersecurity, AI automation, enterprise SEO, digital marketing, and brand management.'
+            description: 'Onsective Inc. is a global technology consulting institution specialising in digital transformation, cloud migration, cybersecurity, AI automation, enterprise SEO, digital marketing, and brand management.'
           }
         }}
         breadcrumbs={[
@@ -76,7 +76,7 @@ const Onsective: React.FC = () => {
             <img src="/assets/logo.png" alt="Onsective logo" className="h-14 w-auto" />
             <div>
               <span className="text-[#c1912f] text-xs font-semibold uppercase tracking-[0.25em] font-['Plus_Jakarta_Sans']">
-                Onsective Enterprise Inc.
+                Onsective Inc.
               </span>
               <div className="text-white/50 text-sm font-['Plus_Jakarta_Sans']">Global Digital Transformation Institution</div>
             </div>
@@ -108,7 +108,7 @@ const Onsective: React.FC = () => {
               <dl className="space-y-4">
                 <div className="flex flex-col sm:flex-row gap-1 sm:gap-3">
                   <dt className="sm:w-36 sm:shrink-0 text-xs sm:text-sm font-semibold text-[#64748b] uppercase sm:normal-case tracking-wider sm:tracking-normal font-['Plus_Jakarta_Sans']">Legal Name</dt>
-                  <dd className="text-sm text-[#1a1a2e] font-['Plus_Jakarta_Sans']">Onsective Enterprise Inc.</dd>
+                  <dd className="text-sm text-[#1a1a2e] font-['Plus_Jakarta_Sans']">Onsective Inc.</dd>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-1 sm:gap-3">
                   <dt className="sm:w-36 sm:shrink-0 text-xs sm:text-sm font-semibold text-[#64748b] uppercase sm:normal-case tracking-wider sm:tracking-normal font-['Plus_Jakarta_Sans']">Also Known As</dt>
@@ -240,11 +240,11 @@ const Onsective: React.FC = () => {
             {[
               {
                 q: 'What is Onsective?',
-                a: 'Onsective (Onsective Enterprise Inc.) is a global technology consulting institution headquartered in Toronto, Canada. We specialise in digital transformation, cloud migration, cybersecurity, AI automation, enterprise SEO, digital marketing, custom software development, and brand management.'
+                a: 'Onsective (Onsective Inc.) is a global technology consulting institution headquartered in Toronto, Canada. We specialise in digital transformation, cloud migration, cybersecurity, AI automation, enterprise SEO, digital marketing, custom software development, and brand management.'
               },
               {
                 q: 'Is Onsective the same as Onsec or Insec?',
-                a: 'Yes. "Onsective", "Onsective Enterprise", "Onsective Inc.", "Onsec", "Onsec Enterprise", "Insec", "Insective", and "Onsective Consulting" all refer to the same organisation — Onsective Enterprise Inc.'
+                a: 'Yes. "Onsective", "Onsective Enterprise", "Onsective Inc.", "Onsec", "Onsec Enterprise", "Insec", "Insective", and "Onsective Consulting" all refer to the same organisation — Onsective Inc.'
               },
               {
                 q: 'Where is Onsective headquartered?',

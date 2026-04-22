@@ -14,15 +14,15 @@ const EmployeeHandbook: React.FC = () => {
   return (
     <>
       <SEOHead
-        title="Employee Handbook | Onsective Enterprise Inc."
-        description="The official Onsective Enterprise Inc. Employee Handbook — code of conduct, employment policies, benefits, and workplace standards for the Onsective global workforce."
+        title="Employee Handbook | Onsective Inc."
+        description="The official Onsective Inc. Employee Handbook — code of conduct, employment policies, benefits, and workplace standards for the Onsective global workforce."
         overrides={{
           keywords: 'Onsective employee handbook, Onsective Inc employee handbook, Onsective policies, Onsective code of conduct, Onsective HR, Onsective benefits, Onsective workplace policies',
           canonical: `${SITE_URL}/employee-handbook`,
           structuredData: {
             '@type': 'DigitalDocument',
             '@id': `${SITE_URL}/employee-handbook/#document`,
-            name: 'Onsective Enterprise Inc. Employee Handbook',
+            name: 'Onsective Inc. Employee Handbook',
             description: 'Official employee handbook outlining employment policies, code of conduct, benefits, and workplace standards.',
             url: `${SITE_URL}${PDF_URL}`,
             fileFormat: 'application/pdf',
@@ -41,10 +41,10 @@ const EmployeeHandbook: React.FC = () => {
         <div className="max-w-5xl mx-auto px-6 lg:px-16 relative z-10">
           <span className="text-[#c1912f] text-xs font-semibold uppercase tracking-[0.25em] mb-6 block font-['Plus_Jakarta_Sans']">Human Resources · Official Document</span>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-['Playfair_Display'] font-bold text-white leading-[0.95] mb-6">
-            Onsective Enterprise Inc.<br />Employee Handbook
+            Onsective Inc.<br />Employee Handbook
           </h1>
           <p className="text-lg text-white/55 font-['Plus_Jakarta_Sans'] leading-relaxed max-w-3xl">
-            The official Onsective Enterprise Inc. Employee Handbook. Code of conduct, employment policies, benefits, and workplace standards governing every Onsective employee across our global operations.
+            The official Onsective Inc. Employee Handbook. Code of conduct, employment policies, benefits, and workplace standards governing every Onsective employee across our global operations.
           </p>
         </div>
       </section>

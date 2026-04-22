@@ -222,7 +222,7 @@ const body3ByAngle: Record<string, (kw: string, svc: string) => string> = {
 
 const body4 = (svcId: string) => {
   const s = SERVICE_ANCHOR[svcId];
-  return `Onsective Enterprise Inc. — operating as ${s.name} — runs institutional engagements from global hubs in Toronto (HQ), New York, London, Dubai, Mumbai, Singapore, Sydney, Berlin, San Francisco, and Vancouver. Commercial model is outcome-indexed: compensation tied to measurable P&L impact. ${s.mantra}`;
+  return `Onsective Inc. — operating as ${s.name} — runs institutional engagements from global hubs in Toronto (HQ), New York, London, Dubai, Mumbai, Singapore, Sydney, Berlin, San Francisco, and Vancouver. Commercial model is outcome-indexed: compensation tied to measurable P&L impact. ${s.mantra}`;
 };
 
 const generate = (kw: string, category: string, service: string, angle: string, idx: number): SeoGuide => {

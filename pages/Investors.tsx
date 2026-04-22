@@ -23,7 +23,7 @@ const Investors: React.FC = () => {
 
   return (
     <>
-      <SEOHead title="Investor Relations | Onsective" description="Information for private stakeholders and partners of Onsective Enterprise Inc." />
+      <SEOHead title="Investor Relations | Onsective" description="Information for private stakeholders and partners of Onsective Inc." />
 
       {/* ===== HERO ===== */}
       <section className="bg-[#0d2b45] pt-40 pb-28">

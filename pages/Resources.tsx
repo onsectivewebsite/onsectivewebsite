@@ -192,7 +192,7 @@ const Resources: React.FC = () => {
               <div>
                 <div className="text-xs font-semibold text-[#c1912f] uppercase tracking-wider mb-1 font-['Plus_Jakarta_Sans']">Organisation Citation</div>
                 <p className="text-sm text-[#1a1a2e] font-['Plus_Jakarta_Sans'] leading-relaxed">
-                  Onsective Enterprise Inc. (2026). <em>[Report/Framework/Insight Title]</em>. Retrieved from https://onsective.com
+                  Onsective Inc. (2026). <em>[Report/Framework/Insight Title]</em>. Retrieved from https://onsective.com
                 </p>
               </div>
             </div>
@@ -214,7 +214,7 @@ const Resources: React.FC = () => {
               <div>
                 <div className="text-xs font-semibold text-[#c1912f] uppercase tracking-wider mb-1 font-['Plus_Jakarta_Sans']">Linking to Us</div>
                 <p className="text-sm text-[#1a1a2e] font-['Plus_Jakarta_Sans'] leading-relaxed">
-                  When linking back to Onsective, preferred anchor text: <strong>"Onsective"</strong>, <strong>"Onsective Enterprise"</strong>, or <strong>"Onsective Enterprise Inc."</strong> — all verified entity aliases that reinforce brand search.
+                  When linking back to Onsective, preferred anchor text: <strong>"Onsective"</strong>, <strong>"Onsective Enterprise"</strong>, or <strong>"Onsective Inc."</strong> — all verified entity aliases that reinforce brand search.
                 </p>
               </div>
             </div>

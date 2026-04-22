@@ -39,7 +39,7 @@ const MethodologyDetail: React.FC = () => {
     <>
       <SEOHead
         title={`${detail.title} — ${parentService.title} Methodology | Onsective`}
-        description={`${detail.tagline}. Onsective Enterprise Inc. delivers the ${detail.title} phase of our ${parentService.title.toLowerCase()} practice to 120+ enterprises across 7+ nations.`}
+        description={`${detail.tagline}. Onsective Inc. delivers the ${detail.title} phase of our ${parentService.title.toLowerCase()} practice to 120+ enterprises across 7+ nations.`}
         overrides={{
           keywords: `Onsective ${detail.title}, Onsective ${parentService.title}, Onsective ${parentService.title} ${detail.title}, ${detail.title} methodology, ${parentService.title} ${detail.title} framework, ${parentService.title} consulting, ${detail.title} consulting Toronto, Onsective Enterprise, Onsective Inc, Onsec, Insec, ${detail.frameworks.slice(0, 4).join(', ')}`,
           canonical: `https://onsective.com/services/${serviceId}/methodology/${methodologyId}`,

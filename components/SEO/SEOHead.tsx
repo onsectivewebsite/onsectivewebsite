@@ -60,7 +60,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({ title, description, pageKey, override
     setMeta('meta[name="description"]', 'name', finalDesc);
     if (finalKeywords) setMeta('meta[name="keywords"]', 'name', finalKeywords);
     setMeta('meta[name="robots"]', 'name', 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1');
-    setMeta('meta[name="author"]', 'name', 'Onsective Enterprise Inc.');
+    setMeta('meta[name="author"]', 'name', 'Onsective Inc.');
 
     // --- Open Graph ---
     setMeta('meta[property="og:title"]', 'property', finalOgTitle);
@@ -88,7 +88,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({ title, description, pageKey, override
         '@type': ['Organization', 'Corporation'],
         '@id': `${SITE_URL}/#organization`,
         name: SITE_NAME,
-        alternateName: ['Onsective', 'Onsective Enterprise Inc.', 'Onsective Consulting'],
+        alternateName: ['Onsective', 'Onsective Inc.', 'Onsective Consulting'],
         url: SITE_URL,
         logo: {
           '@type': 'ImageObject',
@@ -174,9 +174,6 @@ const SEOHead: React.FC<SEOHeadProps> = ({ title, description, pageKey, override
     } else if (faqScript) {
       faqScript.remove();
     }
-
-    // Scroll to top on route change
-    window.scrollTo(0, 0);
   }, [title, description, pageKey, overrides, breadcrumbs, faqItems]);
 
   return null;
