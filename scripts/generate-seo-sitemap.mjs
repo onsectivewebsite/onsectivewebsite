@@ -17,7 +17,9 @@ const SERVICES = [
 
 const LOCATIONS = [
   'toronto', 'new-york', 'london', 'dubai', 'mumbai',
-  'singapore', 'sydney', 'berlin', 'san-francisco', 'vancouver'
+  'singapore', 'sydney', 'berlin', 'san-francisco', 'vancouver',
+  // Canadian expansion — 2026-04
+  'montreal', 'ottawa', 'calgary', 'edmonton', 'quebec-city'
 ];
 
 const INDUSTRIES = [
@@ -103,7 +105,14 @@ const GUIDES = [
   'immigration-law-firm-marketing-toronto',
   'saas-development-company-toronto',
   'custom-legal-software-development-toronto',
-  'cloud-hosting-canadian-law-firms'
+  'cloud-hosting-canadian-law-firms',
+  // Competitor-alternative guides (2026)
+  'accenture-alternatives-canadian-mid-market',
+  'deloitte-digital-alternatives-toronto',
+  'big-four-consulting-alternatives-boutique',
+  'infosys-alternatives-enterprise-digital-transformation',
+  'capgemini-alternatives-canada',
+  'epam-alternatives-custom-software'
 ];
 
 const entry = (loc, pri = '0.65') =>
@@ -126,6 +135,42 @@ for (const s of SERVICES) for (const it of INTENTS) blocks.push(entry(`/services
 // Industry × Location
 blocks.push('  <!-- Programmatic SEO: Industry × Location (100 URLs) -->');
 for (const i of INDUSTRIES) for (const l of LOCATIONS) blocks.push(entry(`/industries/${i}/in/${l}`, '0.65'));
+
+// Service × Industry × Location — cherry-picked 30 high-intent combos
+const TRIPLE_COMBOS = [
+  ['digital-marketing', 'professional-services', 'toronto'],
+  ['digital-marketing', 'professional-services', 'montreal'],
+  ['digital-marketing', 'professional-services', 'vancouver'],
+  ['digital-marketing', 'professional-services', 'ottawa'],
+  ['digital-marketing', 'professional-services', 'calgary'],
+  ['custom-software', 'professional-services', 'toronto'],
+  ['custom-software', 'professional-services', 'montreal'],
+  ['custom-software', 'professional-services', 'vancouver'],
+  ['cloud-services', 'professional-services', 'toronto'],
+  ['cloud-services', 'professional-services', 'montreal'],
+  ['cloud-services', 'professional-services', 'vancouver'],
+  ['custom-software', 'technology', 'toronto'],
+  ['custom-software', 'technology', 'vancouver'],
+  ['custom-software', 'technology', 'montreal'],
+  ['custom-software', 'technology', 'new-york'],
+  ['enterprise-seo', 'technology', 'toronto'],
+  ['enterprise-seo', 'technology', 'vancouver'],
+  ['enterprise-seo', 'technology', 'new-york'],
+  ['cloud-services', 'banking', 'toronto'],
+  ['cloud-services', 'banking', 'new-york'],
+  ['cloud-services', 'banking', 'london'],
+  ['cybersecurity', 'banking', 'toronto'],
+  ['cybersecurity', 'banking', 'new-york'],
+  ['cybersecurity', 'banking', 'london'],
+  ['ai-automation', 'banking', 'toronto'],
+  ['ai-automation', 'banking', 'new-york'],
+  ['cybersecurity', 'healthcare', 'toronto'],
+  ['cybersecurity', 'healthcare', 'new-york'],
+  ['ai-automation', 'healthcare', 'toronto'],
+  ['ai-automation', 'healthcare', 'new-york']
+];
+blocks.push(`  <!-- Programmatic SEO: Service × Industry × Location (${TRIPLE_COMBOS.length} cherry-picked combos) -->`);
+for (const [s, i, l] of TRIPLE_COMBOS) blocks.push(entry(`/services/${s}/for/${i}/in/${l}`, '0.72'));
 
 // Guides
 blocks.push(`  <!-- Programmatic SEO: Topical Guides (${GUIDES.length} URLs) -->`);

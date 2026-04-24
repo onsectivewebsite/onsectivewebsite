@@ -128,6 +128,7 @@ const App: React.FC = () => {
             {/* Programmatic SEO Landing Pages (500+ unique URLs) */}
             <Route path="/services/:serviceId/in/:cityId" element={<SeoLanding mode="service-location" />} />
             <Route path="/services/:serviceId/for/:industryId" element={<SeoLanding mode="service-industry" />} />
+            <Route path="/services/:serviceId/for/:industryId/in/:cityId" element={<SeoLanding mode="service-industry-location" />} />
             <Route path="/services/:serviceId/intent/:intentId" element={<SeoLanding mode="service-intent" />} />
             <Route path="/industries/:industryId/in/:cityId" element={<SeoLanding mode="industry-location" />} />
             <Route path="/guides" element={<Guides />} />

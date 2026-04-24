@@ -14,7 +14,7 @@ import {
 import ReadingProgress from '../components/UI/ReadingProgress';
 import ShareButtons from '../components/UI/ShareButtons';
 
-type Mode = 'service-location' | 'service-industry' | 'service-intent' | 'industry-location' | 'guide';
+type Mode = 'service-location' | 'service-industry' | 'service-industry-location' | 'service-intent' | 'industry-location' | 'guide';
 
 interface Props {
   mode: Mode;
@@ -190,6 +190,15 @@ const SeoLanding: React.FC<Props> = ({ mode }) => {
     return renderServiceIndustry(service, industry);
   }
 
+  // ================== SERVICE-INDUSTRY-LOCATION MODE ==================
+  if (mode === 'service-industry-location') {
+    const service = SERVICES.find(s => s.path.split('/').pop() === params.serviceId);
+    const industry = params.industryId ? getIndustrySEO(params.industryId) : null;
+    const location = params.cityId ? getLocation(params.cityId) : null;
+    if (!service || !industry || !location) return <Navigate to="/services" replace />;
+    return renderServiceIndustryLocation(service, industry, location);
+  }
+
   // ================== SERVICE-INTENT MODE ==================
   if (mode === 'service-intent') {
     const service = SERVICES.find(s => s.path.split('/').pop() === params.serviceId);
@@ -300,6 +309,14 @@ const renderServiceLocation = (service: any, location: any) => {
         </div>
       </Section>
 
+      <Section bg="light" eyebrow={`${location.city} Engagement Blueprint`} title={`How Onsective Scopes ${serviceTitleCase(service.title)} in ${location.city}`}>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <PhaseCard phase="01" heading={`${location.city} Discovery`} body={`Two-week diagnostic anchored in ${location.city}'s regulatory and commercial context. We map current state, stakeholders, and measurable objectives before recommending architecture — grounded in the realities of the ${location.country} market.`} index={0} />
+          <PhaseCard phase="02" heading="Principal-Led Architecture" body={`Senior Onsective principals design the ${service.title.toLowerCase()} target state — not junior contractors. Deliverables include written strategy, reference architecture, and a capped commercial envelope before a single line of code is written.`} index={1} />
+          <PhaseCard phase="03" heading={`${location.hub} Delivery`} body={`Execution runs from our ${location.hub} on a ${location.city} stakeholder cadence. Every milestone is tied to a measurable business outcome, not an activity log, with full handover so ${location.city} teams inherit institutional capability.`} index={2} />
+        </div>
+      </Section>
+
       <RelatedLinks
         title={`Explore Onsective in Other ${location.country} Markets`}
         links={SEO_LOCATIONS.filter(l => l.countryCode === location.countryCode && l.id !== location.id).slice(0, 4).map(l => ({
@@ -374,6 +391,33 @@ const renderServiceIndustry = (service: any, industry: any) => {
         </div>
       </Section>
 
+      <Section bg="light" eyebrow={`${industry.shortName} Context`} title={`Compliance and Use Cases Onsective Addresses in ${industry.shortName}`}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="bg-white border border-[#e2e8f0] rounded-lg p-8">
+            <h3 className="text-lg font-['Playfair_Display'] font-bold text-[#1a1a2e] mb-5">Regulatory Frameworks</h3>
+            <ul className="space-y-3 text-sm text-[#475569] font-['Plus_Jakarta_Sans'] leading-relaxed">
+              {industry.regulations.map((reg: string) => (
+                <li key={reg} className="flex items-start gap-2.5">
+                  <CheckCircle2 size={15} className="text-[#c1912f] mt-0.5 shrink-0" />
+                  <span>Onsective delivers {service.title.toLowerCase()} aligned to <strong className="text-[#1a1a2e]">{reg}</strong>.</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="bg-white border border-[#e2e8f0] rounded-lg p-8">
+            <h3 className="text-lg font-['Playfair_Display'] font-bold text-[#1a1a2e] mb-5">Common {industry.shortName} Use Cases</h3>
+            <ul className="space-y-3 text-sm text-[#475569] font-['Plus_Jakarta_Sans'] leading-relaxed">
+              {industry.painPoints.map((pp: string) => (
+                <li key={pp} className="flex items-start gap-2.5">
+                  <CheckCircle2 size={15} className="text-[#c1912f] mt-0.5 shrink-0" />
+                  <span><span className="capitalize">{pp}</span> — addressed with {service.title.toLowerCase()}.</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </Section>
+
       <RelatedLinks
         title={`${industry.name} × Other Onsective Practices`}
         links={SERVICES.filter(s => s.id !== service.id).slice(0, 4).map(s => ({
@@ -382,6 +426,124 @@ const renderServiceIndustry = (service: any, industry: any) => {
         }))}
       />
       <Cta service={service} context={`${industry.shortName} deployment`} />
+    </>
+  );
+};
+
+// ============================================================
+// Render: Service × Industry × Location (3-part combo)
+// ============================================================
+const renderServiceIndustryLocation = (service: any, industry: any, location: any) => {
+  const title = `${serviceTitleCase(service.title)} for ${industry.shortName} in ${location.city} | Onsective`;
+  const description = capDescription(`${serviceTitleCase(service.title)} for ${industry.shortName} enterprises in ${location.city}, ${location.country} — aligned to ${industry.regulations.slice(0, 2).join(', ')}. Onsective principals.`);
+  const canonical = `${SITE_URL}/services/${service.path.split('/').pop()}/for/${industry.id}/in/${location.id}`;
+
+  return (
+    <>
+      <SEOHead
+        title={title}
+        description={description}
+        overrides={{
+          keywords: `${service.title} for ${industry.name} in ${location.city}, ${service.title} ${industry.shortName} ${location.city}, ${industry.name} ${service.title.toLowerCase()} ${location.city}, ${service.title} ${location.city}, ${service.title} ${industry.shortName}, Onsective ${location.city}, Onsective ${industry.shortName}, Onsective Enterprise, Onsec, Insec`,
+          canonical,
+          structuredData: {
+            '@type': 'LocalBusiness',
+            '@id': `${canonical}/#localbusiness`,
+            name: `Onsective — ${serviceTitleCase(service.title)} for ${industry.shortName} in ${location.city}`,
+            description,
+            url: canonical,
+            telephone: '+1-672-673-7900',
+            image: `${SITE_URL}/assets/logo.png`,
+            priceRange: '$$$',
+            address: {
+              '@type': 'PostalAddress',
+              addressLocality: location.city,
+              addressRegion: location.region,
+              addressCountry: location.countryCode
+            },
+            geo: { '@type': 'GeoCoordinates', latitude: location.lat, longitude: location.lng },
+            areaServed: { '@type': 'City', name: location.city },
+            provider: { '@type': 'Organization', name: 'Onsective Enterprise' },
+            audience: { '@type': 'BusinessAudience', audienceType: industry.name }
+          }
+        }}
+        breadcrumbs={[
+          { name: 'Home', url: SITE_URL },
+          { name: 'Services', url: `${SITE_URL}/services` },
+          { name: service.title, url: `${SITE_URL}${service.path}` },
+          { name: `For ${industry.shortName}`, url: `${SITE_URL}/services/${service.path.split('/').pop()}/for/${industry.id}` },
+          { name: `${location.city}, ${location.country}`, url: canonical }
+        ]}
+      />
+      <Hero
+        eyebrow={`${location.flag} ${location.city} · ${industry.name} · ${service.title}`}
+        h1={`${serviceTitleCase(service.title)} for ${industry.shortName} in ${location.city}`}
+        subtitle={description}
+        primaryCta="Schedule a Consultation"
+        primaryHref="/contact"
+        secondaryCta={`Explore ${serviceTitleCase(service.title)}`}
+        secondaryHref={service.path}
+      />
+
+      <Section bg="white" eyebrow={`${location.city} × ${industry.shortName} × ${service.title}`} title={`Why ${location.city} ${industry.shortName} Leaders Engage Onsective for ${serviceTitleCase(service.title)}`}>
+        <p className="text-[#64748b] text-lg leading-relaxed font-['Plus_Jakarta_Sans'] max-w-3xl mb-12">
+          {service.description}
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card title={`${location.city} ${industry.shortName} Fluency`} body={`Every engagement pairs senior Onsective principals with ${industry.shortName.toLowerCase()} regulatory literacy and ${location.city} market context. We know the ${industry.regulations.slice(0, 2).join(' and ')} framework your counsel expects us to navigate.`} index={0} />
+          <Card title={`${location.hub} Delivery`} body={`Delivery runs from our ${location.hub} on a ${location.city} stakeholder cadence. ${location.country}-resident data by default where the engagement scope touches regulated information.`} index={1} />
+          <Card title="Principal-Led, Outcome-Indexed" body={`No offshore sweatshops, no junior contractors. Every ${service.title.toLowerCase()} engagement for ${industry.shortName.toLowerCase()} is scoped, staffed, and measured against institutional outcomes — not activity.`} index={2} />
+        </div>
+      </Section>
+
+      <Section bg="dark" eyebrow={`${industry.shortName} × ${location.city} Engagement Blueprint`} title={`How Onsective Scopes ${serviceTitleCase(service.title)} for ${industry.shortName} in ${location.city}`} dark>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <OutcomeCard body={`Discovery — two-week diagnostic mapping your ${industry.shortName.toLowerCase()} workflow, regulatory exposure (${industry.regulations.slice(0, 2).join(', ')}), and ${location.city} stakeholder landscape.`} index={0} />
+          <OutcomeCard body={`Architecture — principal-authored target state, reference architecture, and capped commercial envelope before implementation begins.`} index={1} />
+          <OutcomeCard body={`Delivery — ${location.hub}-led execution with milestone-by-milestone accountability to measurable ${industry.shortName.toLowerCase()} outcomes.`} index={2} />
+        </div>
+      </Section>
+
+      <Section bg="light" eyebrow="Compliance & Use Cases" title={`${industry.shortName} Compliance and Use Cases Onsective Addresses in ${location.city}`}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="bg-white border border-[#e2e8f0] rounded-lg p-8">
+            <h3 className="text-lg font-['Playfair_Display'] font-bold text-[#1a1a2e] mb-5">Regulatory Frameworks</h3>
+            <ul className="space-y-3 text-sm text-[#475569] font-['Plus_Jakarta_Sans'] leading-relaxed">
+              {industry.regulations.map((reg: string) => (
+                <li key={reg} className="flex items-start gap-2.5">
+                  <CheckCircle2 size={15} className="text-[#c1912f] mt-0.5 shrink-0" />
+                  <span>Onsective delivers {service.title.toLowerCase()} in {location.city} aligned to <strong className="text-[#1a1a2e]">{reg}</strong>.</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="bg-white border border-[#e2e8f0] rounded-lg p-8">
+            <h3 className="text-lg font-['Playfair_Display'] font-bold text-[#1a1a2e] mb-5">{industry.shortName} Use Cases in {location.city}</h3>
+            <ul className="space-y-3 text-sm text-[#475569] font-['Plus_Jakarta_Sans'] leading-relaxed">
+              {industry.painPoints.map((pp: string) => (
+                <li key={pp} className="flex items-start gap-2.5">
+                  <CheckCircle2 size={15} className="text-[#c1912f] mt-0.5 shrink-0" />
+                  <span><span className="capitalize">{pp}</span> — addressed with {service.title.toLowerCase()}.</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </Section>
+
+      <RelatedLinks
+        title={`Related ${serviceTitleCase(service.title)} Pages`}
+        links={[
+          { label: `${serviceTitleCase(service.title)} in ${location.city}`, href: `/services/${service.path.split('/').pop()}/in/${location.id}` },
+          { label: `${serviceTitleCase(service.title)} for ${industry.shortName}`, href: `/services/${service.path.split('/').pop()}/for/${industry.id}` },
+          { label: `${industry.shortName} Consulting in ${location.city}`, href: `/industries/${industry.id}/in/${location.id}` },
+          ...SEO_LOCATIONS.filter(l => l.countryCode === location.countryCode && l.id !== location.id).slice(0, 3).map(l => ({
+            label: `${serviceTitleCase(service.title)} for ${industry.shortName} in ${l.city}`,
+            href: `/services/${service.path.split('/').pop()}/for/${industry.id}/in/${l.id}`
+          }))
+        ]}
+      />
+      <Cta service={service} context={`${industry.shortName} engagement in ${location.city}`} />
     </>
   );
 };
@@ -440,6 +602,30 @@ const renderServiceIntent = (service: any, intent: any) => {
           <Card title="Principal-Led" body={`Every ${service.title.toLowerCase()} engagement is led by a senior Onsective principal — not a junior contractor.`} index={0} />
           <Card title="Outcome-Indexed" body={`We tie our commercial model to your measurable outcomes — so our economic alignment matches yours.`} index={1} />
           <Card title="Compounding Value" body={`Onsective deliverables are engineered to compound. Every engagement leaves institutional capability in place.`} index={2} />
+        </div>
+      </Section>
+
+      <Section bg="light" eyebrow="Scope & Inclusions" title={`What Onsective Commits to at the ${intent.label} Tier for ${serviceTitleCase(service.title)}`}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="bg-white border border-[#e2e8f0] rounded-lg p-8">
+            <h3 className="text-lg font-['Playfair_Display'] font-bold text-[#1a1a2e] mb-5">Always Included</h3>
+            <ul className="space-y-3 text-sm text-[#475569] font-['Plus_Jakarta_Sans'] leading-relaxed">
+              <li className="flex items-start gap-2.5"><CheckCircle2 size={15} className="text-[#c1912f] mt-0.5 shrink-0" />Principal-led engagement with a named accountable lead.</li>
+              <li className="flex items-start gap-2.5"><CheckCircle2 size={15} className="text-[#c1912f] mt-0.5 shrink-0" />Written deliverables the client can supervise and defend under audit.</li>
+              <li className="flex items-start gap-2.5"><CheckCircle2 size={15} className="text-[#c1912f] mt-0.5 shrink-0" />Canadian data residency by default for engagements touching PIPEDA-scoped data.</li>
+              <li className="flex items-start gap-2.5"><CheckCircle2 size={15} className="text-[#c1912f] mt-0.5 shrink-0" />Handover package so institutional capability remains when the engagement ends.</li>
+              <li className="flex items-start gap-2.5"><CheckCircle2 size={15} className="text-[#c1912f] mt-0.5 shrink-0" />Regulatory fluency for regulated sectors (banking, healthcare, legal, government).</li>
+            </ul>
+          </div>
+          <div className="bg-white border border-[#e2e8f0] rounded-lg p-8">
+            <h3 className="text-lg font-['Playfair_Display'] font-bold text-[#1a1a2e] mb-5">Never Included</h3>
+            <ul className="space-y-3 text-sm text-[#475569] font-['Plus_Jakarta_Sans'] leading-relaxed">
+              <li className="flex items-start gap-2.5"><CheckCircle2 size={15} className="text-[#c1912f] mt-0.5 shrink-0" />Offshore content sweatshops or undisclosed subcontracting.</li>
+              <li className="flex items-start gap-2.5"><CheckCircle2 size={15} className="text-[#c1912f] mt-0.5 shrink-0" />Contingent or commission-only referral incentives.</li>
+              <li className="flex items-start gap-2.5"><CheckCircle2 size={15} className="text-[#c1912f] mt-0.5 shrink-0" />Engagements that bypass Law Society, provincial, or federal regulatory requirements.</li>
+              <li className="flex items-start gap-2.5"><CheckCircle2 size={15} className="text-[#c1912f] mt-0.5 shrink-0" />Work that cannot be disclosed to or audited by client counsel.</li>
+            </ul>
+          </div>
         </div>
       </Section>
 
@@ -519,6 +705,22 @@ const renderIndustryLocation = (industry: any, location: any) => {
         </div>
       </Section>
 
+      <Section bg="light" eyebrow={`${industry.shortName} × ${location.country}`} title={`${industry.shortName} Regulatory Landscape in ${location.country}`}>
+        <div className="max-w-3xl mx-auto">
+          <p className="text-[#475569] font-['Plus_Jakarta_Sans'] leading-relaxed mb-6 text-base">
+            {industry.shortName} institutions operating in {location.country} navigate a mix of federal, provincial or state, and sector-specific instruments. Onsective's delivery in {location.city} aligns to the regulatory frameworks below, plus any local rules specific to the engagement scope. Every deliverable is produced in a form client counsel and internal audit can supervise.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-8 bg-white border border-[#e2e8f0] rounded-lg p-8">
+            {industry.regulations.map((reg: string) => (
+              <div key={reg} className="flex items-start gap-2.5 text-sm text-[#475569] font-['Plus_Jakarta_Sans']">
+                <CheckCircle2 size={15} className="text-[#c1912f] mt-0.5 shrink-0" />
+                <strong className="text-[#1a1a2e]">{reg}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
+
       <RelatedLinks
         title={`${industry.name} Pain Points Onsective Solves`}
         links={industry.painPoints.slice(0, 5).map((pp: string) => ({
@@ -586,6 +788,17 @@ const OutcomeCard: React.FC<{ body: string; index: number }> = ({ body, index })
   >
     <CheckCircle2 size={20} className="text-[#c1912f] mb-4" />
     <p className="text-sm leading-relaxed font-['Plus_Jakarta_Sans']">{body}</p>
+  </div>
+);
+
+const PhaseCard: React.FC<{ phase: string; heading: string; body: string; index: number }> = ({ phase, heading, body, index }) => (
+  <div
+    className="animate-on-scroll opacity-0 translate-y-6 transition-all duration-700 [&.is-visible]:opacity-100 [&.is-visible]:translate-y-0 bg-white border border-[#e2e8f0] p-8 rounded-lg hover:border-[#c1912f]/30 transition-all"
+    style={{ transitionDelay: `${index * 120}ms` }}
+  >
+    <span className="text-xs font-semibold text-[#c1912f] uppercase tracking-[0.2em] mb-3 block font-['Plus_Jakarta_Sans']">Phase {phase}</span>
+    <h3 className="text-lg font-['Playfair_Display'] font-bold text-[#1a1a2e] mb-3">{heading}</h3>
+    <p className="text-[#64748b] text-sm leading-relaxed font-['Plus_Jakarta_Sans']">{body}</p>
   </div>
 );
 

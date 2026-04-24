@@ -151,6 +151,11 @@ const LOCATION_NAMES = {
   'berlin': 'Berlin',
   'san-francisco': 'San Francisco',
   'vancouver': 'Vancouver',
+  'montreal': 'Montreal',
+  'ottawa': 'Ottawa',
+  'calgary': 'Calgary',
+  'edmonton': 'Edmonton',
+  'quebec-city': 'Quebec City',
 };
 
 const INTENT_NAMES = {
@@ -238,6 +243,16 @@ function resolveSEO(reqPath) {
         canonical,
         title: `${service} in ${loc} — Enterprise Consulting${SUFFIX}`,
         description: `${service} consulting and engineering in ${loc} from Onsective — enterprise-grade delivery, local expertise, global reach.`,
+      };
+    }
+    // /services/<s>/for/<industry>/in/<location>  (three-part combo — must come before the 2-part branch)
+    if (segs[2] === 'for' && segs[3] && segs[4] === 'in' && segs[5]) {
+      const ind = industryLabel(segs[3]);
+      const loc = locationLabel(segs[5]);
+      return {
+        canonical,
+        title: `${service} for ${ind} in ${loc}${SUFFIX}`,
+        description: `${service} for ${ind} enterprises in ${loc} — industry-specific methodology and local delivery from Onsective principals.`,
       };
     }
     // /services/<s>/for/<industry>

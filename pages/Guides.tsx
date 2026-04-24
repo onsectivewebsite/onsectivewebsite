@@ -25,7 +25,8 @@ const CATEGORY_ORDER: { key: string; label: string; blurb: string }[] = [
   { key: 'Software',      label: 'Custom Software',        blurb: 'SaaS architecture, legal tech, and enterprise platform engineering.' },
   { key: 'SEO',           label: 'SEO & Technical Search', blurb: 'Technical SEO, programmatic SEO, migrations, and Core Web Vitals.' },
   { key: 'Marketing',     label: 'Digital Marketing',      blurb: 'Paid media, attribution, content strategy, and lifecycle.' },
-  { key: 'Brand',         label: 'Brand & Reputation',     blurb: 'Brand strategy, visual identity, employer branding, and crisis comms.' }
+  { key: 'Brand',         label: 'Brand & Reputation',     blurb: 'Brand strategy, visual identity, employer branding, and crisis comms.' },
+  { key: 'Consulting',    label: 'Consulting Alternatives', blurb: 'Fair comparisons of Accenture, Deloitte Digital, Big Four, Infosys, Capgemini, EPAM — and when a boutique wins.' }
 ];
 
 const PER_CATEGORY_LIMIT = 12;

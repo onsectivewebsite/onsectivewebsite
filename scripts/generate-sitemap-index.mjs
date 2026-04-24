@@ -25,7 +25,9 @@ const SERVICES = [
 ];
 const LOCATIONS = [
   'toronto', 'new-york', 'london', 'dubai', 'mumbai',
-  'singapore', 'sydney', 'berlin', 'san-francisco', 'vancouver'
+  'singapore', 'sydney', 'berlin', 'san-francisco', 'vancouver',
+  // Canadian expansion — 2026-04
+  'montreal', 'ottawa', 'calgary', 'edmonton', 'quebec-city'
 ];
 const INDUSTRIES = [
   'banking', 'healthcare', 'retail', 'manufacturing', 'energy',
@@ -130,6 +132,46 @@ for (const s of SERVICES) for (const i of INDUSTRIES) services.push(entry(`/serv
 for (const s of SERVICES) for (const it of INTENTS) services.push(entry(`/services/${s}/intent/${it}`, '0.60'));
 // Industry × Location
 for (const i of INDUSTRIES) for (const l of LOCATIONS) services.push(entry(`/industries/${i}/in/${l}`, '0.65'));
+// Service × Industry × Location — cherry-picked high-intent combos only.
+// The full cross-product would add 1,500 thin-risk URLs. This list names the
+// combos with documented commercial-search intent and regulatory specificity.
+const TRIPLE_COMBOS = [
+  // Legal / professional services (AI-SEO target audience)
+  ['digital-marketing', 'professional-services', 'toronto'],
+  ['digital-marketing', 'professional-services', 'montreal'],
+  ['digital-marketing', 'professional-services', 'vancouver'],
+  ['digital-marketing', 'professional-services', 'ottawa'],
+  ['digital-marketing', 'professional-services', 'calgary'],
+  ['custom-software', 'professional-services', 'toronto'],
+  ['custom-software', 'professional-services', 'montreal'],
+  ['custom-software', 'professional-services', 'vancouver'],
+  ['cloud-services', 'professional-services', 'toronto'],
+  ['cloud-services', 'professional-services', 'montreal'],
+  ['cloud-services', 'professional-services', 'vancouver'],
+  // Technology / SaaS
+  ['custom-software', 'technology', 'toronto'],
+  ['custom-software', 'technology', 'vancouver'],
+  ['custom-software', 'technology', 'montreal'],
+  ['custom-software', 'technology', 'new-york'],
+  ['enterprise-seo', 'technology', 'toronto'],
+  ['enterprise-seo', 'technology', 'vancouver'],
+  ['enterprise-seo', 'technology', 'new-york'],
+  // Banking
+  ['cloud-services', 'banking', 'toronto'],
+  ['cloud-services', 'banking', 'new-york'],
+  ['cloud-services', 'banking', 'london'],
+  ['cybersecurity', 'banking', 'toronto'],
+  ['cybersecurity', 'banking', 'new-york'],
+  ['cybersecurity', 'banking', 'london'],
+  ['ai-automation', 'banking', 'toronto'],
+  ['ai-automation', 'banking', 'new-york'],
+  // Healthcare
+  ['cybersecurity', 'healthcare', 'toronto'],
+  ['cybersecurity', 'healthcare', 'new-york'],
+  ['ai-automation', 'healthcare', 'toronto'],
+  ['ai-automation', 'healthcare', 'new-york']
+];
+for (const [s, i, l] of TRIPLE_COMBOS) services.push(entry(`/services/${s}/for/${i}/in/${l}`, '0.72'));
 writeSitemap('sitemap-services.xml', services);
 
 // -----------------------------------------------------------
@@ -178,7 +220,14 @@ const TOPICAL = [
   'immigration-law-firm-marketing-toronto',
   'saas-development-company-toronto',
   'custom-legal-software-development-toronto',
-  'cloud-hosting-canadian-law-firms'
+  'cloud-hosting-canadian-law-firms',
+  // Competitor-alternative guides (2026)
+  'accenture-alternatives-canadian-mid-market',
+  'deloitte-digital-alternatives-toronto',
+  'big-four-consulting-alternatives-boutique',
+  'infosys-alternatives-enterprise-digital-transformation',
+  'capgemini-alternatives-canada',
+  'epam-alternatives-custom-software'
 ];
 for (const s of TOPICAL) guides.push(entry(`/guides/${s}`, '0.65'));
 
