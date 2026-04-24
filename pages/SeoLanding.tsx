@@ -212,9 +212,19 @@ const SeoLanding: React.FC<Props> = ({ mode }) => {
 // ============================================================
 // Render: Service × Location
 // ============================================================
+// Truncate a description at a word boundary so Google's ~160-char snippet
+// cutoff doesn't chop mid-word. 155 leaves headroom for brand suffixes the
+// SERP may append.
+const capDescription = (s: string, max = 155): string => {
+  if (s.length <= max) return s;
+  const slice = s.slice(0, max);
+  const lastSpace = slice.lastIndexOf(' ');
+  return (lastSpace > max - 20 ? slice.slice(0, lastSpace) : slice).replace(/[\s.,;:–—-]+$/, '') + '…';
+};
+
 const renderServiceLocation = (service: any, location: any) => {
   const title = `${serviceTitleCase(service.title)} in ${location.city} | Onsective ${location.country}`;
-  const description = `Onsective delivers premium ${service.title.toLowerCase()} in ${location.city}, ${location.country}. Principal-led engagements, institutional-grade outcomes, and ${location.hub} operations. Free consultation for ${location.city} enterprises.`;
+  const description = capDescription(`Principal-led ${service.title.toLowerCase()} consulting in ${location.city}, ${location.country}. ${location.hub} delivery with enterprise-grade outcomes for ${location.city} leaders.`);
   const canonical = `${SITE_URL}/services/${service.path.split('/').pop()}/in/${location.id}`;
 
   return (
@@ -307,7 +317,7 @@ const renderServiceLocation = (service: any, location: any) => {
 // ============================================================
 const renderServiceIndustry = (service: any, industry: any) => {
   const title = `${serviceTitleCase(service.title)} for ${industry.name} | Onsective`;
-  const description = `Onsective delivers ${service.title.toLowerCase()} engineered for ${industry.name.toLowerCase()} — aligned to ${industry.regulations.slice(0, 3).join(', ')} and tuned to the operational realities of ${industry.shortName.toLowerCase()}.`;
+  const description = capDescription(`${serviceTitleCase(service.title)} engineered for ${industry.name} — aligned to ${industry.regulations.slice(0, 2).join(', ')}, delivered by Onsective principals.`);
   const canonical = `${SITE_URL}/services/${service.path.split('/').pop()}/for/${industry.id}`;
 
   return (
@@ -382,7 +392,7 @@ const renderServiceIndustry = (service: any, industry: any) => {
 const renderServiceIntent = (service: any, intent: any) => {
   const h1 = intent.headline(serviceTitleCase(service.title));
   const title = `${h1} | Onsective`;
-  const description = intent.intro(serviceTitleCase(service.title));
+  const description = capDescription(intent.intro(serviceTitleCase(service.title)));
   const canonical = `${SITE_URL}/services/${service.path.split('/').pop()}/intent/${intent.id}`;
 
   return (
@@ -450,7 +460,7 @@ const renderServiceIntent = (service: any, intent: any) => {
 // ============================================================
 const renderIndustryLocation = (industry: any, location: any) => {
   const title = `${industry.shortName} Consulting in ${location.city} | Onsective ${location.country}`;
-  const description = `Onsective delivers ${industry.name.toLowerCase()} digital transformation consulting in ${location.city}, ${location.country}. Cloud, cybersecurity, AI, and software expertise tuned to ${industry.regulations.slice(0, 3).join(', ')}.`;
+  const description = capDescription(`${industry.name} digital transformation consulting in ${location.city}, ${location.country}. Cloud, cybersecurity, AI, and software aligned to ${industry.regulations.slice(0, 2).join(', ')}.`);
   const canonical = `${SITE_URL}/industries/${industry.id}/in/${location.id}`;
 
   return (

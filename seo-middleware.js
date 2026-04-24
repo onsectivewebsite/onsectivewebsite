@@ -326,6 +326,10 @@ function rewriteHtml(template, seo) {
   const D = esc(description);
   const U = esc(canonical);
 
+  // Pre-hydration H1 strips the brand suffix so the visible heading matches
+  // the page's actual topic (non-JS crawlers use this as the body H1).
+  const H1 = esc(title.replace(/\s*\|\s*Onsective\s*$/, '').replace(/\s*\|\s*Onsective\s+Insights\s*$/, ''));
+
   return template
     .replace(/<title>[\s\S]*?<\/title>/i,
       `<title>${T}</title>`)
@@ -346,7 +350,14 @@ function rewriteHtml(template, seo) {
     .replace(/<link\s+rel="alternate"\s+hreflang="en"\s+href="[^"]*"\s*\/>/i,
       `<link rel="alternate" hreflang="en" href="${U}" />`)
     .replace(/<link\s+rel="alternate"\s+hreflang="x-default"\s+href="[^"]*"\s*\/>/i,
-      `<link rel="alternate" hreflang="x-default" href="${U}" />`);
+      `<link rel="alternate" hreflang="x-default" href="${U}" />`)
+    // Per-URL pre-hydration body: replaces the text inside the marked H1 and
+    // intro paragraph in index.html so non-rendering crawlers see URL-specific
+    // content, not the generic brand splash.
+    .replace(/(<h1\s+data-pre-h1[^>]*>)[\s\S]*?(<\/h1>)/i,
+      `$1\n        ${H1}\n      $2`)
+    .replace(/(<p\s+data-pre-intro[^>]*>)[\s\S]*?(<\/p>)/i,
+      `$1\n        ${D}\n      $2`);
 }
 
 /* ------------------------------------------------------------- */

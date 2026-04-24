@@ -80,7 +80,16 @@ const SEOHead: React.FC<SEOHeadProps> = ({ title, description, pageKey, override
     setMeta('meta[name="twitter:creator"]', 'name', '@OnsectiveEnt');
 
     // --- Canonical ---
-    setLink('canonical', canonicalUrl);
+    // seo-middleware.js injects the authoritative canonical server-side,
+    // with consistent normalization (trailing slash, casing, https). We only
+    // override when the page explicitly provides one (e.g. SeoLanding modes
+    // that need a canonical different from the request path). When a page
+    // provides no canonical, we leave the server's value untouched — this
+    // still updates correctly during SPA navigation because each top-level
+    // route that needs a canonical sets pageSEO.canonical via overrides.
+    if (pageSEO.canonical) {
+      setLink('canonical', canonicalUrl);
+    }
 
     // --- Structured Data (JSON-LD) ---
     const graphEntities: any[] = [

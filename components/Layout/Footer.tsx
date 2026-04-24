@@ -217,6 +217,7 @@ const Footer: React.FC = () => {
                   { label: 'Our Vision', path: '/vision' },
                   { label: 'Leadership', path: '/about' },
                   { label: 'Insights', path: '/insights' },
+                  { label: 'Guides', path: '/guides' },
                   { label: 'Resources', path: '/resources' },
                   { label: 'Events', path: '/events' },
                   { label: 'Careers', path: '/careers' },

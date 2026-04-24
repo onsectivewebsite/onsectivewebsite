@@ -1966,15 +1966,16 @@
   </div>
 
   <!-- Main React application mount point -->
-  <!-- Pre-hydration H1 + fallback visible block. React replaces the -->
-  <!-- contents of #root on mount. Static HTML crawlers see a real H1. -->
+  <!-- Pre-hydration shell: per-URL H1 + intro are rewritten by seo-middleware.js -->
+  <!-- so non-rendering crawlers (Bing, some AI bots) see URL-specific body content. -->
+  <!-- React replaces this on mount; end users never see it as final content. -->
   <div id="root">
     <div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 20px;font-family:'Plus Jakarta Sans',Arial,sans-serif;background:#ffffff;color:#0d2b45;text-align:center;box-sizing:border-box;">
       <img src="/assets/logo.png" alt="Onsective Inc." style="max-width:120px;width:30vw;height:auto;margin-bottom:20px;" />
-      <h1 style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(20px,5vw,32px);font-weight:700;color:#0d2b45;margin:0 0 12px;letter-spacing:-0.02em;line-height:1.2;max-width:760px;">
+      <h1 data-pre-h1 style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(20px,5vw,32px);font-weight:700;color:#0d2b45;margin:0 0 12px;letter-spacing:-0.02em;line-height:1.2;max-width:760px;">
         Onsective — Global Digital Transformation Consulting
       </h1>
-      <p style="color:#64748b;font-size:clamp(13px,3.2vw,15px);max-width:560px;margin:0 0 20px;line-height:1.6;padding:0 8px;">
+      <p data-pre-intro style="color:#64748b;font-size:clamp(13px,3.2vw,15px);max-width:560px;margin:0 0 20px;line-height:1.6;padding:0 8px;">
         Onsective Inc. — Toronto-based global technology consulting. Cloud, cybersecurity, AI, software, SEO, and brand management.
       </p>
       <div style="width:160px;max-width:60vw;height:2px;background:#e2e8f0;border-radius:2px;overflow:hidden;">

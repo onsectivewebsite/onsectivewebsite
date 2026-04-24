@@ -89,6 +89,7 @@ const core = [
   entry('/industries', '0.90', 'monthly'),
   entry('/platforms', '0.80', 'monthly'),
   entry('/insights', '0.90', 'daily'),
+  entry('/guides', '0.85', 'weekly'),
   entry('/about', '0.85', 'monthly'),
   entry('/contact', '0.85', 'monthly'),
   entry('/vision', '0.75', 'monthly'),
