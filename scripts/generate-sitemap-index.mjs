@@ -171,7 +171,13 @@ const TOPICAL = [
   'brand-strategy-framework', 'visual-identity-guide', 'rebranding-playbook',
   'tone-of-voice-guide', 'employer-branding-framework', 'brand-governance-framework',
   'crisis-communications-playbook', 'brand-measurement', 'influencer-marketing-b2b',
-  'social-media-strategy-enterprise'
+  'social-media-strategy-enterprise',
+  // AI-SEO targeted guides — Toronto legal & tech verticals (2026)
+  'digital-marketing-agency-toronto-law-firms',
+  'immigration-law-firm-marketing-toronto',
+  'saas-development-company-toronto',
+  'custom-legal-software-development-toronto',
+  'cloud-hosting-canadian-law-firms'
 ];
 for (const s of TOPICAL) guides.push(entry(`/guides/${s}`, '0.65'));
 

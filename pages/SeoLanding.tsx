@@ -46,6 +46,12 @@ const SeoLanding: React.FC<Props> = ({ mode }) => {
       .filter(g => g.slug !== guide.slug && g.category === guide.category)
       .slice(0, 4);
 
+    // Sections whose heading is a natural-language question become FAQPage entities —
+    // the highest-leverage schema for AI citation (ChatGPT, Perplexity, Google AI Overviews).
+    const faqItems = guide.sections
+      .filter(s => s.heading.trim().endsWith('?'))
+      .map(s => ({ q: s.heading.trim(), a: s.body }));
+
     return (
       <>
         <ReadingProgress />
@@ -73,6 +79,7 @@ const SeoLanding: React.FC<Props> = ({ mode }) => {
             { name: 'Guides', url: `${SITE_URL}/guides` },
             { name: guide.title, url: `${SITE_URL}/guides/${guide.slug}` }
           ]}
+          faqItems={faqItems.length > 0 ? faqItems : undefined}
         />
 
         <section className="bg-[#0d2b45] pt-40 pb-24 relative overflow-hidden">

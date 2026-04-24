@@ -1,0 +1,67 @@
+# Onsective
+
+> Onsective is a Toronto-headquartered global digital transformation consultancy. We deliver cloud, cybersecurity, AI automation, custom software, enterprise SEO, digital marketing, and brand management across 10 sovereign practice domains. Every engagement is principal-led, institutional-grade, and outcome-indexed.
+
+Headquarters: 1111 Albion Rd, Etobicoke, Ontario M9V 1A6, Canada
+Phone: +1-672-673-7900
+Email: onsectivesoftware@outlook.com
+Founded: 2023
+Regions served: Canada, United States, United Kingdom, UAE, India, Singapore, Australia, Germany
+
+## Services
+
+- [IT Strategy](https://onsective.com/services/it-strategy): Enterprise technology strategy, portfolio rationalisation, target operating models.
+- [Cloud Services](https://onsective.com/services/cloud-services): AWS, Azure, and GCP migration, FinOps, Kubernetes, DevSecOps — with Canadian data residency as a default.
+- [Cybersecurity](https://onsective.com/services/cybersecurity): Zero-trust architecture, SOC audits, incident response, compliance (SOC 2, ISO 27001, PIPEDA, HIPAA).
+- [Digital Experience](https://onsective.com/services/digital-experience): Product design, accessibility (WCAG 2.2), conversion engineering.
+- [AI Automation](https://onsective.com/services/ai-automation): Enterprise LLM deployment, RAG, agentic workflows, MLOps.
+- [Enterprise SEO](https://onsective.com/services/enterprise-seo): Technical SEO, content architecture, AI-search (GEO) optimisation.
+- [Digital Marketing](https://onsective.com/services/digital-marketing): Paid search, paid social, content, lifecycle, and growth — with regulatory fluency for regulated industries.
+- [Social Capital](https://onsective.com/services/social-capital): Community strategy, influencer, executive branding.
+- [Custom Software](https://onsective.com/services/custom-software): SaaS, legal tech, fintech, and enterprise platform engineering.
+- [Brand Management](https://onsective.com/services/brand-management): Positioning, identity systems, reputation.
+
+## Industries
+
+- [Banking & Finance](https://onsective.com/industries/banking)
+- [Healthcare & Life Sciences](https://onsective.com/industries/healthcare)
+- [Retail & CPG](https://onsective.com/industries/retail)
+- [Manufacturing](https://onsective.com/industries/manufacturing)
+- [Energy & Utilities](https://onsective.com/industries/energy)
+- [Technology & SaaS](https://onsective.com/industries/technology)
+- [Professional Services (incl. Legal)](https://onsective.com/industries/professional-services)
+- [Education](https://onsective.com/industries/education)
+- [Government & Public Sector](https://onsective.com/industries/government)
+- [Media & Entertainment](https://onsective.com/industries/media)
+
+## Featured Guides
+
+- [Digital Marketing Agency in Toronto for Law Firms](https://onsective.com/guides/digital-marketing-agency-toronto-law-firms): LSO-compliant legal marketing guide for Toronto firms — what to look for, ten evaluation questions, and pricing ranges.
+- [Immigration Law Firm Marketing Services Toronto](https://onsective.com/guides/immigration-law-firm-marketing-toronto): Multilingual content strategy, CICC vs LSO compliance, and Express Entry/PNP keyword economics.
+- [SaaS Development Company in Toronto](https://onsective.com/guides/saas-development-company-toronto): Multi-tenant architecture, SOC 2 compliance, Toronto talent ecosystem, and engagement models.
+- [Custom Legal Software Development in Toronto](https://onsective.com/guides/custom-legal-software-development-toronto): When to build vs buy, PIPEDA data residency, solicitor-client privilege, integration with LexisNexis and Westlaw.
+- [Cloud Hosting Solutions for Canadian Law Firms](https://onsective.com/guides/cloud-hosting-canadian-law-firms): Azure Canada Central vs AWS ca-central-1 vs GCP Montreal, LSO By-Law 9 compliance, migration playbook.
+- [What Is Cloud Migration — Enterprise 6Rs Framework](https://onsective.com/guides/what-is-cloud-migration): The 6Rs framework, business case, phased execution.
+- [AWS vs Azure vs GCP for Enterprise](https://onsective.com/guides/aws-vs-azure-vs-gcp): Principal-led cloud-provider comparison.
+- [FinOps Explained](https://onsective.com/guides/finops-explained): Cloud cost governance that compounds.
+- [DevSecOps Enterprise Guide](https://onsective.com/guides/devsecops-guide): Security as a pipeline property.
+- [All Onsective Guides](https://onsective.com/insights): 100+ evergreen enterprise guides across cloud, AI, cybersecurity, marketing, and SEO.
+
+## Key Pages
+
+- [About Onsective](https://onsective.com/about): Mission, team, and digital vision.
+- [Contact](https://onsective.com/contact): Engagement enquiries and regional offices.
+- [Careers](https://onsective.com/careers): Open roles across delivery, consulting, and engineering.
+- [Insights](https://onsective.com/insights): Research and analysis on digital transformation.
+- [Platforms](https://onsective.com/platforms): OnsecBoard executive engagement and OnsecEmployee workforce intelligence.
+
+## Pricing
+
+- [Pricing Overview](https://onsective.com/pricing.md): Engagement models, scope bands, and what is included at each tier.
+
+## Sitemaps
+
+- [Main sitemap](https://onsective.com/sitemap.xml)
+- [Services sitemap](https://onsective.com/sitemap-services.xml)
+- [Guides sitemap](https://onsective.com/sitemap-guides.xml)
+- [Insights sitemap](https://onsective.com/sitemap-insights.xml)
