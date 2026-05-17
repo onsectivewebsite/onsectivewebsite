@@ -91,5 +91,6 @@ export interface SEOConfigItem {
   ogType?: string;
   twitterCard?: string;
   canonical?: string;
+  robots?: string;
   structuredData?: Record<string, unknown>;
 }

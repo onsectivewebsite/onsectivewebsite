@@ -30,6 +30,7 @@ const Alumni = lazy(() => import('./pages/Alumni'));
 const Platforms = lazy(() => import('./pages/Platforms'));
 const EventDetail = lazy(() => import('./pages/EventDetail'));
 const Vision = lazy(() => import('./pages/Vision'));
+const BusinessCardRishabh = lazy(() => import('./pages/BusinessCardRishabh'));
 
 // Legal Pages
 const Privacy = lazy(() => import('./pages/Privacy'));
@@ -63,17 +64,17 @@ const Loading = () => (
 // Layout Wrapper to hide Nav/Footer on Admin pages
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const location = useLocation();
-  const isAdmin = location.pathname.startsWith('/admin');
+  const hideNavFooter = location.pathname.startsWith('/admin') || location.pathname.startsWith('/internal/businesscard');
 
   return (
     <div className="min-h-screen flex flex-col bg-white text-brand-dark font-sans antialiased selection:bg-brand-primary selection:text-white overflow-x-hidden w-full max-w-[100vw] relative">
-      {!isAdmin && <Navbar />}
+      {!hideNavFooter && <Navbar />}
       <main className="flex-grow">
         {children}
       </main>
-      {!isAdmin && <Footer />}
-      {!isAdmin && <BackToTop />}
-      {!isAdmin && <CookieConsent />}
+      {!hideNavFooter && <Footer />}
+      {!hideNavFooter && <BackToTop />}
+      {!hideNavFooter && <CookieConsent />}
     </div>
   );
 };
@@ -159,6 +160,8 @@ const App: React.FC = () => {
             <Route path="/terms" element={<Terms />} />
             <Route path="/copyright" element={<Copyright />} />
             <Route path="/accessibility" element={<Accessibility />} />
+
+            <Route path="/internal/businesscard/rishabh" element={<BusinessCardRishabh />} />
 
             <Route path="/admin" element={<Admin />} />
             <Route path="*" element={<Navigate to="/" replace />} />

@@ -59,7 +59,8 @@ const SEOHead: React.FC<SEOHeadProps> = ({ title, description, pageKey, override
     // --- Basic Meta ---
     setMeta('meta[name="description"]', 'name', finalDesc);
     if (finalKeywords) setMeta('meta[name="keywords"]', 'name', finalKeywords);
-    setMeta('meta[name="robots"]', 'name', 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1');
+    const finalRobots = pageSEO.robots || 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1';
+    setMeta('meta[name="robots"]', 'name', finalRobots);
     setMeta('meta[name="author"]', 'name', 'Onsective Inc.');
 
     // --- Open Graph ---

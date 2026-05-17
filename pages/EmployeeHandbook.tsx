@@ -19,6 +19,7 @@ const EmployeeHandbook: React.FC = () => {
         overrides={{
           keywords: 'Onsective employee handbook, Onsective Inc employee handbook, Onsective policies, Onsective code of conduct, Onsective HR, Onsective benefits, Onsective workplace policies',
           canonical: `${SITE_URL}/employee-handbook`,
+          robots: 'noindex, nofollow',
           structuredData: {
             '@type': 'DigitalDocument',
             '@id': `${SITE_URL}/employee-handbook/#document`,

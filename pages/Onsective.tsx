@@ -24,7 +24,6 @@ const Onsective: React.FC = () => {
         description="Onsective (Onsective Inc.) is a global technology consulting institution headquartered in Toronto, Canada. Serving 120+ enterprises across 7+ nations in digital transformation, cloud, cybersecurity, AI, enterprise SEO, digital marketing, and brand management."
         overrides={{
           keywords: 'Onsective, Onsective Enterprise, Onsective Inc, Onsective Inc, Onsective Consulting, Onsective Software, Onsective Technologies, Onsective Digital, Onsective Global, Onsective Toronto, Onsective Canada, Onsec, Onsec Enterprise, Insec, Insective, onsective.com, what is Onsective, who is Onsective, Onsective company, Onsective services, Onsective reviews, Onsective careers, Onsective contact, OnsecBoard, OnsecEmployee',
-          canonical: `${SITE_URL}/onsective`,
           structuredData: {
             '@type': 'Organization',
             '@id': `${SITE_URL}/#organization-entity`,
