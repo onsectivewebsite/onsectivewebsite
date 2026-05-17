@@ -61,7 +61,7 @@ const BusinessCardRishabh: React.FC = () => {
           {/* Profile Header */}
           <div className="text-center mb-10">
             <div className="w-28 h-28 mx-auto bg-gradient-to-tr from-[#0d2b45] to-[#1a1a2e] border-2 border-[#c1912f] rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(193,145,47,0.3)] mb-6 overflow-hidden">
-              <img src="/assets/logo.png" alt="Onsective Logo" className="w-16 h-auto opacity-90" />
+              <img src="/assets/logo.png" alt="Onsective Logo" className="w-16 h-auto opacity-90 brightness-0 invert" />
             </div>
             <h1 className="text-3xl font-['Playfair_Display'] font-bold text-white mb-2">Rishabh</h1>
             <p className="text-[#c1912f] text-sm uppercase tracking-widest font-semibold mb-4 font-['Plus_Jakarta_Sans']">Onsective Enterprise</p>
