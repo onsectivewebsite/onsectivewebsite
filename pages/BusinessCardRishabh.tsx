@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Send, ArrowRight, Linkedin, Twitter, Github, Globe, CheckCircle, AlertCircle } from 'lucide-react';
+import { Mail, Phone, Send, ArrowRight, Linkedin, Globe, CheckCircle, AlertCircle } from 'lucide-react';
 import SEOHead from '../components/SEO/SEOHead';
 import { SERVICES, CONTACT_EMAIL, CONTACT_PHONE } from '../constants';
 
