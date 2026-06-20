@@ -181,11 +181,6 @@ export const LEADERSHIP_TEAM: LeadershipProfile[] = [
     name: 'Shabir Ahmad',
     role: 'Principal Solutions Architect',
     image: ASSETS.TEAM_SHABIR
-  },
-  {
-    name: 'Riyan',
-    role: 'Chief Brand Designer',
-    image: ASSETS.TEAM_RIYAN
   }
 ];
 

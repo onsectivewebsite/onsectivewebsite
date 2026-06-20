@@ -12,7 +12,6 @@ export const ASSETS = {
   TEAM_KAVYA: '/images/team-kavya.jpg',
   TEAM_ALI: '/images/team-kumakshi.jpg',
   TEAM_SHABIR: '/images/team-shabir.jpg',
-  TEAM_RIYAN: '/images/team-riyan.jpg',
 
   // Services
   SERVICE_STRATEGY: '/images/service-strategy.jpg',
