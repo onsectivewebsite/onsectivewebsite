@@ -258,7 +258,7 @@ const About: React.FC = () => {
           </div>
 
           {/* Leadership grid — magnetic 3D hover with glow borders & spinning rings */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-5xl mx-auto">
             {LEADERSHIP_TEAM.map((leader, idx) => (
               <div
                 key={idx}
