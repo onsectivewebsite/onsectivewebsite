@@ -63,6 +63,9 @@ export function cleanUrlRedirect(originalUrl) {
   const qIndex = String(originalUrl).indexOf('?');
   if (qIndex === -1) return undefined;
   const pathname = originalUrl.slice(0, qIndex);
+  // Only ever redirect to a same-origin absolute path. Reject protocol-relative
+  // ("//host"), backslash variants ("/\\host") and anything not starting with "/".
+  if (!pathname.startsWith('/') || /^[\/\\]{2}/.test(pathname) || pathname.includes('\\')) return undefined;
   const params = new URLSearchParams(originalUrl.slice(qIndex + 1));
   let changed = false;
   for (const key of Array.from(params.keys())) {
