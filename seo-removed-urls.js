@@ -1,49 +1,40 @@
 /**
  * seo-removed-urls.js
  *
- * Paths that have been intentionally retired. The server issues a 301
- * permanent redirect to the mapped target (usually the parent page),
- * and the sitemap generator skips them so they stop being advertised.
- * 301 lets search engines transfer any accumulated signal to the
- * target and drop the old URL from the index.
+ * Retired URLs get a 301 permanent redirect to the closest live page.
+ * Rules are matched in order; the first match wins.
  *
- * Add new entries by pushing `{ from, to }` into REMOVED_URLS.
- * `from` is a leading-slash path (no trailing slash, no query).
- * `to` is the redirect target (absolute or root-relative).
+ * Also exports cleanUrlRedirect(), which strips session and tracking
+ * parameters (for example `gsessionid`) so only clean URLs are indexed.
  */
-export const REMOVED_URLS = [
-  { from: '/industries/government/in/vancouver', to: '/industries/government' },
-  { from: '/guides/building-a-digital-marketing-plan-framework-485', to: '/services/digital-marketing' },
-  { from: '/guides/youtube-content-strategy-checklist-162', to: '/guides' },
-  { from: '/industries/retail/in/singapore', to: '/industries/retail' },
-  { from: '/services/brand-management/methodology/defend', to: '/services/brand-management' },
-  { from: '/services/digital-experience/intent/services', to: '/services/digital-experience' },
-  { from: '/insights/insight-83', to: '/insights' },
-  { from: '/insights/insight-84', to: '/insights' },
-  { from: '/insights/insight-458', to: '/insights' },
-  { from: '/insights/insight-6', to: '/insights' },
-  { from: '/insights/insight-225', to: '/insights' },
-  { from: '/insights/insight-306', to: '/insights' },
-  { from: '/insights/insight-368', to: '/insights' },
-  { from: '/insights/insight-426', to: '/insights' },
-  { from: '/guides/digital-agency', to: '/services/digital-marketing' },
-  { from: '/guides/digital-marketing-la-gi', to: '/services/digital-marketing' },
-  { from: '/services/cybersecurity/in/edmonton', to: '/services/cybersecurity' },
-  { from: '/industries/manufacturing/in/edmonton', to: '/industries/manufacturing' },
-  { from: '/industries/manufacturing/in/ottawa', to: '/industries/manufacturing' },
-  { from: '/guides/digital-marketing-vs-traditional-marketing-playbook-6', to: '/services/digital-marketing' },
-  { from: '/guides/local-seo-in-toronto-comparison-468', to: '/services/enterprise-seo' },
-  { from: '/services/enterprise-seo/for/technology/in/vancouver', to: '/services/enterprise-seo/for/technology' },
-  { from: '/services/cybersecurity/for/healthcare', to: '/services/cybersecurity' },
-  { from: '/guides/youtube-advertising-strategy-trends-314', to: '/services/digital-marketing' },
-  { from: '/guides/erp-integration-patterns-roadmap-b-29', to: '/services/custom-software' },
-  { from: '/services/cloud-services/capability/devsecops-automation', to: '/services/cloud-services' },
-  { from: '/guides/generative-ai-implementation-trends-b-124', to: '/services/ai-automation' },
-  { from: '/guides/custom-legal-software-development-toronto', to: '/services/custom-software' },
-  { from: '/services/brand-management/for/professional-services', to: '/services/brand-management' },
-];
 
-const BY_PATH = new Map(REMOVED_URLS.map(r => [r.from, r.to]));
+// Query parameters that must never appear on indexed URLs.
+const STRIP_PARAMS = new Set([
+  'gsessionid', 'sessionid', 'session_id', 'sid', 'phpsessid', 'jsessionid',
+  'fbclid', 'gclid', 'msclkid', 'mc_cid', 'mc_eid', '_ga', '_gl',
+  'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content',
+]);
+
+// [pattern, target] pairs for pages that no longer exist.
+const RULES = [
+  [/^\/industries(\/.*)?$/, '/services'],
+  [/^\/insights(\/.*)?$/, '/services'],
+  [/^\/guides(\/.*)?$/, '/services'],
+  [/^\/resources$/, '/services'],
+  [/^\/platforms$/, '/services'],
+  [/^\/events(\/.*)?$/, '/about'],
+  [/^\/careers$/, '/about'],
+  [/^\/investors$/, '/about'],
+  [/^\/alumni$/, '/about'],
+  [/^\/vision$/, '/about'],
+  [/^\/onsective$/, '/about'],
+  [/^\/about-onsective$/, '/about'],
+  [/^\/onsective-enterprise$/, '/about'],
+  [/^\/employee-handbook$/, '/about'],
+  [/^\/feed\.xml$/, '/'],
+  // Programmatic city / industry / intent pages: send to the parent service page.
+  [/^\/services\/([^/]+)\/(in|for|intent|capability|methodology)(\/.*)?$/, '/services/$1'],
+];
 
 function normalize(reqPath) {
   if (!reqPath) return '/';
@@ -52,14 +43,35 @@ function normalize(reqPath) {
   return p;
 }
 
-export function isRemoved(reqPath) {
-  return BY_PATH.has(normalize(reqPath));
-}
-
 export function redirectTarget(reqPath) {
-  return BY_PATH.get(normalize(reqPath));
+  const p = normalize(reqPath);
+  for (const [re, to] of RULES) {
+    if (re.test(p)) return p.replace(re, to);
+  }
+  return undefined;
 }
 
-// Back-compat for sitemap generator which reads `REMOVED_URLS` as a set
-// of paths. Expose the set of `from` paths for quick `.has()` checks.
-export const REMOVED_PATHS = new Set(REMOVED_URLS.map(r => r.from));
+export function isRemoved(reqPath) {
+  return redirectTarget(reqPath) !== undefined;
+}
+
+/**
+ * If the request URL carries session/tracking parameters, return the same
+ * URL without them (path plus any remaining query). Otherwise undefined.
+ */
+export function cleanUrlRedirect(originalUrl) {
+  const qIndex = String(originalUrl).indexOf('?');
+  if (qIndex === -1) return undefined;
+  const pathname = originalUrl.slice(0, qIndex);
+  const params = new URLSearchParams(originalUrl.slice(qIndex + 1));
+  let changed = false;
+  for (const key of Array.from(params.keys())) {
+    if (STRIP_PARAMS.has(key.toLowerCase())) {
+      params.delete(key);
+      changed = true;
+    }
+  }
+  if (!changed) return undefined;
+  const rest = params.toString();
+  return rest ? `${pathname}?${rest}` : pathname;
+}

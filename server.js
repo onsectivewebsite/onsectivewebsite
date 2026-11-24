@@ -6,7 +6,7 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
 import adminRouter from './server-admin.js';
 import { createSEOHandler } from './seo-middleware.js';
-import { isRemoved, redirectTarget } from './seo-removed-urls.js';
+import { isRemoved, redirectTarget, cleanUrlRedirect } from './seo-removed-urls.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -81,7 +81,7 @@ app.post('/api/contact', async (req, res) => {
         <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; padding: 40px; border: 1px solid #e2e8f0; border-radius: 0; background-color: #ffffff; color: #0f172a;">
           <div style="text-align: center; margin-bottom: 40px;">
             <div style="display: inline-block; width: 60px; height: 60px; background-color: #020617; color: #C5A059; line-height: 60px; font-size: 28px; font-weight: bold; border: 1px solid #C5A059;">O</div>
-            <h1 style="color: #020617; font-size: 22px; margin-top: 20px; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 900;">Onsective Enterprise</h1>
+            <h1 style="color: #020617; font-size: 22px; margin-top: 20px; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 900;">Onsective Inc.</h1>
             <p style="font-size: 10px; color: #C5A059; letter-spacing: 0.5em; text-transform: uppercase; margin-top: 5px; font-weight: bold;">Lead Intelligence Report</p>
           </div>
           
@@ -123,14 +123,14 @@ app.post('/api/contact', async (req, res) => {
 
     // 1b. Send Confirmation Email to Sender
     const clientMailOptions = {
-      from: `"Onsective Enterprise" <${process.env.EMAIL_USER || 'info@onsective.com'}>`,
+      from: `"Onsective Inc." <${process.env.EMAIL_USER || 'info@onsective.com'}>`,
       to: email, // To the person who filled the form
       subject: `Strategic Briefing Received: ${firstName} ${lastName}`,
       html: `
         <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; padding: 40px; border: 1px solid #e2e8f0; border-radius: 0; background-color: #ffffff; color: #0f172a;">
           <div style="text-align: center; margin-bottom: 40px;">
             <div style="display: inline-block; width: 60px; height: 60px; background-color: #020617; color: #C5A059; line-height: 60px; font-size: 28px; font-weight: bold; border: 1px solid #C5A059;">O</div>
-            <h1 style="color: #020617; font-size: 22px; margin-top: 20px; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 900;">Onsective Enterprise</h1>
+            <h1 style="color: #020617; font-size: 22px; margin-top: 20px; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 900;">Onsective Inc.</h1>
           </div>
           
           <div style="margin-bottom: 30px; border-bottom: 1px solid #f1f5f9; padding-bottom: 30px;">
@@ -138,26 +138,26 @@ app.post('/api/contact', async (req, res) => {
               Dear <strong>${firstName} ${lastName}</strong>,
             </p>
             <p style="font-size: 16px; line-height: 1.8; color: #334155;">
-              This serves as official confirmation that your strategic briefing regarding <strong>${service}</strong> has been successfully received by Onsective's global intelligence node.
+              This serves as confirmation that your enquiry regarding <strong>${service}</strong> has been received by Onsective Inc.
             </p>
             <p style="font-size: 16px; line-height: 1.8; color: #334155;">
-              Your inquiry has been assigned to our senior directorship for immediate triage. We acknowledge the critical nature of your digital transformation mandates and will initiate a formal response within one business day.
+              Thank you for contacting us. We will review your message and reply by email, usually within 1–2 business days.
             </p>
           </div>
           
           <div style="background: #f8fafc; padding: 25px; border-left: 4px solid #C5A059; margin-bottom: 30px;">
-            <p style="font-size: 12px; color: #64748b; text-transform: uppercase; margin-bottom: 5px; font-weight: 800;">Transmission Summary</p>
-            <p style="font-size: 14px; color: #0f172a; margin: 0;"><strong>Case Objective:</strong> ${service}</p>
+            <p style="font-size: 12px; color: #64748b; text-transform: uppercase; margin-bottom: 5px; font-weight: 800;">Summary</p>
+            <p style="font-size: 14px; color: #0f172a; margin: 0;"><strong>Service of interest:</strong> ${service}</p>
             <p style="font-size: 14px; color: #0f172a; margin: 5px 0 0 0;"><strong>Timestamp:</strong> ${new Date(timestamp).toLocaleString()}</p>
           </div>
           
           <p style="font-size: 16px; line-height: 1.8; color: #334155;">
-            Thank you for choosing Onsective as your partner in technical excellence and sovereign growth.
+            Thank you for contacting Onsective.
           </p>
           
           <div style="margin-top: 50px; padding-top: 20px; border-top: 1px solid #f1f5f9;">
-            <p style="font-size: 14px; color: #020617; font-weight: bold; margin-bottom: 5px;">The Onsective Executive Desk</p>
-            <p style="font-size: 12px; color: #64748b; margin: 0;">Global Enterprise Consulting</p>
+            <p style="font-size: 14px; color: #020617; font-weight: bold; margin-bottom: 5px;">The Onsective Team</p>
+            <p style="font-size: 12px; color: #64748b; margin: 0;">IT Consulting, Canada</p>
           </div>
         </div>
       `,
@@ -202,12 +202,20 @@ app.get('/api/health', (req, res) => {
   res.json({
     status: 'healthy',
     timestamp: new Date().toISOString(),
-    service: 'Onsective Enterprise Backend'
+    service: 'Onsective Backend'
   });
 });
 
 // Admin API routes
 app.use(adminRouter);
+
+// Strip session / tracking parameters (e.g. gsessionid) with a 301 so only clean URLs are indexed.
+app.use((req, res, next) => {
+  if (req.path.startsWith('/api/') || req.path.startsWith('/admin')) return next();
+  const clean = cleanUrlRedirect(req.originalUrl);
+  if (!clean) return next();
+  return res.redirect(301, clean);
+});
 
 // Retired URLs — issue a 301 permanent redirect to the mapped target
 // (usually the parent page). Must sit before the SPA catch-all.

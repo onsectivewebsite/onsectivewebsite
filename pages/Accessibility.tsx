@@ -77,7 +77,7 @@ const Accessibility: React.FC = () => {
               </p>
             </div>
             <p className="text-[#64748b] leading-relaxed font-['Plus_Jakarta_Sans']">
-              We conduct quarterly accessibility reviews of all public-facing digital properties. Any non-conformance issues identified during these reviews are prioritized and addressed within our standard development cycles.
+              We review this website for accessibility from time to time. Issues we find, or that you report to us, are fixed as soon as we reasonably can.
             </p>
           </div>
 
@@ -96,7 +96,7 @@ const Accessibility: React.FC = () => {
                   'Alternative text for all meaningful images and media content',
                   'Descriptive link text and ARIA labels where appropriate',
                   'Responsive design that accommodates text resizing and zoom up to 200%',
-                  'Regular accessibility audits using both automated and manual testing tools',
+                  'Accessibility checks using automated and manual testing tools',
                   'Ongoing team training on accessible design and development practices',
                   'Focus management for single-page application route transitions',
                   'Skip navigation links for keyboard and screen reader users',

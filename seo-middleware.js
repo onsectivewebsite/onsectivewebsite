@@ -25,94 +25,46 @@ const SUFFIX = ` | ${BRAND}`;
 
 const STATIC_ROUTES = {
   '/': {
-    title: 'Onsective — Global Digital Transformation Consulting & IT Strategy',
-    description: 'Onsective — Toronto-based global technology consulting. Cloud, cybersecurity, AI, software, SEO, and brand management. 120+ clients, 7+ nations.',
+    title: 'Onsective Inc. | IT Consulting in Canada',
+    description: 'Onsective Inc. is a Canada-based IT consulting company helping small and mid-sized businesses with software, cloud and digital systems.',
   },
   '/services': {
-    title: 'IT Consulting Services — Cloud, AI, Cybersecurity & SEO | Onsective',
-    description: "Onsective's full-service IT consulting: cloud migration, cybersecurity audits, AI automation, enterprise SEO, custom software, and digital marketing.",
+    title: 'IT Consulting Services | Onsective',
+    description: 'IT consulting for small and mid-sized businesses: IT strategy, cloud, security, websites, custom software, automation, SEO and marketing.',
   },
-  '/industries': {
-    title: 'Industries We Serve — Banking, Healthcare, Retail & More | Onsective',
-    description: 'Industry-specialized consulting from Onsective across banking, healthcare, retail, manufacturing, energy, technology, education, and government.',
-  },
-  '/insights': {
-    title: 'Insights — Digital Transformation, Cloud, AI & Cybersecurity | Onsective',
-    description: 'Executive-grade insights from Onsective on digital transformation, cloud architecture, cybersecurity, AI, and enterprise technology strategy.',
-  },
-  '/platforms': {
-    title: 'Platforms — OnsecBoard, OnsecEmployee & Client Portals | Onsective',
-    description: 'Onsective platforms: OnsecBoard for executive engagement, OnsecEmployee for workforce intelligence, and bespoke enterprise dashboards.',
+  '/pricing': {
+    title: 'How We Charge | Onsective',
+    description: 'How Onsective Inc. charges for IT consulting: hourly, project-based quotes or a monthly retainer. Prices in Canadian dollars.',
   },
   '/about': {
-    title: 'About Onsective — Our Mission, Team & Digital Vision',
-    description: 'Meet the team behind Onsective Enterprise. Learn our mission, leadership, and approach to global enterprise digital transformation.',
-  },
-  '/onsective': {
-    title: 'Onsective — Who We Are',
-    description: 'Onsective Enterprise: global digital transformation consultancy headquartered in Toronto. Cloud, cybersecurity, AI, software, marketing, brand.',
-  },
-  '/about-onsective': {
-    title: 'About Onsective Enterprise — Leadership, Vision, Footprint',
-    description: 'Everything about Onsective Enterprise: leadership, global presence, client roster, and our approach to enterprise consulting.',
-  },
-  '/onsective-enterprise': {
-    title: 'Onsective Enterprise — Global Consulting Firm',
-    description: 'Onsective Enterprise Inc. — Toronto-headquartered global consulting firm serving 120+ clients across seven nations.',
+    title: 'About Onsective Inc.',
+    description: 'Onsective Inc. is a new Canada-based IT consulting company helping small and mid-sized businesses with software, cloud and digital systems.',
   },
   '/contact': {
-    title: 'Contact Onsective — Start Your Digital Transformation',
-    description: 'Reach the Onsective team to scope a digital transformation engagement, request a quote, or speak with a principal consultant.',
-  },
-  '/vision': {
-    title: 'Vision — The Future of Enterprise Technology | Onsective',
-    description: 'Onsective\'s vision for the next decade of enterprise technology: AI-native operations, sovereign data, and zero-trust by default.',
-  },
-  '/careers': {
-    title: 'Careers at Onsective — Join a Global Consulting Firm',
-    description: 'Open roles at Onsective Enterprise. Consulting, engineering, AI, cybersecurity, and brand craft opportunities across our global offices.',
-  },
-  '/events': {
-    title: 'Events — Onsective Talks, Panels & Summits',
-    description: 'Upcoming Onsective events, executive roundtables, industry panels, and thought-leadership summits.',
-  },
-  '/investors': {
-    title: 'Investors — Onsective Enterprise',
-    description: 'Investor relations materials, governance disclosures, and financial updates for Onsective Enterprise Inc.',
-  },
-  '/alumni': {
-    title: 'Alumni — Onsective Network',
-    description: 'The Onsective alumni network — former consultants, executives, and partners who shaped the firm.',
-  },
-  '/resources': {
-    title: 'Resources — Whitepapers, Playbooks & Frameworks | Onsective',
-    description: 'Onsective resource library: whitepapers, playbooks, frameworks, and templates on digital transformation, cloud, cybersecurity, and AI.',
-  },
-  '/employee-handbook': {
-    title: 'Employee Handbook — Onsective Enterprise',
-    description: 'The Onsective Enterprise employee handbook: policies, conduct, and operating principles for all team members worldwide.',
+    title: 'Contact Onsective Inc.',
+    description: 'Contact Onsective Inc., a Canada-based IT consulting company. Send us a message about your project.',
   },
   '/privacy': {
-    title: 'Privacy Policy — Onsective Enterprise',
-    description: 'How Onsective Enterprise collects, uses, stores, and protects personal data. PIPEDA, GDPR, and CCPA compliant.',
+    title: 'Privacy Policy | Onsective',
+    description: 'How Onsective Inc. collects, uses and protects personal information.',
   },
   '/terms': {
-    title: 'Terms of Service — Onsective Enterprise',
-    description: 'Terms and conditions governing the use of onsective.com and engagements with Onsective Enterprise Inc.',
+    title: 'Terms of Service | Onsective',
+    description: 'Terms of Service for onsective.com and services provided by Onsective Inc.',
+  },
+  '/refund-policy': {
+    title: 'Refund and Cancellation Policy | Onsective',
+    description: 'Refund and cancellation policy for services provided by Onsective Inc.',
   },
   '/copyright': {
-    title: 'Copyright Notice — Onsective Enterprise',
-    description: 'Copyright, trademark, and intellectual property notices for Onsective Enterprise Inc.',
+    title: 'Copyright Notice | Onsective',
+    description: 'Copyright and trademark notices for Onsective Inc.',
   },
   '/accessibility': {
-    title: 'Accessibility Statement — Onsective Enterprise',
-    description: 'Onsective\'s commitment to WCAG 2.2 AA accessibility and our ongoing program to make our digital experiences inclusive.',
+    title: 'Accessibility Statement | Onsective',
+    description: 'Accessibility statement for onsective.com.',
   },
 };
-
-/* ------------------------------------------------------------- */
-/*  Taxonomy labels for dynamic routes                           */
-/* ------------------------------------------------------------- */
 
 const SERVICE_NAMES = {
   'it-strategy': 'IT Strategy',
@@ -120,74 +72,16 @@ const SERVICE_NAMES = {
   'cybersecurity': 'Cybersecurity',
   'digital-experience': 'Digital Experience',
   'ai-automation': 'AI & Automation',
-  'enterprise-seo': 'Enterprise SEO',
+  'enterprise-seo': 'Search Engine Optimization (SEO)',
   'digital-marketing': 'Digital Marketing',
-  'social-capital': 'Social Capital',
+  'social-capital': 'Social Media Handling',
   'custom-software': 'Custom Software',
   'brand-management': 'Brand Management',
-};
-
-const INDUSTRY_NAMES = {
-  'banking': 'Banking & Financial Services',
-  'healthcare': 'Healthcare & Life Sciences',
-  'retail': 'Retail & Consumer',
-  'manufacturing': 'Manufacturing & Industrial',
-  'energy': 'Energy & Utilities',
-  'technology': 'Technology',
-  'professional-services': 'Professional Services',
-  'education': 'Education',
-  'government': 'Government & Public Sector',
-  'media': 'Media & Entertainment',
-};
-
-const LOCATION_NAMES = {
-  'toronto': 'Toronto',
-  'new-york': 'New York',
-  'london': 'London',
-  'dubai': 'Dubai',
-  'mumbai': 'Mumbai',
-  'singapore': 'Singapore',
-  'sydney': 'Sydney',
-  'berlin': 'Berlin',
-  'san-francisco': 'San Francisco',
-  'vancouver': 'Vancouver',
-  'montreal': 'Montreal',
-  'ottawa': 'Ottawa',
-  'calgary': 'Calgary',
-  'edmonton': 'Edmonton',
-  'quebec-city': 'Quebec City',
-};
-
-const INTENT_NAMES = {
-  'pricing': 'Pricing',
-  'agency': 'Agency',
-  'company': 'Company',
-  'consulting': 'Consulting',
-  'firm': 'Firm',
-  'experts': 'Experts',
-  'solutions': 'Solutions',
-  'services': 'Services',
-  'near-me': 'Near Me',
-  'reviews': 'Reviews',
 };
 
 /* ------------------------------------------------------------- */
 /*  Helpers                                                      */
 /* ------------------------------------------------------------- */
-
-const humanize = (slug) =>
-  String(slug)
-    .replace(/[-_]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim()
-    .split(' ')
-    .map(w => w.length <= 3 ? w.toUpperCase() : w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
-    .join(' ');
-
-const serviceLabel = (s) => SERVICE_NAMES[s] || humanize(s);
-const industryLabel = (i) => INDUSTRY_NAMES[i] || humanize(i);
-const locationLabel = (l) => LOCATION_NAMES[l] || humanize(l);
-const intentLabel = (it) => INTENT_NAMES[it] || humanize(it);
 
 const esc = (s) =>
   String(s)
@@ -207,128 +101,20 @@ function resolveSEO(reqPath) {
 
   const canonical = clean === '/' ? `${SITE_URL}/` : `${SITE_URL}${clean}`;
 
-  // Exact static route match
-  if (STATIC_ROUTES[clean]) {
-    return { canonical, ...STATIC_ROUTES[clean] };
-  }
+  if (STATIC_ROUTES[clean]) return { canonical, ...STATIC_ROUTES[clean] };
 
   const segs = clean.split('/').filter(Boolean);
-
-  // /services/<service>[/...]
-  if (segs[0] === 'services' && segs[1]) {
-    const service = serviceLabel(segs[1]);
-
-    // /services/<s>/methodology/<phase>
-    if (segs[2] === 'methodology' && segs[3]) {
-      const phase = humanize(segs[3]);
-      return {
-        canonical,
-        title: `${phase} — ${service} Methodology${SUFFIX}`,
-        description: `The ${phase} phase of Onsective's ${service} methodology — approach, deliverables, and outcomes for enterprise engagements.`,
-      };
-    }
-    // /services/<s>/capability/<cap>
-    if (segs[2] === 'capability' && segs[3]) {
-      const cap = humanize(segs[3]);
-      return {
-        canonical,
-        title: `${cap} — ${service} Capability${SUFFIX}`,
-        description: `${cap} within Onsective's ${service} practice — capabilities, engagement models, and reference outcomes.`,
-      };
-    }
-    // /services/<s>/in/<loc>
-    if (segs[2] === 'in' && segs[3]) {
-      const loc = locationLabel(segs[3]);
-      return {
-        canonical,
-        title: `${service} in ${loc} — Enterprise Consulting${SUFFIX}`,
-        description: `${service} consulting and engineering in ${loc} from Onsective — enterprise-grade delivery, local expertise, global reach.`,
-      };
-    }
-    // /services/<s>/for/<industry>/in/<location>  (three-part combo — must come before the 2-part branch)
-    if (segs[2] === 'for' && segs[3] && segs[4] === 'in' && segs[5]) {
-      const ind = industryLabel(segs[3]);
-      const loc = locationLabel(segs[5]);
-      return {
-        canonical,
-        title: `${service} for ${ind} in ${loc}${SUFFIX}`,
-        description: `${service} for ${ind} enterprises in ${loc} — industry-specific methodology and local delivery from Onsective principals.`,
-      };
-    }
-    // /services/<s>/for/<industry>
-    if (segs[2] === 'for' && segs[3]) {
-      const ind = industryLabel(segs[3]);
-      return {
-        canonical,
-        title: `${service} for ${ind}${SUFFIX}`,
-        description: `${service} tailored for ${ind} — industry-specific methodology, case studies, and measurable outcomes from Onsective.`,
-      };
-    }
-    // /services/<s>/intent/<intent>
-    if (segs[2] === 'intent' && segs[3]) {
-      const intent = intentLabel(segs[3]);
-      return {
-        canonical,
-        title: `${service} ${intent}${SUFFIX}`,
-        description: `${service} ${intent.toLowerCase()} from Onsective — engagement models, scope, and investment guidance for enterprise buyers.`,
-      };
-    }
-    // /services/<s>
-    if (!segs[2]) {
-      return {
-        canonical,
-        title: `${service} Consulting Services${SUFFIX}`,
-        description: `${service} from Onsective Enterprise — strategy, architecture, delivery, and measurable business outcomes for global organizations.`,
-      };
-    }
-  }
-
-  // /industries/<industry>[/in/<loc>]
-  if (segs[0] === 'industries' && segs[1]) {
-    const ind = industryLabel(segs[1]);
-    if (segs[2] === 'in' && segs[3]) {
-      const loc = locationLabel(segs[3]);
-      return {
-        canonical,
-        title: `${ind} Consulting in ${loc}${SUFFIX}`,
-        description: `Consulting for ${ind} in ${loc} from Onsective — sector expertise, local delivery, and enterprise-grade engagement.`,
-      };
-    }
+  if (segs[0] === 'services' && segs.length === 2 && SERVICE_NAMES[segs[1]]) {
+    const name = SERVICE_NAMES[segs[1]];
     return {
       canonical,
-      title: `${ind} Consulting — Digital Transformation${SUFFIX}`,
-      description: `Onsective's ${ind} practice — digital transformation, strategy, and engineering outcomes purpose-built for the sector.`,
+      title: `${name} | IT Consulting${SUFFIX}`,
+      description: `${name} from Onsective Inc., a Canada-based IT consulting company for small and mid-sized businesses.`,
     };
   }
 
-  // /insights/<slug>
-  if (segs[0] === 'insights' && segs[1]) {
-    const title = humanize(segs[1]);
-    return {
-      canonical,
-      title: `${title}${SUFFIX} Insights`,
-      description: `${title} — an Onsective insight on digital transformation, cloud, cybersecurity, AI, and enterprise technology strategy.`,
-    };
-  }
-
-  // /guides/<slug>
-  if (segs[0] === 'guides' && segs[1]) {
-    const title = humanize(segs[1]);
-    return {
-      canonical,
-      title: `${title} — Enterprise Guide${SUFFIX}`,
-      description: `${title} — a practitioner-grade enterprise guide from Onsective covering strategy, architecture, delivery, and measurement.`,
-    };
-  }
-
-  // Fallback — humanize last segment
-  const last = segs[segs.length - 1] || 'home';
-  const title = humanize(last);
-  return {
-    canonical,
-    title: `${title}${SUFFIX}`,
-    description: `${title} — Onsective Enterprise. Global digital transformation consulting across cloud, cybersecurity, AI, software, SEO, and brand.`,
-  };
+  // Unknown path: the app redirects to the home page, so use the home page data.
+  return { canonical: `${SITE_URL}/`, ...STATIC_ROUTES['/'] };
 }
 
 /* ------------------------------------------------------------- */

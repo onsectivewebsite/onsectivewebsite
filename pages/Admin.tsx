@@ -347,7 +347,7 @@ const Admin: React.FC = () => {
               <img src="/assets/icon.jpg" alt="Onsective" className="w-full h-full object-cover" />
             </div>
             <h1 className="text-white text-xl font-serif font-black tracking-tight uppercase">Command Center</h1>
-            <p className="text-[#c1912f] text-[9px] font-black uppercase tracking-[0.4em] mt-1">Institutional Access</p>
+            <p className="text-[#c1912f] text-[9px] font-black uppercase tracking-[0.4em] mt-1">Admin Access</p>
           </div>
 
           <div className="bg-[#0a1628] border border-white/10 p-8">

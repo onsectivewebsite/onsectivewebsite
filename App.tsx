@@ -8,31 +8,15 @@ import CookieConsent from './components/UI/CookieConsent';
 // Lazy load pages for performance
 const Home = lazy(() => import('./pages/Home'));
 const Services = lazy(() => import('./pages/Services'));
-const Industries = lazy(() => import('./pages/Industries'));
 const ServiceDetail = lazy(() => import('./pages/ServiceDetail'));
-const CapabilityDetail = lazy(() => import('./pages/CapabilityDetail'));
-const MethodologyDetail = lazy(() => import('./pages/MethodologyDetail'));
-const SeoLanding = lazy(() => import('./pages/SeoLanding'));
-const Guides = lazy(() => import('./pages/Guides'));
-const Resources = lazy(() => import('./pages/Resources'));
-const Onsective = lazy(() => import('./pages/Onsective'));
-const EmployeeHandbook = lazy(() => import('./pages/EmployeeHandbook'));
-const IndustryDetail = lazy(() => import('./pages/IndustryDetail'));
 const Contact = lazy(() => import('./pages/Contact'));
-const Insights = lazy(() => import('./pages/Insights'));
-const InsightDetail = lazy(() => import('./pages/InsightDetail'));
-const Careers = lazy(() => import('./pages/Careers'));
-const Events = lazy(() => import('./pages/Events'));
 const Admin = lazy(() => import('./pages/Admin'));
 const About = lazy(() => import('./pages/About'));
-const Investors = lazy(() => import('./pages/Investors'));
-const Alumni = lazy(() => import('./pages/Alumni'));
-const Platforms = lazy(() => import('./pages/Platforms'));
-const EventDetail = lazy(() => import('./pages/EventDetail'));
-const Vision = lazy(() => import('./pages/Vision'));
 const BusinessCardRishabh = lazy(() => import('./pages/BusinessCardRishabh'));
 
 // Legal Pages
+const Pricing = lazy(() => import('./pages/Pricing'));
+const Refund = lazy(() => import('./pages/Refund'));
 const Privacy = lazy(() => import('./pages/Privacy'));
 const Terms = lazy(() => import('./pages/Terms'));
 const Copyright = lazy(() => import('./pages/Copyright'));
@@ -123,43 +107,21 @@ const App: React.FC = () => {
 
             <Route path="/services" element={<Services />} />
             <Route path="/services/:id" element={<ServiceDetail />} />
-            <Route path="/services/:serviceId/capability/:capabilityId" element={<CapabilityDetail />} />
-            <Route path="/services/:serviceId/methodology/:methodologyId" element={<MethodologyDetail />} />
 
-            {/* Programmatic SEO Landing Pages (500+ unique URLs) */}
-            <Route path="/services/:serviceId/in/:cityId" element={<SeoLanding mode="service-location" />} />
-            <Route path="/services/:serviceId/for/:industryId" element={<SeoLanding mode="service-industry" />} />
-            <Route path="/services/:serviceId/for/:industryId/in/:cityId" element={<SeoLanding mode="service-industry-location" />} />
-            <Route path="/services/:serviceId/intent/:intentId" element={<SeoLanding mode="service-intent" />} />
-            <Route path="/industries/:industryId/in/:cityId" element={<SeoLanding mode="industry-location" />} />
-            <Route path="/guides" element={<Guides />} />
-            <Route path="/guides/:slug" element={<SeoLanding mode="guide" />} />
-            <Route path="/resources" element={<Resources />} />
-            <Route path="/onsective" element={<Onsective />} />
-            <Route path="/about-onsective" element={<Onsective />} />
-            <Route path="/onsective-enterprise" element={<Onsective />} />
-            <Route path="/employee-handbook" element={<EmployeeHandbook />} />
-
-            <Route path="/industries" element={<Industries />} />
-            <Route path="/industries/:id" element={<IndustryDetail />} />
-
-            <Route path="/platforms" element={<Platforms />} />
-            <Route path="/insights" element={<Insights />} />
-            <Route path="/insights/:id" element={<InsightDetail />} />
-
+            <Route path="/pricing" element={<Pricing />} />
             <Route path="/about" element={<About />} />
-            <Route path="/careers" element={<Careers />} />
-            <Route path="/investors" element={<Investors />} />
-            <Route path="/alumni" element={<Alumni />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/events" element={<Events />} />
-            <Route path="/events/:id" element={<EventDetail />} />
-            <Route path="/vision" element={<Vision />} />
 
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/refund-policy" element={<Refund />} />
             <Route path="/copyright" element={<Copyright />} />
             <Route path="/accessibility" element={<Accessibility />} />
+
+            {/* Retired pages: the server sends a 301; this covers in-app navigation. */}
+            <Route path="/industries/*" element={<Navigate to="/services" replace />} />
+            <Route path="/insights/*" element={<Navigate to="/services" replace />} />
+            <Route path="/guides/*" element={<Navigate to="/services" replace />} />
 
             <Route path="/internal/businesscard/rishabh" element={<BusinessCardRishabh />} />
 

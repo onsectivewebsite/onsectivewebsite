@@ -1,20 +1,23 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Onsective website
 
-# Run and deploy your AI Studio app
+Website for Onsective Inc., a Canada-based IT consulting company.
 
-This contains everything you need to run your app locally.
+## Run locally
 
-View your app in AI Studio: https://ai.studio/apps/3b6b631c-629b-4b29-97fc-479dc3fd7494
+```
+npm install
+npm run dev
+```
 
-## Run Locally
+## Build
 
-**Prerequisites:**  Node.js
+```
+npm run build
+npm start
+```
 
+## Content rules
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+- Do not add client counts, statistics, awards, certifications, testimonials, case studies, office locations or country lists unless they are real and documented.
+- Company facts live in `data/company.ts`. Services and pricing models live in `data/content.ts`.
+- Anything shown as `TODO` (highlighted in yellow on the site) still needs a real value before launch.

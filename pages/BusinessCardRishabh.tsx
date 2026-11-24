@@ -43,8 +43,8 @@ const BusinessCardRishabh: React.FC = () => {
   return (
     <>
       <SEOHead
-        title="Rishabh | Onsective Enterprise"
-        description="Connect with Rishabh at Onsective Enterprise. Global digital transformation, cloud, cybersecurity, and enterprise SEO."
+        title="Rishabh | Onsective Inc."
+        description="Connect with Rishabh at Onsective Inc., a Canada-based IT consulting company."
         overrides={{
           canonical: `https://onsective.com/internal/businesscard/rishabh`,
           robots: 'noindex, nofollow' // Internal page, hide from Google
@@ -64,9 +64,9 @@ const BusinessCardRishabh: React.FC = () => {
               <img src="/assets/logo.png" alt="Onsective Logo" className="w-16 h-auto opacity-90 brightness-0 invert" />
             </div>
             <h1 className="text-3xl font-['Playfair_Display'] font-bold text-white mb-2">Rishabh</h1>
-            <p className="text-[#c1912f] text-sm uppercase tracking-widest font-semibold mb-4 font-['Plus_Jakarta_Sans']">Onsective Enterprise</p>
+            <p className="text-[#c1912f] text-sm uppercase tracking-widest font-semibold mb-4 font-['Plus_Jakarta_Sans']">Onsective Inc.</p>
             <p className="text-white/70 text-sm max-w-md mx-auto leading-relaxed font-['Plus_Jakarta_Sans']">
-              Global Digital Transformation & Technology Consulting. Let's discuss how we can accelerate your enterprise growth.
+              IT consulting for small and mid-sized businesses. Let's talk about what you need.
             </p>
           </div>
 

@@ -918,14 +918,14 @@ router.post('/api/subscribe', (req, res) => {
           </div>
           <div style="padding: 40px 30px;">
             <p style="color: #1a1a2e; font-size: 16px; line-height: 1.8;">Thank you for subscribing to Onsective Insights.</p>
-            <p style="color: #64748b; font-size: 14px; line-height: 1.8;">You will receive ${frequency || 'weekly'} digests with our latest articles on digital transformation, cloud, AI, cybersecurity, and enterprise technology.</p>
+            <p style="color: #64748b; font-size: 14px; line-height: 1.8;">You will receive ${frequency || 'weekly'} digests with our latest updates.</p>
             <div style="margin: 30px 0; padding: 20px; background: #f8fafc; border-left: 3px solid #c1912f;">
               <p style="color: #1a1a2e; font-size: 14px; margin: 0;"><strong>Delivery:</strong> ${(frequency || 'weekly').charAt(0).toUpperCase() + (frequency || 'weekly').slice(1)} digest</p>
             </div>
           </div>
           <div style="padding: 20px 30px; background: #f8fafc; text-align: center; border-top: 1px solid #e2e8f0;">
             <a href="${unsubLink}" style="color: #94a3b8; font-size: 11px; text-decoration: underline;">Unsubscribe</a>
-            <p style="color: #cbd5e1; font-size: 10px; margin-top: 8px;">Onsective Enterprise Inc. — Toronto, Canada</p>
+            <p style="color: #cbd5e1; font-size: 10px; margin-top: 8px;">Onsective Inc. — Toronto, Canada</p>
           </div>
         </div>
       `,
@@ -1102,7 +1102,7 @@ router.post('/api/admin/send-digest', authenticateAdmin, async (req, res) => {
                 <a href="${unsubLink}" style="color:#94a3b8;font-size:11px;text-decoration:underline;">Unsubscribe</a>
                 <span style="color:#cbd5e1;font-size:11px;"> · </span>
                 <a href="https://onsective.com/insights" style="color:#94a3b8;font-size:11px;text-decoration:underline;">View all insights</a>
-                <p style="color:#cbd5e1;font-size:10px;margin-top:8px;">Onsective Enterprise Inc. · Toronto, Canada</p>
+                <p style="color:#cbd5e1;font-size:10px;margin-top:8px;">Onsective Inc. · Toronto, Canada</p>
               </div>
             </div>
           `,

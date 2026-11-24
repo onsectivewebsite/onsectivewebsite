@@ -1,28 +1,30 @@
 import React, { useEffect } from 'react';
-import { SEO_CONFIG, DEFAULT_SEO } from '../../data/seo';
-import { SEOConfigItem } from '../../types';
+import { LEGAL_NAME, HEADQUARTERS_ADDRESS, CONTACT_EMAIL, CONTACT_PHONE } from '../../data/company';
 
 interface SEOHeadProps {
   title?: string;
   description?: string;
-  pageKey?: string;
-  overrides?: Partial<SEOConfigItem>;
+  pageKey?: string;     // kept for compatibility, unused
+  overrides?: unknown;  // kept for compatibility, unused
   breadcrumbs?: { name: string; url: string }[];
   faqItems?: { q: string; a: string }[];
 }
 
-const SITE_NAME = 'Onsective Enterprise';
+const SITE_NAME = 'Onsective';
 const SITE_URL = 'https://onsective.com';
-const DEFAULT_OG_IMAGE = `${SITE_URL}/assets/logo.png`;
+const DEFAULT_TITLE = 'Onsective Inc. | IT Consulting in Canada';
+const DEFAULT_DESC =
+  'Onsective Inc. is a Canada-based IT consulting company helping small and mid-sized businesses with software, cloud and digital systems.';
+const OG_IMAGE = `${SITE_URL}/assets/logo.png`;
 
-const setMeta = (selector: string, attr: string, value: string, attrName = 'content') => {
+const setMeta = (selector: string, key: 'name' | 'property', name: string, value: string) => {
   let el = document.querySelector(selector) as HTMLMetaElement | null;
   if (!el) {
     el = document.createElement('meta');
-    el.setAttribute(attr, selector.match(/"([^"]+)"/)?.[1] || '');
+    el.setAttribute(key, name);
     document.head.appendChild(el);
   }
-  el.setAttribute(attrName, value);
+  el.setAttribute('content', value);
 };
 
 const setLink = (rel: string, href: string) => {
@@ -35,106 +37,59 @@ const setLink = (rel: string, href: string) => {
   el.href = href;
 };
 
-const SEOHead: React.FC<SEOHeadProps> = ({ title, description, pageKey, overrides, breadcrumbs, faqItems }) => {
+const SEOHead: React.FC<SEOHeadProps> = ({ title, description, breadcrumbs, faqItems }) => {
   useEffect(() => {
-    // 1. Resolve SEO config
-    const pageSEO: SEOConfigItem = pageKey && SEO_CONFIG[pageKey]
-      ? { ...DEFAULT_SEO, ...SEO_CONFIG[pageKey], ...overrides }
-      : { ...DEFAULT_SEO, ...overrides };
+    const finalTitle = title || DEFAULT_TITLE;
+    const finalDesc = description || DEFAULT_DESC;
+    const fullTitle = finalTitle.includes('|') ? finalTitle : `${finalTitle} | ${SITE_NAME}`;
 
-    const finalTitle = title || pageSEO.title;
-    const finalDesc = description || pageSEO.description;
-    const finalKeywords = pageSEO.keywords || DEFAULT_SEO.keywords || '';
-    const finalOgTitle = pageSEO.ogTitle || finalTitle;
-    const finalOgDesc = pageSEO.ogDescription || finalDesc;
-    const finalOgImage = pageSEO.ogImage || DEFAULT_OG_IMAGE;
-    const finalOgType = pageSEO.ogType || 'website';
-    const finalTwitterCard = pageSEO.twitterCard || 'summary_large_image';
-    const canonicalUrl = pageSEO.canonical || `${SITE_URL}${window.location.pathname}`;
+    // Canonical URL is always the clean path: no query string, no hash, no trailing slash.
+    let path = window.location.pathname;
+    if (path.length > 1 && path.endsWith('/')) path = path.slice(0, -1);
+    const canonicalUrl = path === '/' ? `${SITE_URL}/` : `${SITE_URL}${path}`;
 
-    // --- Page Title ---
-    const titleSuffix = ` | ${SITE_NAME}`;
-    document.title = finalTitle.includes('|') ? finalTitle : `${finalTitle}${titleSuffix}`;
+    document.title = fullTitle;
+    setMeta('meta[name="description"]', 'name', 'description', finalDesc);
+    setMeta('meta[name="robots"]', 'name', 'robots', 'index, follow');
+    setMeta('meta[name="author"]', 'name', 'author', LEGAL_NAME);
 
-    // --- Basic Meta ---
-    setMeta('meta[name="description"]', 'name', finalDesc);
-    if (finalKeywords) setMeta('meta[name="keywords"]', 'name', finalKeywords);
-    const finalRobots = pageSEO.robots || 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1';
-    setMeta('meta[name="robots"]', 'name', finalRobots);
-    setMeta('meta[name="author"]', 'name', 'Onsective Inc.');
+    setMeta('meta[property="og:title"]', 'property', 'og:title', fullTitle);
+    setMeta('meta[property="og:description"]', 'property', 'og:description', finalDesc);
+    setMeta('meta[property="og:image"]', 'property', 'og:image', OG_IMAGE);
+    setMeta('meta[property="og:type"]', 'property', 'og:type', 'website');
+    setMeta('meta[property="og:url"]', 'property', 'og:url', canonicalUrl);
+    setMeta('meta[property="og:site_name"]', 'property', 'og:site_name', SITE_NAME);
+    setMeta('meta[property="og:locale"]', 'property', 'og:locale', 'en_CA');
 
-    // --- Open Graph ---
-    setMeta('meta[property="og:title"]', 'property', finalOgTitle);
-    setMeta('meta[property="og:description"]', 'property', finalOgDesc);
-    setMeta('meta[property="og:image"]', 'property', finalOgImage);
-    setMeta('meta[property="og:type"]', 'property', finalOgType);
-    setMeta('meta[property="og:url"]', 'property', canonicalUrl);
-    setMeta('meta[property="og:site_name"]', 'property', SITE_NAME);
-    setMeta('meta[property="og:locale"]', 'property', 'en_CA');
+    setMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary');
+    setMeta('meta[name="twitter:title"]', 'name', 'twitter:title', fullTitle);
+    setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', finalDesc);
+    setMeta('meta[name="twitter:image"]', 'name', 'twitter:image', OG_IMAGE);
 
-    // --- Twitter Card ---
-    setMeta('meta[name="twitter:card"]', 'name', finalTwitterCard);
-    setMeta('meta[name="twitter:title"]', 'name', finalOgTitle);
-    setMeta('meta[name="twitter:description"]', 'name', finalOgDesc);
-    setMeta('meta[name="twitter:image"]', 'name', finalOgImage);
-    setMeta('meta[name="twitter:site"]', 'name', '@OnsectiveEnt');
-    setMeta('meta[name="twitter:creator"]', 'name', '@OnsectiveEnt');
+    setLink('canonical', canonicalUrl);
 
-    // --- Canonical ---
-    // seo-middleware.js injects the authoritative canonical server-side,
-    // with consistent normalization (trailing slash, casing, https). We only
-    // override when the page explicitly provides one (e.g. SeoLanding modes
-    // that need a canonical different from the request path). When a page
-    // provides no canonical, we leave the server's value untouched — this
-    // still updates correctly during SPA navigation because each top-level
-    // route that needs a canonical sets pageSEO.canonical via overrides.
-    if (pageSEO.canonical) {
-      setLink('canonical', canonicalUrl);
-    }
-
-    // --- Structured Data (JSON-LD) ---
-    const graphEntities: any[] = [
+    const graph: any[] = [
       {
-        '@type': ['Organization', 'Corporation'],
+        '@type': 'Organization',
         '@id': `${SITE_URL}/#organization`,
         name: SITE_NAME,
-        alternateName: ['Onsective', 'Onsective Inc.', 'Onsective Consulting'],
+        legalName: LEGAL_NAME,
         url: SITE_URL,
-        logo: {
-          '@type': 'ImageObject',
-          url: `${SITE_URL}/assets/logo.png`,
-        },
-        contactPoint: {
-          '@type': 'ContactPoint',
-          telephone: '+1-672-673-7900',
-          contactType: 'customer service',
-          areaServed: 'Worldwide',
-        },
-        sameAs: [
-          'https://share.google/1FEaabgX3DE0px7L3',
-          'https://www.linkedin.com/company/onsective/',
-          'https://www.instagram.com/onsective',
-          'https://twitter.com/OnsectiveEnt',
-        ],
+        logo: `${SITE_URL}/assets/logo.png`,
+        email: CONTACT_EMAIL,
+        telephone: CONTACT_PHONE.replace(/[^0-9+]/g, ''),
         address: {
           '@type': 'PostalAddress',
-          streetAddress: '1111 Albion Rd',
+          streetAddress: HEADQUARTERS_ADDRESS.street,
           addressLocality: 'Etobicoke',
-          addressRegion: 'ON',
-          postalCode: 'M9V 1A6',
+          addressRegion: HEADQUARTERS_ADDRESS.state,
+          postalCode: HEADQUARTERS_ADDRESS.zip,
           addressCountry: 'CA',
         },
       },
     ];
-
-    // Add page-specific structured data
-    if (pageSEO.structuredData) {
-      graphEntities.push(pageSEO.structuredData);
-    }
-
-    // Add BreadcrumbList if provided
     if (breadcrumbs && breadcrumbs.length > 0) {
-      graphEntities.push({
+      graph.push({
         '@type': 'BreadcrumbList',
         itemListElement: breadcrumbs.map((bc, i) => ({
           '@type': 'ListItem',
@@ -144,47 +99,26 @@ const SEOHead: React.FC<SEOHeadProps> = ({ title, description, pageKey, override
         })),
       });
     }
-
-    const orgSchema = {
-      '@context': 'https://schema.org',
-      '@graph': graphEntities,
-    };
-
-    let ldScript = document.querySelector('script[data-seo="structured"]') as HTMLScriptElement | null;
-    if (!ldScript) {
-      ldScript = document.createElement('script');
-      ldScript.type = 'application/ld+json';
-      ldScript.setAttribute('data-seo', 'structured');
-      document.head.appendChild(ldScript);
-    }
-    ldScript.textContent = JSON.stringify(orgSchema, null, 2);
-
-    // Add FAQ structured data if provided
-    let faqScript = document.querySelector('script[data-seo="faq"]') as HTMLScriptElement | null;
     if (faqItems && faqItems.length > 0) {
-      const faqSchema = {
-        '@context': 'https://schema.org',
+      graph.push({
         '@type': 'FAQPage',
         mainEntity: faqItems.map(item => ({
           '@type': 'Question',
           name: item.q,
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: item.a,
-          },
+          acceptedAnswer: { '@type': 'Answer', text: item.a },
         })),
-      };
-      if (!faqScript) {
-        faqScript = document.createElement('script');
-        faqScript.type = 'application/ld+json';
-        faqScript.setAttribute('data-seo', 'faq');
-        document.head.appendChild(faqScript);
-      }
-      faqScript.textContent = JSON.stringify(faqSchema, null, 2);
-    } else if (faqScript) {
-      faqScript.remove();
+      });
     }
-  }, [title, description, pageKey, overrides, breadcrumbs, faqItems]);
+
+    let ld = document.querySelector('script[data-seo="structured"]') as HTMLScriptElement | null;
+    if (!ld) {
+      ld = document.createElement('script');
+      ld.type = 'application/ld+json';
+      ld.setAttribute('data-seo', 'structured');
+      document.head.appendChild(ld);
+    }
+    ld.textContent = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
+  }, [title, description, breadcrumbs, faqItems]);
 
   return null;
 };

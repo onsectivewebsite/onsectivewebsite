@@ -1,242 +1,209 @@
-import { Shield, Cloud, BarChart3, Globe, Cpu, Search, Megaphone, Award, Share2, Code2 } from 'lucide-react';
-import { Service, Industry, Stat, CaseStudy, Job, Event, LeadershipProfile } from '../types';
-import { ASSETS } from '../utils/assets';
+import { Shield, Cloud, BarChart3, Globe, Cpu, Search, Megaphone, Award, Share2, Code2, LucideIcon } from 'lucide-react';
+import { LeadershipProfile } from '../types';
 
-// --- CAPABILITIES ---
-export const SERVICES: Service[] = [
+export interface ServiceItem {
+  id: string;
+  title: string;
+  description: string;      // one or two plain sentences
+  icon: LucideIcon;
+  path: string;
+  whatWeDo: string[];       // plain-language list of tasks
+  goodFor: string;          // who this is useful for
+}
+
+// --- SERVICES ---
+export const SERVICES: ServiceItem[] = [
   {
     id: 'it-strategy',
-    title: 'IT STRATEGY',
-    description: 'Forensic technology audits, enterprise architecture mapping, and sovereign multi-year transformation roadmaps. Our principals embed with your C-suite to ensure every technology investment compounds into measurable competitive advantage — transforming IT from a cost center into your most formidable strategic weapon.',
+    title: 'IT Strategy',
+    description: 'We review the technology you use today and help you plan what to keep, change or add, in plain language and in a sensible order.',
     icon: BarChart3,
-    path: '/services/it-strategy'
+    path: '/services/it-strategy',
+    whatWeDo: [
+      'Review your current software, hosting and tools',
+      'Identify gaps, duplicate tools and avoidable costs',
+      'Write a short, prioritized technology plan',
+      'Help you compare vendors and options',
+    ],
+    goodFor: 'Small and mid-sized businesses that want a clear technology plan without hiring a full-time IT lead.',
   },
   {
     id: 'cloud-services',
-    title: 'CLOUD SERVICES',
-    description: 'End-to-end sovereign cloud transformation — from readiness assessment and architecture design to zero-downtime migration and continuous FinOps governance. We architect multi-cloud and hybrid environments across AWS, Azure, and GCP that deliver elastic scale, sovereign data compliance, and institutional-grade resilience.',
+    title: 'Cloud Services',
+    description: 'We help you move to, set up and manage cloud hosting on providers such as AWS, Microsoft Azure and Google Cloud.',
     icon: Cloud,
-    path: '/services/cloud-services'
+    path: '/services/cloud-services',
+    whatWeDo: [
+      'Set up cloud accounts, servers, databases and storage',
+      'Move existing websites and applications to the cloud',
+      'Configure backups and basic monitoring',
+      'Review cloud bills and suggest ways to reduce them',
+    ],
+    goodFor: 'Businesses moving off older servers, or those whose cloud setup has grown messy or expensive.',
   },
   {
     id: 'cybersecurity',
-    title: 'CYBERSECURITY',
-    description: 'Institutional security operations built on zero-trust architecture. We conduct adversarial red-team exercises, deploy 24/7 sovereign security operations centers, engineer incident response playbooks, and implement identity-centric access frameworks that protect your most critical assets against nation-state-grade threats.',
+    title: 'Cybersecurity',
+    description: 'We help you put basic, practical security in place: secure accounts, safer settings and clear steps to follow if something goes wrong.',
     icon: Shield,
-    path: '/services/cybersecurity'
+    path: '/services/cybersecurity',
+    whatWeDo: [
+      'Review account access, passwords and multi-factor authentication',
+      'Check website and cloud settings for common weaknesses',
+      'Write simple security policies and an incident checklist',
+      'Train staff on common threats such as phishing',
+    ],
+    goodFor: 'Businesses that want to cover the security basics and reduce everyday risk.',
   },
   {
     id: 'digital-experience',
-    title: 'DIGITAL EXPERIENCE',
-    description: 'We research, design, and engineer digital products that command attention and drive institutional-grade conversion rates. From deep ethnographic research and behavioral journey mapping to pixel-perfect interface architecture and full-stack engineering — we create experiences that establish brand authority.',
+    title: 'Digital Experience',
+    description: 'We design and build clear, easy-to-use websites and web pages for your customers.',
     icon: Globe,
-    path: '/services/digital-experience'
+    path: '/services/digital-experience',
+    whatWeDo: [
+      'Plan page layouts and user flows',
+      'Design and build responsive websites',
+      'Improve page speed and accessibility',
+      'Set up forms, booking and contact tools',
+    ],
+    goodFor: 'Businesses that need a new website or a refresh of an existing one.',
   },
   {
     id: 'ai-automation',
-    title: 'AI & AUTOMATION',
-    description: 'Production-grade artificial intelligence systems that deliver measurable ROI from day one — not science projects that stall at proof-of-concept. We architect custom ML models, intelligent automation workflows, NLP systems, and predictive analytics platforms that give your teams superhuman decision-making velocity.',
+    title: 'AI & Automation',
+    description: 'We look for repetitive tasks in your business and set up practical automations or AI-assisted tools where they make sense.',
     icon: Cpu,
-    path: '/services/ai-automation'
+    path: '/services/ai-automation',
+    whatWeDo: [
+      'Identify manual, repetitive tasks that can be automated',
+      'Connect the tools you already use (email, spreadsheets, CRM)',
+      'Set up AI-assisted tools such as document summaries or chat assistants',
+      'Explain clearly what automation can and cannot do for you',
+    ],
+    goodFor: 'Teams that spend too much time on repetitive admin work.',
   },
   {
     id: 'enterprise-seo',
-    title: 'ENTERPRISE SEO',
-    description: 'Technical search architecture at institutional scale. We optimize sovereign infrastructure for crawl efficiency, build topical authority through strategic content frameworks, manage complex international SEO deployments, and capture high-intent organic traffic that converts into qualified pipeline across every market.',
+    title: 'Search Engine Optimization (SEO)',
+    description: 'We help your website get found in search by fixing technical issues and improving page content.',
     icon: Search,
-    path: '/services/enterprise-seo'
+    path: '/services/enterprise-seo',
+    whatWeDo: [
+      'Technical checks: speed, mobile friendliness, indexing',
+      'Keyword research and page-level recommendations',
+      'Set up Google Search Console and analytics',
+      'Monthly reports on what changed',
+    ],
+    goodFor: 'Businesses that want more visitors from search engines. We do not promise specific rankings.',
   },
   {
     id: 'digital-marketing',
-    title: 'DIGITAL MARKETING',
-    description: 'Full-funnel campaign orchestration across Google, Meta, LinkedIn, and programmatic channels. We manage multi-million dollar media portfolios with precision targeting, build marketing automation ecosystems, and optimize every touchpoint toward institutional metrics: qualified pipeline, influenced revenue, and compounding lifetime value.',
+    title: 'Digital Marketing',
+    description: 'We help you set up and run online advertising and email campaigns, and measure what they bring in.',
     icon: Megaphone,
-    path: '/services/digital-marketing'
+    path: '/services/digital-marketing',
+    whatWeDo: [
+      'Set up and manage Google and social media ad accounts',
+      'Build email lists and simple email campaigns',
+      'Set up conversion tracking so results can be measured',
+      'Report on spend and results every month',
+    ],
+    goodFor: 'Businesses that want to start or tidy up online advertising. Ad spend is paid by you to the ad platform.',
   },
   {
     id: 'social-capital',
-    title: 'SOCIAL MEDIA HANDLING',
-    description: 'Institutional-scale social media orchestration across LinkedIn, Instagram, X, YouTube, TikTok, and Facebook. We engineer content strategies, cultivate communities, orchestrate influencer partnerships, and deploy sovereign crisis communication protocols that protect and elevate brand authority.',
+    title: 'Social Media Handling',
+    description: 'We help you plan and publish regular content on the social platforms your customers use.',
     icon: Share2,
-    path: '/services/social-capital'
+    path: '/services/social-capital',
+    whatWeDo: [
+      'Set up or tidy business profiles',
+      'Plan a content calendar',
+      'Create and schedule posts',
+      'Report on activity and engagement',
+    ],
+    goodFor: 'Businesses that want a steady social media presence without managing it day to day.',
   },
   {
     id: 'custom-software',
-    title: 'CUSTOM SOFTWARE',
-    description: 'End-to-end bespoke software engineering — from rapid prototype to sovereign enterprise-scale platforms. We architect, build, test, and deploy custom web applications, mobile platforms, SaaS ecosystems, and microservices architectures tailored with absolute precision to your institutional requirements.',
+    title: 'Custom Software',
+    description: 'We build custom web applications, internal tools and integrations when off-the-shelf software does not fit.',
     icon: Code2,
-    path: '/services/custom-software'
+    path: '/services/custom-software',
+    whatWeDo: [
+      'Gather requirements and agree on a written scope',
+      'Design, build and test web applications',
+      'Connect your software to other systems through APIs',
+      'Provide handover documentation and ongoing support if wanted',
+    ],
+    goodFor: 'Businesses with a specific process or product idea that existing tools do not cover.',
   },
   {
     id: 'brand-management',
-    title: 'BRAND MANAGEMENT',
-    description: 'We codify sovereign corporate identity into governance systems that scale across every market and medium. From brand strategy and visual identity architecture to tone-of-voice codification, employer branding, and institutional brand governance — we ensure your brand commands premium perception at every touchpoint.',
+    title: 'Brand Management',
+    description: 'We help you create a consistent look and message for your business: logo, colours, fonts and tone of voice.',
     icon: Award,
-    path: '/services/brand-management'
-  }
-];
-
-// --- INDUSTRIES ---
-export const INDUSTRIES: Industry[] = [
-  {
-    id: 'banking',
-    title: 'FINANCIAL SERVICES',
-    description: 'Sovereign digital transformation for banking, fintech, insurance, and capital markets institutions operating under the most demanding regulatory environments.',
-    path: '/industries/banking'
-  },
-  {
-    id: 'healthcare',
-    title: 'HEALTHCARE & LIFE SCIENCES',
-    description: 'Mission-critical healthcare technology platforms that elevate patient outcomes, accelerate clinical operations, and ensure absolute regulatory compliance.',
-    path: '/industries/healthcare'
-  },
-  {
-    id: 'retail',
-    title: 'RETAIL & E-COMMERCE',
-    description: 'Institutional-grade omnichannel commerce platforms and intelligent supply chain architectures engineered for the modern consumer economy.',
-    path: '/industries/retail'
-  },
-  {
-    id: 'manufacturing',
-    title: 'MANUFACTURING & INDUSTRY 4.0',
-    description: 'Sovereign smart factory platforms, IoT integration architectures, and digital twin ecosystems that engineer operational excellence at industrial scale.',
-    path: '/industries/manufacturing'
-  },
-  {
-    id: 'energy',
-    title: 'ENERGY & UTILITIES',
-    description: 'Grid modernization, renewable integration, and intelligent infrastructure platforms architected for the sovereign energy transition.',
-    path: '/industries/energy'
-  },
-  {
-    id: 'technology',
-    title: 'TECHNOLOGY & SAAS',
-    description: 'Multi-tenant SaaS architecture, developer platforms, product-led growth infrastructure, and enterprise-readiness engineering for B2B technology firms.',
-    path: '/industries/technology'
-  },
-  {
-    id: 'professional-services',
-    title: 'PROFESSIONAL SERVICES',
-    description: 'Thought leadership at scale, matter/knowledge management, and digital client acquisition systems for consulting, legal, accounting, and advisory firms.',
-    path: '/industries/professional-services'
-  },
-  {
-    id: 'education',
-    title: 'EDUCATION & EDTECH',
-    description: 'Learning platforms, student information systems, enrolment marketing, and accessibility compliance for higher education, K-12, and corporate learning.',
-    path: '/industries/education'
-  },
-  {
-    id: 'government',
-    title: 'GOVERNMENT & PUBLIC SECTOR',
-    description: 'Citizen services portals, sovereign cloud architecture, cyber defence operations, and legacy modernisation for federal, state, and municipal government.',
-    path: '/industries/government'
-  },
-  {
-    id: 'media',
-    title: 'MEDIA & ENTERTAINMENT',
-    description: 'Streaming infrastructure, rights and royalty management, audience intelligence, and subscription economics for publishers, broadcasters, and streaming platforms.',
-    path: '/industries/media'
+    path: '/services/brand-management',
+    whatWeDo: [
+      'Logo and colour palette',
+      'Simple brand guidelines',
+      'Business card, email signature and social media templates',
+      'Reviewing existing materials for consistency',
+    ],
+    goodFor: 'New and growing businesses that want a professional, consistent presentation.',
   },
 ];
 
-// --- PERFORMANCE METRICS ---
-export const STATS: Stat[] = [
-  { label: 'Global Presence', value: '7', suffix: '+ Nations' },
-  { label: 'Enterprise Clients', value: '120', suffix: '+' },
-  { label: 'Projects Delivered', value: '500', suffix: '+' },
-  { label: 'Platform Uptime', value: '99.9', suffix: '%' },
-];
+// --- HOW WE CHARGE ---
+// TODO: Replace every amount below with your real rates before publishing.
+export interface PricingModel {
+  id: string;
+  name: string;
+  summary: string;
+  amount: string;
+  bestFor: string;
+  details: string[];
+}
 
-// --- GLOBAL OFFICES ---
-export const GLOBAL_OFFICES = [
-  { city: 'Toronto', country: 'Canada', type: 'Global HQ', flag: '🇨🇦' },
-  { city: 'New York', country: 'United States', type: 'Americas Hub', flag: '🇺🇸' },
-  { city: 'London', country: 'United Kingdom', type: 'EMEA Hub', flag: '🇬🇧' },
-  { city: 'Dubai', country: 'UAE', type: 'Middle East Hub', flag: '🇦🇪' },
-  { city: 'Mumbai', country: 'India', type: 'APAC Delivery Center', flag: '🇮🇳' },
-  { city: 'Singapore', country: 'Singapore', type: 'APAC Hub', flag: '🇸🇬' },
-  { city: 'Sydney', country: 'Australia', type: 'Oceania Hub', flag: '🇦🇺' },
-  { city: 'Berlin', country: 'Germany', type: 'EU Engineering', flag: '🇩🇪' },
-];
-
-// --- EXECUTIVE LEADERSHIP ---
-export const LEADERSHIP_TEAM: LeadershipProfile[] = [
+export const PRICING_MODELS: PricingModel[] = [
   {
-    name: 'Rishabh',
-    role: 'Founder & Director',
-    image: ASSETS.TEAM_RISHABH
+    id: 'hourly',
+    name: 'Hourly',
+    summary: 'You pay for the hours worked, tracked and invoiced.',
+    amount: 'TODO: hourly rate (CAD)',
+    bestFor: 'Small tasks, advice and work where the scope may change.',
+    details: [
+      'Hours are logged and shared with you on every invoice',
+      'TODO: minimum engagement / minimum billable block, if any',
+    ],
   },
   {
-    name: 'Kavya',
-    role: 'Director of Global Strategy',
-    image: ASSETS.TEAM_KAVYA
+    id: 'project',
+    name: 'Project-based quote',
+    summary: 'We agree on a written scope and a fixed price before work starts.',
+    amount: 'TODO: typical starting price (CAD) or "quoted per project"',
+    bestFor: 'Websites, migrations and builds with a clear start and end.',
+    details: [
+      'Written scope, deliverables and timeline',
+      'TODO: payment schedule (e.g. deposit % / milestones / on delivery)',
+      'Work outside the agreed scope is quoted separately',
+    ],
   },
   {
-    name: 'Kumakshi Khanna',
-    role: 'Chief Legal Advisor',
-    image: ASSETS.TEAM_ALI
+    id: 'retainer',
+    name: 'Monthly retainer',
+    summary: 'A fixed monthly fee for an agreed amount of ongoing support.',
+    amount: 'TODO: monthly fee (CAD) and hours included',
+    bestFor: 'Ongoing maintenance, monitoring, marketing and support.',
+    details: [
+      'Agreed monthly hours or deliverables',
+      'TODO: notice period to cancel (e.g. 30 days)',
+    ],
   },
-  {
-    name: 'Shabir Ahmad',
-    role: 'Principal Solutions Architect',
-    image: ASSETS.TEAM_SHABIR
-  }
 ];
 
-// --- CASE STUDIES ---
-export const FEATURED_CASES: CaseStudy[] = [
-  {
-    id: 'sovereign-cloud',
-    title: 'Cloud Migration for a Tier-1 Bank',
-    category: 'Financial Services',
-    summary: 'Engineered a zero-trust multi-cloud environment for a Tier-1 financial institution, migrating 200+ microservices with zero downtime and reducing infrastructure costs by 40%.',
-    image: ASSETS.CASE_1
-  },
-  {
-    id: 'autonomous-systems',
-    title: 'AI-Powered Supply Chain for Manufacturing',
-    category: 'Industrial',
-    summary: 'Deployed neural network-powered predictive analytics across 12 production lines, cutting defect rates by 67% and establishing autonomous quality assurance protocols.',
-    image: ASSETS.CASE_2
-  },
-  {
-    id: 'unified-retail',
-    title: 'Omnichannel Platform for Global Retailer',
-    category: 'Retail',
-    summary: 'Architected a unified omnichannel commerce platform serving 8M+ customers across 14 countries with 99.99% availability and real-time inventory synchronization.',
-    image: ASSETS.CASE_3
-  }
-];
-
-// --- OPEN POSITIONS ---
-export const OPEN_POSITIONS: Job[] = [
-  { id: '1', title: 'Senior Solutions Architect', location: 'Toronto HQ', type: 'Full-time', department: 'Engineering' },
-  { id: '2', title: 'Director of Strategy', location: 'Vancouver', type: 'Full-time', department: 'Consulting' },
-  { id: '3', title: 'AI Research Lead', location: 'Remote', type: 'Full-time', department: 'Innovation Labs' },
-];
-
-// --- EVENTS ---
-export const EVENTS: Event[] = [
-  {
-    id: 'ev-2',
-    title: 'Premium Launch Event',
-    date: 'March 11, 2026 @ 10:00 AM',
-    location: 'Global Headquarters',
-    type: 'upcoming',
-    description: 'An exclusive launch event showcasing our latest premium content and institutional offerings.',
-    image: ASSETS.EVENT_2
-  },
-  {
-    id: 'ev-1',
-    title: 'Sovereignty & AI Summit',
-    date: 'May 20, 2026',
-    location: 'Davos, Switzerland',
-    type: 'upcoming',
-    description: 'An executive roundtable focused on the intersection of AI governance and national data sovereignty.',
-    image: ASSETS.EVENT_1
-  }
-];
-
-// --- TRUST BADGES (empty — no certifications claimed) ---
-export const TRUST_BADGES: string[] = [];
+// --- TEAM ---
+// TODO: Confirm names, roles and photos. Remove anyone who is not actually part of the company.
+// Titles here are intentionally plain. Do not use inflated titles.
+export const LEADERSHIP_TEAM: LeadershipProfile[] = [];

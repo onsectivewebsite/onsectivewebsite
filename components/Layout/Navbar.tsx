@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Search, ChevronDown, ArrowRight, Phone, Mail } from 'lucide-react';
-import { NAV_ITEMS, SERVICES, INDUSTRIES, ALL_INSIGHTS, CONTACT_EMAIL, CONTACT_PHONE } from '../../constants';
+import { NAV_ITEMS, SERVICES, CONTACT_EMAIL, CONTACT_PHONE } from '../../constants';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,13 +46,11 @@ const Navbar: React.FC = () => {
     const q = searchQuery.toLowerCase();
     return {
       services: SERVICES.filter(s => s.title.toLowerCase().includes(q)),
-      industries: INDUSTRIES.filter(i => i.title.toLowerCase().includes(q)),
-      insights: ALL_INSIGHTS.filter(p => p.title.toLowerCase().includes(q)).slice(0, 5),
     };
   }, [searchQuery]);
 
   const hasResults = searchResults
-    ? searchResults.services.length + searchResults.industries.length + searchResults.insights.length > 0
+    ? searchResults.services.length > 0
     : false;
 
   return (
@@ -79,9 +77,7 @@ const Navbar: React.FC = () => {
             </a>
           </div>
           <div className="flex items-center gap-5 text-white/60 text-xs">
-            <Link to="/careers" className="hover:text-white transition-colors">Careers</Link>
-            <Link to="/investors" className="hover:text-white transition-colors">Investors</Link>
-            <Link to="/alumni" className="hover:text-white transition-colors">Alumni</Link>
+<Link to="/pricing" className="hover:text-white transition-colors">Pricing</Link>
           </div>
         </div>
       </div>
@@ -213,36 +209,6 @@ const Navbar: React.FC = () => {
                       className="block px-2 py-1.5 rounded text-sm text-brand-text hover:text-brand-primary hover:bg-brand-light transition-colors"
                     >
                       {s.title}
-                    </Link>
-                  ))}
-                </div>
-              )}
-              {searchResults.industries.length > 0 && (
-                <div>
-                  <div className="text-[10px] font-semibold text-brand-muted uppercase tracking-wider mb-1.5">Industries</div>
-                  {searchResults.industries.map(i => (
-                    <Link
-                      key={i.id}
-                      to={i.path}
-                      onClick={() => { setIsSearchOpen(false); setSearchQuery(''); }}
-                      className="block px-2 py-1.5 rounded text-sm text-brand-text hover:text-brand-primary hover:bg-brand-light transition-colors"
-                    >
-                      {i.title}
-                    </Link>
-                  ))}
-                </div>
-              )}
-              {searchResults.insights.length > 0 && (
-                <div>
-                  <div className="text-[10px] font-semibold text-brand-muted uppercase tracking-wider mb-1.5">Insights</div>
-                  {searchResults.insights.map(p => (
-                    <Link
-                      key={p.id}
-                      to={`/insights/${p.id}`}
-                      onClick={() => { setIsSearchOpen(false); setSearchQuery(''); }}
-                      className="block px-2 py-1.5 rounded text-sm text-brand-text hover:text-brand-primary hover:bg-brand-light transition-colors"
-                    >
-                      {p.title}
                     </Link>
                   ))}
                 </div>
@@ -418,9 +384,7 @@ const Navbar: React.FC = () => {
 
             {/* Extra mobile links */}
             <div className="pt-4 border-t border-brand-border space-y-1">
-              <Link to="/careers" onClick={() => setIsOpen(false)} className="block py-2 text-sm text-brand-muted hover:text-brand-primary transition-colors">Careers</Link>
-              <Link to="/investors" onClick={() => setIsOpen(false)} className="block py-2 text-sm text-brand-muted hover:text-brand-primary transition-colors">Investors</Link>
-              <Link to="/alumni" onClick={() => setIsOpen(false)} className="block py-2 text-sm text-brand-muted hover:text-brand-primary transition-colors">Alumni</Link>
+              <Link to="/refund-policy" onClick={() => setIsOpen(false)} className="block py-2 text-sm text-brand-muted hover:text-brand-primary transition-colors">Refund Policy</Link>
             </div>
           </div>
 
